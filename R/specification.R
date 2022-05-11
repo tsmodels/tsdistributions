@@ -1,7 +1,7 @@
 #' Specification of distribution model
 #'
-#' @param y A numeric or xts vector
-#' @param distribution The type of distribution. Valid choices are norm (Normal),
+#' @param y a numeric vector
+#' @param distribution the type of distribution. Valid choices are norm (Normal),
 #' snorm (Skew Normal), std (Student), sstd (Skew Student), ged (Generalized Error),
 #' sged (Skew Generalized Error), nig (Normal Inverse Gaussian), gh (Generalized Hyperbolic),
 #' ghst (Generalized Hyperbolic Skew Student) and jsu (Johnson's SU).

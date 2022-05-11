@@ -1,11 +1,11 @@
 #' Estimates the parameters of a distribution using autodiff.
 #'
-#' @param object An object of class tsdistribution.spec.
-#' @param solver Only \dQuote{nlminb} currently supported.
-#' @param control Solver control parameters.
-#' @param use_hessian Whether to use the hessian in the calculation.
+#' @param object an object of class tsdistribution.spec.
+#' @param solver only \dQuote{nlminb} currently supported.
+#' @param control solver control parameters.
+#' @param use_hessian whether to use the hessian in the calculation.
 #' @param ... additional parameters passed to the estimation function
-#' @return An list of coefficients and other information.
+#' @return A list of coefficients and other information.
 #' @method estimate tsdistribution.spec
 #' @details The estimation makes use of the TMB package for minimizing
 #' the negative of the log-likelihood using automatic differentiation.
