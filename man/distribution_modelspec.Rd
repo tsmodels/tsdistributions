@@ -7,9 +7,9 @@
 distribution_modelspec(y, distribution = "norm", ...)
 }
 \arguments{
-\item{y}{A numeric or xts vector}
+\item{y}{a numeric vector}
 
-\item{distribution}{The type of distribution. Valid choices are norm (Normal),
+\item{distribution}{the type of distribution. Valid choices are norm (Normal),
 snorm (Skew Normal), std (Student), sstd (Skew Student), ged (Generalized Error),
 sged (Skew Generalized Error), nig (Normal Inverse Gaussian), gh (Generalized Hyperbolic),
 ghst (Generalized Hyperbolic Skew Student) and jsu (Johnson's SU).}

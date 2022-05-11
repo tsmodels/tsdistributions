@@ -1489,9 +1489,7 @@ ghyptransform = function(mu = 0, sigma = 1,  skew = 0, shape = 3, lambda = -0.5)
 #' generator
 #' @rdname ddist
 #' @export
-#'
-#'
-#'
+#' 
 ddist <- function(distribution = "norm", x, mu = 0, sigma = 1, skew = 1, shape = 5, lambda = -0.5, log = FALSE)
 {
  distribution <- match.arg(distribution[1], valid_distributions())
@@ -1571,7 +1569,19 @@ rdist <- function(distribution = "norm", n, mu = 0, sigma = 1, skew = 1, shape =
  return(ans)
 }
 
-
+#' Distribution skewness and kurtosis
+#'
+#' @description Calculates the skewness and kurtosis of the distribution given
+#' a set of parameters.
+#' @param distribution a valid distribution.
+#' @param skew skew parameter.
+#' @param shape  shape parameter.
+#' @param lambda additional shape parameter determining subfamilies of the ghyp 
+#' distribution.
+#' @return A numeric value.
+#' @rdname dskewness
+#' @export
+#'
 dskewness <- function(distribution = "norm", skew = 1, shape = 5, lambda = -0.5)
 {
  distribution <- match.arg(distribution[1], valid_distributions())
@@ -1598,6 +1608,8 @@ dskewness <- function(distribution = "norm", skew = 1, shape = 5, lambda = -0.5)
  return(as.numeric(ans))
 }
 
+#' @rdname dskewness
+#' @export
 dkurtosis <- function(distribution = "norm", skew = 1, shape = 5, lambda = -0.5)
 {
  distribution <- match.arg(distribution[1], valid_distributions())

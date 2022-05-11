@@ -14,18 +14,18 @@
 )
 }
 \arguments{
-\item{object}{An object of class tsdistribution.spec.}
+\item{object}{an object of class tsdistribution.spec.}
 
-\item{solver}{Only \dQuote{nlminb} currently supported.}
+\item{solver}{only \dQuote{nlminb} currently supported.}
 
-\item{control}{Solver control parameters.}
+\item{control}{solver control parameters.}
 
-\item{use_hessian}{Whether to use the hessian in the calculation.}
+\item{use_hessian}{whether to use the hessian in the calculation.}
 
 \item{...}{additional parameters passed to the estimation function}
 }
 \value{
-An list of coefficients and other information.
+A list of coefficients and other information.
 }
 \description{
 Estimates the parameters of a distribution using autodiff.
