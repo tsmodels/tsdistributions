@@ -45,7 +45,7 @@ jobs:
       - name: Install github dependences
         env:
           R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-        run: Rscript -e - e "devtools::install_github('tsmodels/tsmethods')" -e "remotes::install_deps(dependencies = TRUE)" 
+        run: Rscript -e "devtools::install_github('tsmodels/tsmethods')" -e "remotes::install_deps(dependencies = TRUE)" 
         
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
