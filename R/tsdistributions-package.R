@@ -8,6 +8,7 @@
 #' @importFrom knitr kable
 #' @importFrom SkewHyperbolic pskewhyp qskewhyp
 #' @importFrom GeneralizedHyperbolic ghypMom
+#' @importFrom Rsolnp solnp
 #' @importFrom stats dnorm integrate optim pnorm qnorm rnorm runif sd uniroot
 #' @import tsmethods
 "_PACKAGE"

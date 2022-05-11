@@ -1926,3 +1926,30 @@ validate_bounds <- function(distribution, sigma = 1, skew = 0.2, shape = 5, lamb
     }
   }
 }
+
+# domain functions
+nig_domain <- function(max_kurt = 30, n = 25)
+{
+  di <- distribution_bounds("nig")
+  di[parameter == "shape", upper := 100]
+  k <- seq(5, max_kurt, length = n)
+  maxkurt <- dkurtosis("nig", skew = 0, shape = di[parameter == "shape"]$upper)
+  f <- function(x, kurt){
+    -dskewness("nig", skew = x[1], shape = x[2])
+  }
+  fin <- function(x, kurt){
+    dkurtosis("nig", skew = x[1], shape = x[2]) + 3 - maxkurt - kurt
+  }
+  pars <- matrix(NA, ncol = 4, nrow = n)
+  for (i in 1:length(k)) {
+    sol <- solnp(pars = c(0.1, 0.5), fun = f, eqfun = fin, eqB = 0, LB = c(0.05, di[parameter == "shape"]$lower),
+                UB = c(di[parameter == "skew"]$upper, di[parameter == "shape"]$upper), 
+                control = list(trace = 0, outer.iter = 25), kurt = k[i])
+    pars[i,1:2] <- sol$pars
+    pars[i,3] <- tail(sol$value,1)
+    pars[i,4] <- k[i]
+  }
+  pars <- rbind(matrix(c(0,100, dskewness("nig", 0, 100), 3 + dkurtosis("nig", 0, 100)), ncol = 4), pars)
+  ans <- spline(pars[,4], pars[,3])
+  return(list(Kurtosis = ans$x, Skewness = ans$y))
+}
