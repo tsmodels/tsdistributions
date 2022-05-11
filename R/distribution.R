@@ -17,7 +17,7 @@ distribution_bounds <- function(distribution = "norm")
         return(tmp)
     }
     if (distribution == "ged") {
-        tmp <- rbind(tmp, data.table(parameter = "shape", lower = 0.1, upper = 50))
+        tmp <- rbind(tmp, data.table(parameter = "shape", lower = 0.1, upper = 100))
         tmp[,distribution := "ged"]
         return(tmp)
     }
@@ -36,28 +36,28 @@ distribution_bounds <- function(distribution = "norm")
     if (distribution == "sged") {
         tmp <- rbind(
             data.table(parameter = "skew", lower = 0.01, upper = 30),
-            data.table(parameter = "shape", lower = 0.1, upper = 60))
+            data.table(parameter = "shape", lower = 0.1, upper = 100))
         tmp[,distribution := "sged"]
         return(tmp)
     }
     if (distribution == "sstd") {
         tmp <- rbind(tmp,
                      data.table(parameter = "skew", lower = 0.01, upper = 30),
-                     data.table(parameter = "shape", lower = 2.01, upper = 60))
+                     data.table(parameter = "shape", lower = 2.01, upper = 100))
         tmp[,distribution := "sstd"]
         return(tmp)
     }
     if (distribution == "nig") {
         tmp <- rbind(tmp,
                      data.table(parameter = "skew", lower = -0.99, upper = 0.99),
-                     data.table(parameter = "shape", lower = 0.01, upper = 25))
+                     data.table(parameter = "shape", lower = 0.01, upper = 100))
         tmp[,distribution := "nig"]
         return(tmp)
     }
     if (distribution == "ghyp") {
         tmp <- rbind(tmp,
                      data.table(parameter = "skew", lower = -0.99, upper = 0.99),
-                     data.table(parameter = "shape", lower = 0.25, upper = 25),
+                     data.table(parameter = "shape", lower = 0.25, upper = 100),
                      data.table(parameter = "lambda", lower = -6, upper = 6))
         tmp[,distribution := "ghyp"]
         return(tmp)
@@ -67,14 +67,14 @@ distribution_bounds <- function(distribution = "norm")
         # representation in rugarch
         tmp <- rbind(tmp,
                      data.table(parameter = "skew", lower = -20, upper = 20),
-                     data.table(parameter = "shape", lower = 0.1, upper = 10))
+                     data.table(parameter = "shape", lower = 0.1, upper = 100))
         tmp[,distribution := "jsu"]
         return(tmp)
     }
     if (distribution == "ghst") {
         tmp <- rbind(tmp,
                      data.table(parameter = "skew", lower = -80, upper = 80),
-                     data.table(parameter = "shape", lower = 4.01, upper = 25))
+                     data.table(parameter = "shape", lower = 4.01, upper = 100))
         tmp[,distribution := "ghst"]
         return(tmp)
     }

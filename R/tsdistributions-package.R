@@ -9,7 +9,8 @@
 #' @importFrom SkewHyperbolic pskewhyp qskewhyp
 #' @importFrom GeneralizedHyperbolic ghypMom
 #' @importFrom Rsolnp solnp
-#' @importFrom stats dnorm integrate optim pnorm qnorm rnorm runif sd uniroot
+#' @importFrom stats dnorm integrate optim pnorm qnorm rnorm runif sd uniroot spline
+#' @importFrom utils tail
 #' @import tsmethods
 "_PACKAGE"
 

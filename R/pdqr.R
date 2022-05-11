@@ -1684,6 +1684,7 @@ dkurtosis <- function(distribution = "norm", skew = 1, shape = 5, lambda = -0.5)
  return(ans)
 }
 
+
 .ghypmu <- function(lambda, alpha, beta, delta, mu){
  gm <- sqrt(alpha^2 - beta^2)
  ans <- mu + (delta * beta * besselK( delta * gm, lambda + 1) )/( gm * besselK( delta * gm, lambda) ) 
@@ -1711,7 +1712,7 @@ dkurtosis <- function(distribution = "norm", skew = 1, shape = 5, lambda = -0.5)
 }
 
 .ghypskew <- function(lambda, alpha, beta, delta, mu){
- skew <- ghypMom(3, lambda, alpha, beta, delta, mu, momType = "central")/(.ghypsigma(lambda, alpha, beta, delta, mu)^3)
+ skew <- ghypMom(3, lambda = lambda, alpha = alpha, beta = beta, delta = delta, mu = mu, momType = "central")/(.ghypsigma(lambda = lambda, alpha = alpha, beta = beta, delta = delta, mu = mu)^3)
  return(skew)
 }
 
@@ -1727,7 +1728,7 @@ dkurtosis <- function(distribution = "norm", skew = 1, shape = 5, lambda = -0.5)
 }
 
 .ghypexkurt <- function(lambda, alpha, beta, delta, mu){
- kurt <- ghypMom(4, lambda, alpha, beta, delta, mu, momType = "central")/(.ghypsigma(lambda, alpha, beta, delta, mu)^4) - 3
+ kurt <- ghypMom(4, lambda = lambda, alpha = alpha, beta = beta, delta = delta, mu = mu, momType = "central")/(.ghypsigma(lambda = lambda, alpha = alpha, beta = beta, delta = delta, mu = mu)^4) - 3
  return(kurt)
 }
 
@@ -1927,29 +1928,115 @@ validate_bounds <- function(distribution, sigma = 1, skew = 0.2, shape = 5, lamb
   }
 }
 
-# domain functions
-nig_domain <- function(max_kurt = 30, n = 25)
-{
-  di <- distribution_bounds("nig")
-  di[parameter == "shape", upper := 100]
+#' Distribution Authorized Domain
+#'
+#' @description Calculated the region of Skewness-Kurtosis for which a density exists.
+#' @param distribution a valid distribution with skew and shape parameters.
+#' @param max_kurt the maximum kurtosis for which to determine the bounds for 
+#' the skewness-kurtosis domain.
+#' @param n  the number of points between the lower and upper bounds of the 
+#' skew and shape parameters for which to evaluate the skewness and excess kurtosis. 
+#' This determines the kurtosis interval (3 - max_kurt) for which to 
+#' calculate (solver based) the maximum skewness.
+#' @param lambda additional shape parameter determining subfamilies of the ghyp 
+#' distribution.
+#' @return A list with the lower half of the skewness and kurtosis values.
+#' @rdname authorized_domain
+#' @export
+#'
+authorized_domain <- function(distribution, max_kurt = 30, n = 25, lambda = 1) {
+  valid_d <- c("nig","ghyp","jsu","sstd","ghst")
+  distribution <- match.arg(distribution[1], valid_d)
+  di <- skdomain_bounds(distribution)
   k <- seq(5, max_kurt, length = n)
-  maxkurt <- dkurtosis("nig", skew = 0, shape = di[parameter == "shape"]$upper)
-  f <- function(x, kurt){
-    -dskewness("nig", skew = x[1], shape = x[2])
+  dpars <- c(di[parameter == "skew"]$value, di[parameter == "shape"]$value)
+  skew_min <- switch(distribution, "jsu" = 0, "nig" = 0, "sstd" = 1, "ghyp" = 0, "ghst" = 0)
+  if (distribution == "ghyp") {
+    maxkurt <- dkurtosis(distribution, skew = skew_min, shape = di[parameter == "shape"]$upper, lambda = lambda)
+    f = function(x, kurt, xlambda){
+      -dskewness(distribution, skew = x[1], shape = x[2], lambda = xlambda)
+    }
+    fin = function(x, kurt, xlambda){
+      dkurtosis(distribution, skew = x[1], shape = x[2], lambda = xlambda) + 3 - maxkurt - kurt
+    }
+    pars <- matrix(NA, ncol = 4, nrow = n)
+    for (i in 1:length(k)) {
+      sol <- try(solnp(pars = dpars, fun = f, eqfun = fin, eqB = 0, LB = c(di[parameter == "skew"]$lower, di[parameter == "shape"]$lower),
+                   UB = c(di[parameter == "skew"]$upper, di[parameter == "shape"]$upper), 
+                   control = list(trace = 0, outer.iter = 25), kurt = k[i], xlambda = lambda), silent = TRUE)
+      if (inherits(sol, 'try-error')) {
+        pars[i,1:2] <- rep(NA, 2)
+        pars[i,3] <- NA
+        pars[i,4] <- NA
+      } else {
+        if (any(is.na(sol$pars))) {
+          pars[i,1:2] <- rep(NA, 2)
+          pars[i,3] <- NA
+          pars[i,4] <- NA
+        } else {
+          pars[i,1:2] <- sol$pars
+          pars[i,3] <- tail(sol$value,1)
+          pars[i,4] <- dkurtosis(distribution, skew =  sol$pars[1], shape =  sol$pars[2], lambda = lambda) + 3
+        }
+      }
+    }
+    pars <- rbind(matrix(c(0, di[parameter == "shape"]$upper, dskewness(distribution, 0,  di[parameter == "shape"]$upper, lambda = lambda), 
+                           3 + dkurtosis(distribution, 0,  di[parameter == "shape"]$upper, lambda = lambda)), ncol = 4), pars)
+  } else {
+    maxkurt <- dkurtosis(distribution, skew = skew_min, shape = di[parameter == "shape"]$upper)
+    f <- function(x, kurt){
+      -dskewness(distribution, skew = x[1], shape = x[2])
+    }
+    fin <- function(x, kurt){
+      dkurtosis(distribution, skew = x[1], shape = x[2]) + 3 - maxkurt - kurt
+    }
+    pars <- matrix(NA, ncol = 4, nrow = n)
+    for (i in 1:length(k)) {
+      sol <- try(solnp(pars = dpars, fun = f, eqfun = fin, eqB = 0, LB = c(di[parameter == "skew"]$lower, di[parameter == "shape"]$lower),
+                   UB = c(di[parameter == "skew"]$upper, di[parameter == "shape"]$upper), 
+                   control = list(trace = 0, outer.iter = 25), kurt = k[i]), silent = TRUE)
+      if (inherits(sol, 'try-error')) {
+        pars[i,1:2] <- rep(NA, 2)
+        pars[i,3] <- NA
+        pars[i,4] <- NA
+      } else {
+        if (any(is.na(sol$pars))) {
+          pars[i,1:2] <- rep(NA, 2)
+          pars[i,3] <- NA
+          pars[i,4] <- NA
+        } else {
+          pars[i,1:2] <- sol$pars
+          pars[i,3] <- tail(sol$value,1)
+          pars[i,4] <- dkurtosis(distribution, skew =  sol$pars[1], shape =  sol$pars[2]) + 3
+        }
+      }
+    }
+    pars <- rbind(matrix(c(0, di[parameter == "shape"]$upper, dskewness(distribution, skew_min,  di[parameter == "shape"]$upper), 3 + dkurtosis(distribution, skew_min,  di[parameter == "shape"]$upper)), ncol = 4), pars)
   }
-  fin <- function(x, kurt){
-    dkurtosis("nig", skew = x[1], shape = x[2]) + 3 - maxkurt - kurt
+  ans <- spline(pars[,4], pars[,3], method = "fmm")
+  return(list(Skewness = ans$y, Kurtosis = ans$x, pars = pars[,1:2]))
+}
+
+# valid bounds for the existence of a fourth moment
+skdomain_bounds <- function(distribution)
+{
+  parameter <- NULL
+  d <- distribution_bounds(distribution)
+  if (distribution == "sstd") {
+    out <- rbind(data.table(parameter = "skew", lower = 1, upper = 60, value = 1.1),
+          data.table(parameter = "shape", lower = 4.01, upper = 300, value = 4.05))
+  } else if (distribution == "nig") {
+    out <- rbind(data.table(parameter = "skew", lower = 0.05, upper = d[parameter == "skew"]$upper, value = 0.1),
+                 data.table(parameter = "shape", lower = d[parameter == "shape"]$lower, upper = d[parameter == "shape"]$upper, value = 0.5))
+  } else if (distribution == "ghst") {
+    out <- rbind(data.table(parameter = "skew", lower = 0.1, upper = d[parameter == "skew"]$upper, value = 0.2),
+                 data.table(parameter = "shape", lower = 8.01, upper = d[parameter == "shape"]$upper, value = 8.1))
+  } else if (distribution == "ghyp") {
+    out <- rbind(data.table(parameter = "skew", lower = 0.05, upper = d[parameter == "skew"]$upper, value = 0.1),
+                 data.table(parameter = "shape", lower = d[parameter == "shape"]$lower, upper = d[parameter == "shape"]$upper, value = 0.5))
+  } else if (distribution == "jsu") {
+    out <- rbind(data.table(parameter = "skew", lower = 0.05, upper = d[parameter == "skew"]$upper, value = 0.1),
+                 data.table(parameter = "shape", lower = 0.1, upper = d[parameter == "shape"]$upper, value = 0.5))
   }
-  pars <- matrix(NA, ncol = 4, nrow = n)
-  for (i in 1:length(k)) {
-    sol <- solnp(pars = c(0.1, 0.5), fun = f, eqfun = fin, eqB = 0, LB = c(0.05, di[parameter == "shape"]$lower),
-                UB = c(di[parameter == "skew"]$upper, di[parameter == "shape"]$upper), 
-                control = list(trace = 0, outer.iter = 25), kurt = k[i])
-    pars[i,1:2] <- sol$pars
-    pars[i,3] <- tail(sol$value,1)
-    pars[i,4] <- k[i]
-  }
-  pars <- rbind(matrix(c(0,100, dskewness("nig", 0, 100), 3 + dkurtosis("nig", 0, 100)), ncol = 4), pars)
-  ans <- spline(pars[,4], pars[,3])
-  return(list(Kurtosis = ans$x, Skewness = ans$y))
+  return(out)
 }

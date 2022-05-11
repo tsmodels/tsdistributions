@@ -3,6 +3,7 @@
 S3method(coef,tsdistribution.estimate)
 S3method(estimate,tsdistribution.spec)
 S3method(summary,tsdistribution.estimate)
+export(authorized_domain)
 export(ddist)
 export(dged)
 export(distribution_bounds)

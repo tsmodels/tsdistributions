@@ -46,7 +46,7 @@ distribution_modelspec <- function(y, distribution = "norm", ...)
  if (distribution == "ged") {
   tmp <- rbind(tmp,
                data.table(parameter = "skew", value = 0, lower = 0, upper = 0, include = 0, estimate = 0, equation = "distribution", group = "distribution"),
-               data.table(parameter = "shape", value = 2, lower = 0.1, upper = 50, include = 1, estimate = 1, equation = "distribution", group = "distribution"),
+               data.table(parameter = "shape", value = 2, lower = 0.1, upper = 100, include = 1, estimate = 1, equation = "distribution", group = "distribution"),
                data.table(parameter = "lambda", value = -0.5, lower = -6, upper = 6, include = 0, estimate = 0, equation = "distribution", group = "distribution"))
   return(tmp)
  }
@@ -67,28 +67,28 @@ distribution_modelspec <- function(y, distribution = "norm", ...)
  if (distribution == "sged") {
   tmp <- rbind(tmp,
    data.table(parameter = "skew", value = 1, lower = 0.01, upper = 30, include = 1, estimate = 1, equation = "distribution", group = "distribution"),
-   data.table(parameter = "shape", value = 2, lower = 0.1, upper = 60, include = 1, estimate = 1, equation = "distribution", group = "distribution"),
+   data.table(parameter = "shape", value = 2, lower = 0.1, upper = 100, include = 1, estimate = 1, equation = "distribution", group = "distribution"),
    data.table(parameter = "lambda", value = -0.5, lower = -6, upper = 6, include = 0, estimate = 0, equation = "distribution", group = "distribution"))
   return(tmp)
  }
  if (distribution == "sstd") {
   tmp <- rbind(tmp,
                data.table(parameter = "skew", value = 1, lower = 0.01, upper = 30, include = 1, estimate = 1, equation = "distribution", group = "distribution"),
-               data.table(parameter = "shape", value = 4, lower = 2.01, upper = 60, include = 1, estimate = 1, equation = "distribution", group = "distribution"),
+               data.table(parameter = "shape", value = 4, lower = 2.01, upper = 100, include = 1, estimate = 1, equation = "distribution", group = "distribution"),
                data.table(parameter = "lambda", value = -0.5, lower = -6, upper = 6, include = 0, estimate = 0, equation = "distribution", group = "distribution"))
   return(tmp)
  }
  if (distribution == "nig") {
   tmp <- rbind(tmp,
                data.table(parameter = "skew", value = 0.2, lower = -0.99, upper = 0.99, include = 1, estimate = 1, equation = "distribution", group = "distribution"),
-               data.table(parameter = "shape", value = 0.4, lower = 0.01, upper = 25, include = 1, estimate = 1, equation = "distribution", group = "distribution"),
+               data.table(parameter = "shape", value = 0.4, lower = 0.01, upper = 100, include = 1, estimate = 1, equation = "distribution", group = "distribution"),
                data.table(parameter = "lambda", value = -0.5, lower = -6, upper = 6, include = 0, estimate = 0, equation = "distribution", group = "distribution"))
   return(tmp)
  }
  if (distribution == "ghyp") {
   tmp <- rbind(tmp,
                data.table(parameter = "skew", value = 0.2, lower = -0.99, upper = 0.99, include = 1, estimate = 1, equation = "distribution", group = "distribution"),
-               data.table(parameter = "shape", value = 2, lower = 0.25, upper = 25, include = 1, estimate = 1, equation = "distribution", group = "distribution"),
+               data.table(parameter = "shape", value = 2, lower = 0.25, upper = 100, include = 1, estimate = 1, equation = "distribution", group = "distribution"),
                data.table(parameter = "lambda", value = -0.5, lower = -6, upper = 6, include = 1, estimate = 1, equation = "distribution", group = "distribution"))
   return(tmp)
  }
@@ -97,14 +97,14 @@ distribution_modelspec <- function(y, distribution = "norm", ...)
   # representation in rugarch
   tmp <- rbind(tmp,
                data.table(parameter = "skew", value = 0, lower = -20, upper = 20, include = 1, estimate = 1, equation = "distribution", group = "distribution"),
-               data.table(parameter = "shape", value = 1, lower = 0.1, upper = 10, include = 1, estimate = 1, equation = "distribution", group = "distribution"),
+               data.table(parameter = "shape", value = 1, lower = 0.1, upper = 100, include = 1, estimate = 1, equation = "distribution", group = "distribution"),
                data.table(parameter = "lambda", value = -0.5, lower = -6, upper = 6, include = 0, estimate = 0, equation = "distribution", group = "distribution"))
   return(tmp)
  }
  if (distribution == "ghst") {
   tmp <- rbind(tmp,
                data.table(parameter = "skew", value = 0.2, lower = -80, upper = 80, include = 1, estimate = 1, equation = "distribution", group = "distribution"),
-               data.table(parameter = "shape", value = 8.2, lower = 4.01, upper = 25, include = 1, estimate = 1, equation = "distribution", group = "distribution"),
+               data.table(parameter = "shape", value = 8.2, lower = 4.01, upper = 100, include = 1, estimate = 1, equation = "distribution", group = "distribution"),
                data.table(parameter = "lambda", value = -0.5, lower = -6, upper = 6, include = 0, estimate = 0, equation = "distribution", group = "distribution"))
   return(tmp)
  }
