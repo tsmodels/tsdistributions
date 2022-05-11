@@ -39,11 +39,10 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
       - name: Install dependencies
-        run: |
-          install.packages(c("remotes", "rcmdcheck", "devtools"))
-          devtools::install_github("tsmodels/tsmethods")
-          remotes::install_deps(dependencies = TRUE)
-          shell: Rscript {0}
+        env:
+          R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+        run: Rscript -e "install.packages(c('remotes', 'rcmdcheck'))" -e "remotes::install_deps(dependencies = TRUE)"
+        run: Rscript -e "devtools::install_github('tsmodels/tsmethods')" -e "remotes::install_deps(dependencies = TRUE)"
           
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
