@@ -41,9 +41,8 @@ jobs:
       - name: Install dependencies
         env:
           R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-        run: Rscript -e "install.packages(c('remotes', 'rcmdcheck'))" -e "remotes::install_deps(dependencies = TRUE)"
-        run: Rscript -e "devtools::install_github('tsmodels/tsmethods')" -e "remotes::install_deps(dependencies = TRUE)"
-          
+        run: Rscript -e "install.packages(c('remotes', 'rcmdcheck'))" -e "remotes::install_deps(dependencies = TRUE)" - e "devtools::install_github('tsmodels/tsmethods')"
+
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
           extra-packages: rcmdcheck
