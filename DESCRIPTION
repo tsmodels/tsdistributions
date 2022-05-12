@@ -6,7 +6,7 @@ Author: alexios galanos
 Maintainer: alexios galanos <alexios@4dscape.com>
 Depends: R (>= 3.5.0), methods, tsmethods
 LinkingTo: TMB
-Imports: TMB (>= 1.7.20), GeneralizedHyperbolic, SkewHyperbolic, graphics, stats, grDevices, utils, data.table, knitr, zoo, Rsolnp
+Imports: TMB (>= 1.7.20), GeneralizedHyperbolic, SkewHyperbolic, stats, utils, data.table, knitr, zoo, Rsolnp
 Description: A numbers of reparameterized distributions in mean, variance space with full functionality (p,q,r,d) and estimation using automatic differentiation.
 License: GPL-2 | file LICENSE
 Encoding: UTF-8
