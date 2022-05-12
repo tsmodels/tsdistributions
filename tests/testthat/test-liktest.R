@@ -94,7 +94,7 @@ test_that("jsu", {
  pars <- coef(mod)
  rx <- (r - pars[1])/pars[2]
  test_llh <- sum(-log(ddist(dist, rx, mu = 0, sigma = 1, skew = pars[3], shape = pars[4])/pars[2]))
- expect_equal(round(mod$llh,2), round(test_llh,2))
+ expect_equal(round(mod$llh,1), round(test_llh,1))
 })
 
 test_that("ghst", {

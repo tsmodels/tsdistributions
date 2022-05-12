@@ -1945,23 +1945,25 @@ validate_bounds <- function(distribution, sigma = 1, skew = 0.2, shape = 5, lamb
 #' @export
 #'
 authorized_domain <- function(distribution, max_kurt = 30, n = 25, lambda = 1) {
+  parameter <- NULL
   valid_d <- c("nig","ghyp","jsu","sstd","ghst")
   distribution <- match.arg(distribution[1], valid_d)
   di <- skdomain_bounds(distribution)
   k <- seq(5, max_kurt, length = n)
   dpars <- c(di[parameter == "skew"]$value, di[parameter == "shape"]$value)
+  # sstd skew = 1 is equivalent to zero skewness
   skew_min <- switch(distribution, "jsu" = 0, "nig" = 0, "sstd" = 1, "ghyp" = 0, "ghst" = 0)
   if (distribution == "ghyp") {
     maxkurt <- dkurtosis(distribution, skew = skew_min, shape = di[parameter == "shape"]$upper, lambda = lambda)
-    f = function(x, kurt, xlambda){
+    f1 <- function(x, kurt, xlambda){
       -dskewness(distribution, skew = x[1], shape = x[2], lambda = xlambda)
     }
-    fin = function(x, kurt, xlambda){
+    fin1 <- function(x, kurt, xlambda){
       dkurtosis(distribution, skew = x[1], shape = x[2], lambda = xlambda) + 3 - maxkurt - kurt
     }
     pars <- matrix(NA, ncol = 4, nrow = n)
     for (i in 1:length(k)) {
-      sol <- try(solnp(pars = dpars, fun = f, eqfun = fin, eqB = 0, LB = c(di[parameter == "skew"]$lower, di[parameter == "shape"]$lower),
+      sol <- try(solnp(pars = dpars, fun = f1, eqfun = fin1, eqB = 0, LB = c(di[parameter == "skew"]$lower, di[parameter == "shape"]$lower),
                    UB = c(di[parameter == "skew"]$upper, di[parameter == "shape"]$upper), 
                    control = list(trace = 0, outer.iter = 25), kurt = k[i], xlambda = lambda), silent = TRUE)
       if (inherits(sol, 'try-error')) {
@@ -1984,15 +1986,15 @@ authorized_domain <- function(distribution, max_kurt = 30, n = 25, lambda = 1) {
                            3 + dkurtosis(distribution, 0,  di[parameter == "shape"]$upper, lambda = lambda)), ncol = 4), pars)
   } else {
     maxkurt <- dkurtosis(distribution, skew = skew_min, shape = di[parameter == "shape"]$upper)
-    f <- function(x, kurt){
+    f2 <- function(x, kurt){
       -dskewness(distribution, skew = x[1], shape = x[2])
     }
-    fin <- function(x, kurt){
+    fin2 <- function(x, kurt){
       dkurtosis(distribution, skew = x[1], shape = x[2]) + 3 - maxkurt - kurt
     }
     pars <- matrix(NA, ncol = 4, nrow = n)
     for (i in 1:length(k)) {
-      sol <- try(solnp(pars = dpars, fun = f, eqfun = fin, eqB = 0, LB = c(di[parameter == "skew"]$lower, di[parameter == "shape"]$lower),
+      sol <- try(solnp(pars = dpars, fun = f2, eqfun = fin2, eqB = 0, LB = c(di[parameter == "skew"]$lower, di[parameter == "shape"]$lower),
                    UB = c(di[parameter == "skew"]$upper, di[parameter == "shape"]$upper), 
                    control = list(trace = 0, outer.iter = 25), kurt = k[i]), silent = TRUE)
       if (inherits(sol, 'try-error')) {
