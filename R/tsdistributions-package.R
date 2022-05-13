@@ -1,7 +1,6 @@
 #' @rawNamespace useDynLib(tsdistributions, .registration=TRUE); useDynLib(tsdistributions_TMBExports)
 #' @keywords internal
 #' @importFrom TMB MakeADFun
-#' @importFrom stats nlminb na.omit
 #' @import data.table
 #' @import methods
 #' @importFrom zoo coredata
@@ -9,7 +8,7 @@
 #' @importFrom SkewHyperbolic pskewhyp qskewhyp
 #' @importFrom GeneralizedHyperbolic ghypMom
 #' @importFrom Rsolnp solnp
-#' @importFrom stats dnorm integrate optim pnorm qnorm rnorm runif sd uniroot spline
+#' @importFrom stats dnorm integrate optim pnorm qnorm rnorm runif sd uniroot spline nlminb na.omit coef logLik
 #' @importFrom utils tail
 #' @import tsmethods
 "_PACKAGE"
