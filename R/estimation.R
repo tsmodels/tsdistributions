@@ -55,8 +55,8 @@ estimate.tsdistribution.spec <- function(object, solver = "nlminb", control = li
     names(par_list) <- parmatrix$parameter
     object$parmatrix <- parmatrix
     loglik <- fun$fn(pars)
-    gradient <- spec_list$grad_fun(pars, fun, tsdistenv)
-    hessian <- spec_list$hess_fun(pars, fun, tsdistenv)
+    gradient <- fun$gr(pars)
+    hessian <- fun$he(pars)
     names(pars) <- tsdistenv$estimation_names
     colnames(gradient) <- tsdistenv$estimation_names
     colnames(hessian) <- rownames(hessian) <- tsdistenv$estimation_names
