@@ -17,14 +17,23 @@ summary.tsdistribution.estimate <- function(object, digits = 4, vcov_type = "H",
 {
     value <- NULL
     estimate <- NULL
-    V <- vcov(object, type = vcov_type)
-    est <- object$parmatrix[estimate == 1]$value
-    par_names <- object$parmatrix[estimate == 1]$parameters
-    se <- sqrt(diag(V))
-    tval <- est/se
-    coefficients <- cbind(Estimate = est, `Std. Error` = se,`t value` = tval, `Pr(>|t|)` = 2*(1 - pnorm(abs(tval))))
     n_obs <- object$nobs
     n_parameters <- length(coef(object))
+    V <- try(vcov(object, type = vcov_type), silent = TRUE)
+    est <- object$parmatrix[estimate == 1]$value
+    if (inherits(V, 'try-error')) {
+        V <- matrix(NaN, ncol = n_parameters, nrow = n_parameters)
+        se <- rep(NaN, n_parameters)
+        tval <- rep(NaN, n_parameters)
+        pval <- rep(NaN, n_parameters)
+    } else {
+        se <- sqrt(diag(V))
+        tval <- est / se
+        pval <- 2*(1 - pnorm(abs(tval)))
+    }
+    par_names <- object$parmatrix[estimate == 1]$parameter
+    coefficients <- as.data.frame(cbind(Estimate = est, `Std. Error` = se,`t value` = tval, `Pr(>|t|)` = pval))
+    rownames(coefficients) <- par_names
     loglik <- -object$loglik
     distribution <- object$spec$distribution
     coefficients <- as.data.table(coefficients, keep.rownames = TRUE)
