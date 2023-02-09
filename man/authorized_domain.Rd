@@ -9,15 +9,15 @@ authorized_domain(distribution, max_kurt = 30, n = 25, lambda = 1)
 \arguments{
 \item{distribution}{a valid distribution with skew and shape parameters.}
 
-\item{max_kurt}{the maximum kurtosis for which to determine the bounds for 
+\item{max_kurt}{the maximum kurtosis for which to determine the bounds for
 the skewness-kurtosis domain.}
 
-\item{n}{the number of points between the lower and upper bounds of the 
-skew and shape parameters for which to evaluate the skewness and excess kurtosis. 
-This determines the kurtosis interval (3 - max_kurt) for which to 
+\item{n}{the number of points between the lower and upper bounds of the
+skew and shape parameters for which to evaluate the skewness and excess kurtosis.
+This determines the kurtosis interval (3 - max_kurt) for which to
 calculate (solver based) the maximum skewness.}
 
-\item{lambda}{additional shape parameter determining subfamilies of the ghyp 
+\item{lambda}{additional shape parameter determining subfamilies of the ghyp
 distribution.}
 }
 \value{

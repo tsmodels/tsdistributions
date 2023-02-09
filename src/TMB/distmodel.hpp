@@ -14,15 +14,20 @@ Type distmodel(objective_function<Type>* obj) {
     PARAMETER(skew);
     PARAMETER(shape);
     PARAMETER(lambda);
-    const int n = y.size();
+    Type nll = 0.0;
+    int n = y.size();
+    vector<Type> llh_vec(n);
+    llh_vec.setZero();
     vector<Type> z = (y.array() - mu) * (Type(1.0)/sigma);
     REPORT(z);
-    vector<Type> llh_vec = distfun::distlike(z, skew, shape, lambda, dclass);
+    llh_vec = distfun::distlike(z, skew, shape, lambda, dclass);
     // scale to avoid problems in estimation
     llh_vec = llh_vec.array()/sigma;
     REPORT(llh_vec);
-    Type llh = llh_vec.log().sum();
-    return(llh);
+    vector<Type> tmp = llh_vec.array().log();
+    REPORT(tmp);
+    nll += Type(-1.0) * tmp.array().sum();
+    return(nll);
 }
 
 #undef TMB_OBJECTIVE_PTR

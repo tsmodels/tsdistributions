@@ -5,12 +5,14 @@
 \alias{summary}
 \title{Summary of estimated distribution}
 \usage{
-\method{summary}{tsdistribution.estimate}(object, digits = 4, ...)
+\method{summary}{tsdistribution.estimate}(object, digits = 4, vcov_type = "H", ...)
 }
 \arguments{
 \item{object}{an object of class tsdistribution.estimate.}
 
 \item{digits}{the number of significant digits to use when printing,.}
+
+\item{vcov_type}{the type of standard errors based on the vcov estimate (see \code{\link{vcov}}).}
 
 \item{...}{additional parameters passed to the summary method.}
 }

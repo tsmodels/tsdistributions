@@ -4,11 +4,12 @@
 #' @import data.table
 #' @import methods
 #' @importFrom zoo coredata
-#' @importFrom knitr kable
 #' @importFrom SkewHyperbolic pskewhyp qskewhyp
 #' @importFrom GeneralizedHyperbolic ghypMom
 #' @importFrom Rsolnp solnp
-#' @importFrom stats dnorm integrate optim pnorm qnorm rnorm runif sd uniroot spline nlminb na.omit coef logLik
+#' @importFrom sandwich estfun bwNeweyWest vcovHAC vcovOPG bread
+#' @importFrom numDeriv jacobian
+#' @importFrom stats dnorm integrate optim pnorm qnorm rnorm runif sd uniroot spline nlminb na.omit coef logLik printCoefmat ar lm logLik vcov AIC BIC
 #' @importFrom utils tail
 #' @import tsmethods
 "_PACKAGE"

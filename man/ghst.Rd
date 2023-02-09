@@ -51,12 +51,12 @@ qsghst(
 \item{p}{vector of probabilities.}
 }
 \value{
-d gives the density, p gives the distribution function, q gives the quantile function 
-and r generates random deviates. Output depends on x or q length, or n for the random number 
+d gives the density, p gives the distribution function, q gives the quantile function
+and r generates random deviates. Output depends on x or q length, or n for the random number
 generator
 }
 \description{
-Density, distribution, quantile function and random number 
-generation for the location scale invariant parameterization of the 
+Density, distribution, quantile function and random number
+generation for the location scale invariant parameterization of the
 generalized hyperbolic student distribution.
 }

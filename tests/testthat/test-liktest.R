@@ -6,7 +6,7 @@ test_that("norm", {
  pars <- coef(mod)
  rx <- (r - pars[1])/pars[2]
  test_llh <- sum(-log(ddist(dist, rx, mu = 0, sigma = 1)/pars[2]))
-  expect_equal(mod$llh, test_llh)
+  expect_equal(mod$loglik, test_llh)
 })
 
 test_that("std", {
@@ -17,7 +17,7 @@ test_that("std", {
  pars <- coef(mod)
  rx <- (r - pars[1])/pars[2]
  test_llh <- sum(-log(ddist(dist, rx, mu = 0, sigma = 1, shape = pars[3])/pars[2]))
- expect_equal(mod$llh, test_llh)
+ expect_equal(mod$loglik, test_llh)
 })
 
 test_that("ged", {
@@ -28,7 +28,7 @@ test_that("ged", {
  pars <- coef(mod)
  rx <- (r - pars[1])/pars[2]
  test_llh <- sum(-log(ddist(dist, rx, mu = 0, sigma = 1, shape = pars[3])/pars[2]))
- expect_equal(mod$llh, test_llh)
+ expect_equal(mod$loglik, test_llh)
 })
 
 test_that("ged", {
@@ -39,7 +39,7 @@ test_that("ged", {
  pars <- coef(mod)
  rx <- (r - pars[1])/pars[2]
  test_llh <- sum(-log(ddist(dist, rx, mu = 0, sigma = 1, shape = pars[3])/pars[2]))
- expect_equal(mod$llh, test_llh)
+ expect_equal(mod$loglik, test_llh)
 })
 
 test_that("snorm", {
@@ -50,7 +50,7 @@ test_that("snorm", {
  pars <- coef(mod)
  rx <- (r - pars[1])/pars[2]
  test_llh <- sum(-log(ddist(dist, rx, mu = 0, sigma = 1, skew = pars[3])/pars[2]))
- expect_equal(mod$llh, test_llh)
+ expect_equal(mod$loglik, test_llh)
 })
 
 test_that("sged", {
@@ -61,7 +61,7 @@ test_that("sged", {
  pars <- coef(mod)
  rx <- (r - pars[1])/pars[2]
  test_llh <- sum(-log(ddist(dist, rx, mu = 0, sigma = 1, skew = pars[3], shape = pars[4])/pars[2]))
- expect_equal(mod$llh, test_llh)
+ expect_equal(mod$loglik, test_llh)
 })
 
 test_that("sstd", {
@@ -72,7 +72,7 @@ test_that("sstd", {
  pars <- coef(mod)
  rx <- (r - pars[1])/pars[2]
  test_llh <- sum(-log(ddist(dist, rx, mu = 0, sigma = 1, skew = pars[3], shape = pars[4])/pars[2]))
- expect_equal(mod$llh, test_llh)
+ expect_equal(mod$loglik, test_llh)
 })
 
 test_that("nig", {
@@ -83,7 +83,7 @@ test_that("nig", {
  pars <- coef(mod)
  rx <- (r - pars[1])/pars[2]
  test_llh <- sum(-log(ddist(dist, rx, mu = 0, sigma = 1, skew = pars[3], shape = pars[4])/pars[2]))
- expect_equal(mod$llh, test_llh)
+ expect_equal(mod$loglik, test_llh)
 })
 
 test_that("jsu", {
@@ -94,7 +94,7 @@ test_that("jsu", {
  pars <- coef(mod)
  rx <- (r - pars[1])/pars[2]
  test_llh <- sum(-log(ddist(dist, rx, mu = 0, sigma = 1, skew = pars[3], shape = pars[4])/pars[2]))
- expect_equal(round(mod$llh,1), round(test_llh,1))
+ expect_equal(round(mod$loglik,1), round(test_llh,1))
 })
 
 test_that("ghst", {
@@ -105,7 +105,7 @@ test_that("ghst", {
  pars <- coef(mod)
  rx <- (r - pars[1])/pars[2]
  test_llh <- sum(-log(ddist(dist, rx, mu = 0, sigma = 1, skew = pars[3], shape = pars[4])/pars[2]))
- expect_equal(mod$llh, test_llh)
+ expect_equal(mod$loglik, test_llh)
 })
 
 test_that("ghyp", {
@@ -116,5 +116,5 @@ test_that("ghyp", {
  pars <- coef(mod)
  rx <- (r - pars[1])/pars[2]
  test_llh <- sum(-log(ddist(dist, rx, mu = 0, sigma = 1, skew = pars[3], shape = pars[4], lambda = pars[5])/pars[2]))
- expect_equal(mod$llh, test_llh)
+ expect_equal(mod$loglik, test_llh)
 })

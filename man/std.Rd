@@ -33,12 +33,12 @@ rstd(n, mu = 0, sigma = 1, shape = 5)
 \item{n}{number of observations.}
 }
 \value{
-d gives the density, p gives the distribution function, q gives the quantile function 
-and r generates random deviates. Output depends on x or q length, or n for the random number 
+d gives the density, p gives the distribution function, q gives the quantile function
+and r generates random deviates. Output depends on x or q length, or n for the random number
 generator
 }
 \description{
-Density, distribution, quantile function and random number 
-generation for the location scale invariant parameterization of the 
+Density, distribution, quantile function and random number
+generation for the location scale invariant parameterization of the
 student distribution.
 }

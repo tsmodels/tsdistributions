@@ -24,6 +24,14 @@ namespace distfun{
     }
     VECTORIZE2_tt(besselK2)
 
+    template<class Type>
+    Type signbranch(Type x, Type u){
+     Type inequality_case = CppAD::CondExpLt(x, Type(0.0), Type(1.0)/u, u);
+     Type out = CppAD::CondExpEq(x, Type(0.0), Type(1.0), inequality_case);
+     return out;
+    }
+    VECTORIZE1_t(signbranch)
+    
     template <class Type>
     Type mygammafn(Type x)
     {
@@ -83,8 +91,7 @@ namespace distfun{
         Type mu = m1 * (skew - Type(1.0)/skew);
         Type sigma = sqrt((Type(1.0) - m1 * m1) * (skew * skew + Type(1.0)/(skew * skew)) + Type(2.0) * m1 * m1 - Type(1.0));
         Type z = x * sigma + mu;
-        Type xxi_tmp = CppAD::CondExpLt(z, Type(0.0), Type(1.0)/skew, skew);
-        Type xxi = CppAD::CondExpEq(z, Type(0.0), Type(1.0), xxi_tmp);
+        Type xxi = signbranch(z, skew);
         Type g = Type(2.0)/(skew+Type(1.0)/skew);
         Type pdf = g * dstudent_std(z/xxi,shape,0) * sigma;
         if(give_log == 1) pdf = log(pdf);
@@ -113,8 +120,7 @@ namespace distfun{
         Type m12 = m1 * m1;
         Type sigma = sqrt((Type(1.0) - m12)*(skew2 + Type(1.0)/skew2) + Type(2.0) * m12 - Type(1.0));
         Type z = x*sigma + mu;
-        Type xxi_tmp = CppAD::CondExpLt(z, Type(0.0), Type(1.0)/skew, skew);
-        Type xxi = CppAD::CondExpEq(z, Type(0.0), Type(1.0), xxi_tmp);
+        Type xxi = signbranch(z, skew);
         Type g = Type(2.0)/(skew + Type(1.0)/skew);
         Type pdf = g * dged_std(z/xxi, shape, 0) * sigma;
         if(give_log == 1) pdf = log(pdf);
@@ -131,9 +137,10 @@ namespace distfun{
         Type mu = m1*(skew-Type(1.0)/skew);
         Type sigma = sqrt((Type(1.0)-m12) * (xi2 + Type(1.0)/xi2) + Type(2.0) * m12 - Type(1.0));
         Type z = x*sigma+mu;
-        Type xxi = CppAD::CondExpLt(z, Type(0.0), Type(1.0)/skew, skew);
+        Type xxi = signbranch(z, skew);
         Type g = Type(2.0)/(skew + Type(1.0)/skew);
-        Type pdf = g * dnorm(z/xxi,Type(0), Type(1.0), 0) * sigma;
+        Type tmp = z/xxi;
+        Type pdf = g * dnorm_std(tmp, 0) * sigma;
         if(give_log == 1) pdf = log(pdf);
         return pdf;
     }

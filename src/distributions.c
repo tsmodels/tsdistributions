@@ -641,7 +641,13 @@ double dsnormstd(const double x, const double xi)
 	mu = m1*(xi-1.0/xi);
 	sigma = sqrt((1-m12)*(xi2+1.0/xi2)+2*m12-1);
 	z = x*sigma+mu;
-	xxi = (z<0)? 1.0/xi : xi;
+	xxi = xi;
+	if(z == 0.0){
+	 xxi = 1.0;
+	}
+	if(z < 0.0) {
+	 xxi = 1.0/xi;
+	}
 	g = 2.0/(xi + 1.0/xi);
 	pdf = g * dnormstd(z/xxi)*sigma;
 	return pdf;

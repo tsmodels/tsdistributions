@@ -16,7 +16,7 @@ dkurtosis(distribution = "norm", skew = 1, shape = 5, lambda = -0.5)
 
 \item{shape}{shape parameter.}
 
-\item{lambda}{additional shape parameter determining subfamilies of the ghyp 
+\item{lambda}{additional shape parameter determining subfamilies of the ghyp
 distribution.}
 }
 \value{

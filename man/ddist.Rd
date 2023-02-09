@@ -65,7 +65,7 @@ rdist(
 
 \item{shape}{shape parameter.}
 
-\item{lambda}{additional shape parameter determining subfamilies of the ghyp 
+\item{lambda}{additional shape parameter determining subfamilies of the ghyp
 distribution.}
 
 \item{log}{(logical) if TRUE, probabilities p are given as log(p).}
@@ -77,12 +77,12 @@ distribution.}
 \item{n}{number of observations.}
 }
 \value{
-d gives the density, p gives the distribution function, q gives the quantile function 
-and r generates random deviates. Output depends on x or q length, or n for the random number 
+d gives the density, p gives the distribution function, q gives the quantile function
+and r generates random deviates. Output depends on x or q length, or n for the random number
 generator
 }
 \description{
-Density, distribution, quantile function and random number 
-generation for the location scale invariant parameterization of all 
+Density, distribution, quantile function and random number
+generation for the location scale invariant parameterization of all
 the distributions in the package.
 }
