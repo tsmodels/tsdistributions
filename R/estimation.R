@@ -90,9 +90,9 @@ tsdistribution_tmb <- function(object, use_hessian = FALSE, silent = TRUE)
         if (inherits(llh, 'try-error')) {
             llh <- llh + 0.2 * abs(llh)
         } else if (is.na(llh) | !is.finite(llh)) {
-            llh <- llh + 0.2 * abs(llh)
+            llh <- abs(tsdistenv$nll) + 0.2 * abs(tsdistenv$nll)
         }
-        tsdistenv$llh <- llh
+        tsdistenv$nll <- llh
         return(llh)
     }
  
