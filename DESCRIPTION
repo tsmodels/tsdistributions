@@ -1,11 +1,11 @@
 Package: tsdistributions
 Type: Package
 Title: Univariate Standardized Distributions
-Version: 0.2.0
+Version: 0.3.0
 Author: alexios galanos
 Maintainer: alexios galanos <alexios@4dscape.com>
 Depends: R (>= 3.5.0), methods, tsmethods
-LinkingTo: TMB
+LinkingTo: TMB, RcppEigen
 Imports: TMB (>= 1.7.20), GeneralizedHyperbolic, SkewHyperbolic, stats, utils, data.table, zoo, Rsolnp, numDeriv, sandwich
 Description: A numbers of reparameterized distributions in mean, variance space with full functionality (p,q,r,d) and estimation using automatic differentiation.
 License: GPL-2 | file LICENSE
