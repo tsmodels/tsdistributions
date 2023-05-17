@@ -22,4 +22,23 @@ knitr::opts_chunk$set(
 
 # tsdistributions
 A number of location-scale invariant distributions with full d,p,q,r methods 
-and autodiff (TMB) backed estimation.
+and autodiff (TMB) backed estimation. These distributions are parameterized in
+terms of the mean, standard deviation, skew and shape, with the GHYP distribution 
+having 2 shape parameters.
+
+The currently implemented distributions are shown below.
+
+
+```{r,echo = FALSE,warning=FALSE,message=FALSE}
+library(data.table)
+references <- c("")
+tab <- data.table(Distribution = c("Normal","Student","GED","Skew-Normal","Skew-Student","Skew-GED","Normal Inverse Gaussian","Generalized Hyperbolic",
+                                   "Johnson's SU","Generalized Hyperbolic Skew Student"),
+                  Function = c("norm","std","ged","snorm","sstd","sged","nig","ghyp","jsu","ghst"),
+                  Parameters = c(2,3,3,3,4,4,4,5,4,4),
+                  Notes = c(""," ","","Fernandez & Steel","Fernandez & Steel","Fernandez & Steel","Barndorff-Nielsen","Barndorff-Nielsen",
+                            "Johnson","Aas & Haff")
+                  )
+tab <- knitr::kable(tab, format = "pipe", align = c("l","c","r"))
+tab
+```
