@@ -14,7 +14,7 @@ with the GHYP distribution having 2 shape parameters.
 The currently implemented distributions are shown below.
 
 | Distribution                        | Function | Parameters | Notes             |
-|:------------------------------------|:--------:|-----------:|:------------------|
+|:------------------------------------|:--------:|-----------:|------------------:|
 | Normal                              |   norm   |          2 |                   |
 | Student                             |   std    |          3 |                   |
 | GED                                 |   ged    |          3 |                   |
