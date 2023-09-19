@@ -1575,7 +1575,7 @@ rdist <- function(distribution = "norm", n, mu = 0, sigma = 1, skew = 1, shape =
 
 #' Distribution skewness and kurtosis
 #'
-#' @description Calculates the skewness and kurtosis of the distribution given
+#' @description Calculates the skewness and excess kurtosis of the distribution given
 #' a set of parameters.
 #' @param distribution a valid distribution.
 #' @param skew skew parameter.

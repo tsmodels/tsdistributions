@@ -15,7 +15,7 @@
 \value{
 The function computes and returns a vector of the first four 
 moments of the distribution based on the estimated parameters. The kurtosis
-always represents the value in excesss of 3.
+always represents the value in excess of 3.
 }
 \description{
 Extract the moments of an estimated distribution

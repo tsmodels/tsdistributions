@@ -23,6 +23,6 @@ distribution.}
 A numeric value.
 }
 \description{
-Calculates the skewness and kurtosis of the distribution given
+Calculates the skewness and excess kurtosis of the distribution given
 a set of parameters.
 }

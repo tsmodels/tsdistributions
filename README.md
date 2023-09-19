@@ -1,6 +1,6 @@
 
 [![R-CMD-check](https://github.com/tsmodels/tsdistributions/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tsmodels/tsdistributions/actions/workflows/R-CMD-check.yaml)
-[![Last-changedate](https://img.shields.io/badge/last%20change-2023--08--18-yellowgreen.svg)](/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2023--09--18-yellowgreen.svg)](/commits/master)
 [![packageversion](https://img.shields.io/badge/Package%20version-0.3.1-orange.svg?style=flat-square)](commits/master)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/tsdistributions)](https://cran.r-project.org/package=tsdistributions)
 
@@ -14,7 +14,7 @@ with the GHYP distribution having 2 shape parameters.
 The currently implemented distributions are shown below.
 
 | Distribution                        | Function | Parameters | Notes             |
-|:------------------------------------|:--------:|-----------:|------------------:|
+|:------------------------------------|:--------:|-----------:|:------------------|
 | Normal                              |   norm   |          2 |                   |
 | Student                             |   std    |          3 |                   |
 | GED                                 |   ged    |          3 |                   |

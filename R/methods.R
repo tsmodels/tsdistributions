@@ -154,7 +154,7 @@ coef.tsdistribution.estimate <- function(object, ...)
 #' @param ... other arguments.
 #' @return The function computes and returns a vector of the first four 
 #' moments of the distribution based on the estimated parameters. The kurtosis
-#' always represents the value in excesss of 3.
+#' always represents the value in excess of 3.
 #' @method tsmoments tsdistribution.estimate
 #' @aliases tsmoments
 #' @rdname tsmoments
