@@ -1,3 +1,9 @@
+2023-09-18 Alexios Galanos <alexios$4dscape.com>
+	* DESCRIPTION (Version): version is 0.3.1
+    * Fix to Fernandez and Steel skewed distributions quantile function
+    (qsnorm, qsged and qsstd). 
+    * Added additional unit tests.
+
 2023-02-18 Alexios Galanos <alexios$4dscape.com>
 	* DESCRIPTION (Version): version is 0.2.0
 	* Fix to snorm distribution (dsnorm) for cases when variable z == 0. Other skewed 

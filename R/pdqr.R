@@ -151,7 +151,8 @@ qsghst <- function(p, mu = 0, sigma = 1, skew = 1, shape = 8, lower_tail = TRUE,
     beta <- param[3] / sigma
     nu <- param[4]
     ans <- qskewhyp(p, mu = mu, delta = delta, beta = beta, nu = nu,
-                    lower.tail = lower_tail, log.p = log, method = c("spline","integrate")[1])
+                    lower.tail = lower_tail, log.p = log, method = c("spline","integrate")[1], 
+                    nInterpol = 1000)
     return(ans)
 }
 
@@ -306,7 +307,7 @@ dged <- function(x, mu = 0, sigma = 1, shape = 2, log = FALSE)
 
 #' @rdname ged
 #' @export
-pged <- function(q, mu = 0, sigma = 1, shape = 2, lower_tail = TRUE, log = TRUE)
+pged <- function(q, mu = 0, sigma = 1, shape = 2, lower_tail = TRUE, log = FALSE)
 {
     value_len <- c(length(q), length(mu), length(sigma), length(shape))
     max_n <- max(value_len)

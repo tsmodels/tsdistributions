@@ -18,11 +18,19 @@ double dnormstd(const double x)
   if(pdf == 0.0) pdf = 0.0 + 2.22507e-24;
   return pdf;
 }
+
 double signum(const double x)
 {
 	double res=-(x<0)+(x>0);
 	return  res;
 }
+
+double signump(const double x)
+{
+    double res = (x >= 0)? 1.0 : -1.0;
+    return  res;
+}
+
 double dhuge(void)
 {
   return HUGE_VAL;
@@ -487,10 +495,10 @@ double qsstd(const double p, const double xi, const double nu)
 	double mu = m1*(xi-1.0/xi);
 	double sigma =  sqrt((1-m1*m1)*(xi*xi+1/(xi*xi)) + 2*m1*m1 - 1);
 	double g = 2.0 / (xi + 1.0/xi);
-	double z = p-0.5;
-	double Xi = (z<0)?1.0/xi:xi;
-	double tmp = (heaviside(z, 0) - signum(z)*p)/(g*Xi);
-	double q = (-signum(z)*qstd(tmp, 0, 1, nu)*Xi - mu)/sigma;
+	double z = p - (1/(1 + xi * xi));
+	double Xi = pow(xi, signum(z));
+	double tmp = (heaviside(z, 0) - signum(z) * p)/(g*Xi);
+	double q = (-signum(z) * qstd(tmp, 0, 1, nu) * Xi - mu)/sigma;
 	return( q );
 }
 
@@ -669,7 +677,7 @@ double psnorm(const double q, const double mu, const double sigma, const double 
 	double m1 = 2.0/sqrt(2*PI);
 	double mux = m1 * (xi - 1.0/xi);
 	double sig = sqrt((1.0-m1*m1)*(xi*xi+1.0/(xi*xi)) + 2.0*m1*m1 - 1.0);
-	double z = qx*sig + mux;
+	double z = qx * sig + mux;
 	double Xi = (z<0)?1.0/xi:xi;
 	double g = 2.0/(xi + 1.0/xi);
 	double p = heaviside(z, 0) - signum(z) * g * Xi * pnorm(-fabs(z)/Xi, 0, 1, 1, 0);
@@ -691,10 +699,10 @@ double qsnorm(const double p, const double xi)
 	double mu = m1 * (xi - 1.0/xi);
 	double sigma = sqrt((1.0-m1*m1)*(xi*xi+1.0/(xi*xi)) + 2.0*m1*m1 - 1.0);
 	double g = 2.0/(xi + 1.0/xi);
-	double z = p-0.5;
-	double Xi = (z<0)?1.0/xi:xi;
+	double z = p - (1/(1 + xi * xi));
+	double Xi = pow(xi, signum(z));
 	double tmp = (heaviside(z, 0) - signum(z) * p)/ (g* Xi);
-	double q = (-1.0*signum(z)*qnorm(tmp, 0, Xi, 1, 0) - mu)/sigma;
+	double q = (-1.0 * signum(z)*qnorm(tmp, 0, Xi, 1, 0) - mu)/sigma;
 	return( q );
 }
 
@@ -884,10 +892,10 @@ double qsged(const double p, const double xi, const double nu)
 	double mu = m1*(xi-1.0/xi);
 	double sigma =  sqrt((1.0-m1*m1)*(xi*xi+1/(xi*xi)) + 2.0*m1*m1 - 1);
 	double g = 2.0/(xi + 1.0/xi);
-	double z = p - 0.5;
-	double Xi = (z<0)?1.0/xi:xi;
+	double z = p - (1/(1 + xi * xi));
+	double Xi = pow(xi, signum(z));
 	double q = (heaviside(z, 0) - signum(z) * p)/ (g* Xi);
-	q = (-signum(z)*qged(q, nu)*Xi - mu)/sigma;
+	q = (-signum(z) * qged(q, nu)*Xi - mu)/sigma;
 	return( q );
 }
 

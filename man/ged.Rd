@@ -9,7 +9,7 @@
 \usage{
 dged(x, mu = 0, sigma = 1, shape = 2, log = FALSE)
 
-pged(q, mu = 0, sigma = 1, shape = 2, lower_tail = TRUE, log = TRUE)
+pged(q, mu = 0, sigma = 1, shape = 2, lower_tail = TRUE, log = FALSE)
 
 qged(p, mu = 0, sigma = 1, shape = 2, lower_tail = TRUE, log = FALSE)
 
