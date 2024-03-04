@@ -835,7 +835,7 @@ double dsgedstd(const double x, const double xi, const double nu)
 	double lambda, m1, mu, sigma, z, g, pdf, xxi;
 	xxi=xi;
 	lambda = sqrt(pow(1.0/2.0,(2/nu))*gammafn( 1.0/nu )/gammafn( 3.0/nu));
-	g = nu/(lambda*(pow(2.0,1.0+(1.0/nu)))*gammafn( 1.0/nu));
+	//g = nu/(lambda*(pow(2.0,1.0+(1.0/nu)))*gammafn( 1.0/nu));
 	m1 = pow(2.0, (1.0/nu))*lambda*gammafn(2.0/nu)/gammafn(1.0/nu);
 	mu = m1*(xi-1.0/xi);
 	sigma = (1 - pow(m1,2.0))*(pow(xi,2.0)+1.0/(pow(xi,2.0))) + 2.0*(pow(m1,2))-1.0;

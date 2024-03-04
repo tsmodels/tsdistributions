@@ -4,8 +4,7 @@
 #' @param x an object of class \dQuote{tsdistribution.estimate}.
 #' @param ... not currently used.
 #' @return The score matrix
-#' @details The function returns the scores of likelihood at the optimal solution
-#' which is calculated using the Jacobian function from numDeriv package.
+#' @details The function returns the scores of likelihood at the optimal solution.
 #' @method estfun tsdistribution.estimate
 #' @aliases estfun
 #' @rdname estfun

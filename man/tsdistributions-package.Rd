@@ -8,4 +8,12 @@
 \description{
 A numbers of reparameterized distributions in mean, variance space with full functionality (p,q,r,d) and estimation using automatic differentiation.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://www.nopredict.com/packages/tsdistributions}
+  \item \url{https://github.com/tsmodels/tsdistributions}
+}
+
+}
 \keyword{internal}

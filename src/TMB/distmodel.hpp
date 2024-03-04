@@ -8,6 +8,7 @@
 template<class Type>
 Type distmodel(objective_function<Type>* obj) {
     DATA_VECTOR(y); // data vector
+    DATA_UPDATE(y); // data vector
     DATA_INTEGER(dclass);
     PARAMETER(mu);
     PARAMETER(sigma);

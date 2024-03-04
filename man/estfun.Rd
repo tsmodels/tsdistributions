@@ -19,8 +19,7 @@ The score matrix
 Score Method
 }
 \details{
-The function returns the scores of likelihood at the optimal solution
-which is calculated using the Jacobian function from numDeriv package.
+The function returns the scores of likelihood at the optimal solution.
 }
 \author{
 Alexios Galanos

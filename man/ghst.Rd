@@ -46,7 +46,7 @@ qsghst(
 
 \item{n}{Number of observations.}
 
-\item{lower_tail}{if TRUE (default), probabilities are P[X ≤ x] otherwise, P[X > x].}
+\item{lower_tail}{if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.}
 
 \item{p}{vector of probabilities.}
 }

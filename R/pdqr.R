@@ -29,7 +29,7 @@
 #' @param skew skew parameter.
 #' @param shape shape parameter.
 #' @param log (logical) if TRUE, probabilities p are given as log(p).
-#' @param lower_tail if TRUE (default), probabilities are P[X ≤ x] otherwise, P[X > x].
+#' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
 #' @return d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
 #' generator
@@ -168,7 +168,7 @@ qsghst <- function(p, mu = 0, sigma = 1, skew = 1, shape = 8, lower_tail = TRUE,
 #' @param sigma standard deviation.
 #' @param skew skew parameter.
 #' @param log (logical) if TRUE, probabilities p are given as log(p).
-#' @param lower_tail if TRUE (default), probabilities are P[X ≤ x] otherwise, P[X > x].
+#' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
 #' @return d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
 #' generator
@@ -276,7 +276,7 @@ rsnorm <- function(n, mu = 0, sigma = 1, skew = 1.5)
 #' @param sigma standard deviation.
 #' @param shape shape parameter.
 #' @param log (logical) if TRUE, probabilities p are given as log(p).
-#' @param lower_tail if TRUE (default), probabilities are P[X ≤ x] otherwise, P[X > x].
+#' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
 #' @return d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
 #' generator
@@ -385,7 +385,7 @@ rged <- function(n, mu = 0, sigma = 1, shape = 2)
 #' @param skew skew parameter.
 #' @param shape shape parameter.
 #' @param log (logical) if TRUE, probabilities p are given as log(p).
-#' @param lower_tail if TRUE (default), probabilities are P[X ≤ x] otherwise, P[X > x].
+#' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
 #' @return d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
 #' generator
@@ -504,7 +504,7 @@ Heaviside <- function(x, a = 0)
 #' @param sigma standard deviation.
 #' @param shape shape parameter.
 #' @param log (logical) if TRUE, probabilities p are given as log(p).
-#' @param lower_tail if TRUE (default), probabilities are P[X ≤ x] otherwise, P[X > x].
+#' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
 #' @return d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
 #' generator
@@ -613,7 +613,7 @@ rstd <- function(n, mu = 0, sigma = 1, shape = 5)
 #' @param skew skew parameter.
 #' @param shape shape parameter.
 #' @param log (logical) if TRUE, probabilities p are given as log(p).
-#' @param lower_tail if TRUE (default), probabilities are P[X ≤ x] otherwise, P[X > x].
+#' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
 #' @return d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
 #' generator
@@ -979,7 +979,7 @@ rgh <- function(n, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
 #' @param lambda additional shape parameter determining subfamilies of this
 #' distributions.
 #' @param log (logical) if TRUE, probabilities p are given as log(p).
-#' @param lower_tail if TRUE (default), probabilities are P[X ≤ x] otherwise, P[X > x].
+#' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
 #' @return d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
 #' generator
@@ -1189,7 +1189,7 @@ rnig <- function(n, alpha = 1, beta = 0, delta = 1, mu = 0)
 #' @param skew skew parameter.
 #' @param shape shape parameter.
 #' @param log (logical) if TRUE, probabilities p are given as log(p).
-#' @param lower_tail if TRUE (default), probabilities are P[X ≤ x] otherwise, P[X > x].
+#' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
 #' @return d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
 #' generator
@@ -1277,7 +1277,7 @@ rsnig <- function(n, mu = 0, sigma = 1, skew = 0, shape = 1)
 #' @param skew skew parameter.
 #' @param shape shape parameter.
 #' @param log (logical) if TRUE, probabilities p are given as log(p).
-#' @param lower_tail if TRUE (default), probabilities are P[X ≤ x] otherwise, P[X > x].
+#' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
 #' @return d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
 #' generator
@@ -1488,7 +1488,7 @@ ghyptransform <- function(mu = 0, sigma = 1,  skew = 0, shape = 3, lambda = -0.5
 #' @param lambda additional shape parameter determining subfamilies of the ghyp
 #' distribution.
 #' @param log (logical) if TRUE, probabilities p are given as log(p).
-#' @param lower_tail if TRUE (default), probabilities are P[X ≤ x] otherwise, P[X > x].
+#' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
 #' @return d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
 #' generator
@@ -1818,7 +1818,6 @@ dkurtosis <- function(distribution = "norm", skew = 1, shape = 5, lambda = -0.5)
         my2 <- 1 + 3 * lda^2
         my3 <- 16 * cx * lda * (1 + lda^2) * ((eta - 2)^2) / ((eta - 1) * (eta - 3))
         my4 <- 3 * (eta - 2) * (1 + 10 * lda^2 + 5 * lda^4) / (eta - 4)
-        m3 <- (my3 - 3 * a * my2 + 2 * a^3) / (b^3)
         m4 <- -3 + (my4 - 4 * a * my3 + 6 * (a^2) * my2 - 3 * a^4) / (b^4)
     } else {
         m4 <- NA

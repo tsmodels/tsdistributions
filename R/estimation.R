@@ -60,13 +60,14 @@ estimate.tsdistribution.spec <- function(object, solver = "nlminb", control = li
     names(pars) <- tsdistenv$estimation_names
     colnames(gradient) <- tsdistenv$estimation_names
     colnames(hessian) <- rownames(hessian) <- tsdistenv$estimation_names
-    scores <- jacobian(score_function, x = pars, tmb_fun = fun)
+    scores <- score_function(object, pars, use_hessian)
     nobs <- NROW(object$target$y)
     df <- length(pars)
     out <- list(pars = pars, parmatrix = parmatrix, loglik = loglik, gradient = gradient, hessian = hessian, scores = scores, nobs = nobs, df = df, solver_out = sol, spec = object)
     class(out) <- "tsdistribution.estimate"
     return(out)
 }
+
 
 
 # convert specification to object ready for estimation using TMB
@@ -122,7 +123,20 @@ tsdistribution_tmb <- function(object, use_hessian = FALSE, silent = TRUE)
     return(out)
 }
 
-score_function <- function(x, tmb_fun)
+score_function <- function(object, pars, use_hessian)
 {
-    -1.0 * log(tmb_fun$report(par = x)$llh_vec)
+    y <- object$target$y
+    object$target$y <- y[1]
+    spec_list <- tsdistribution_tmb(object, use_hessian = use_hessian)
+    silent <- TRUE
+    fun <- try(MakeADFun(data = spec_list$data, parameters = spec_list$par_list, DLL = "tsdistributions_TMBExports", 
+                         map = spec_list$map, trace = FALSE, silent = silent), silent = FALSE)
+    m <- length(fun$par)
+    n <- length(y)
+    jac <- matrix(0, ncol = m, nrow = n)
+    for(i in 1:n){
+        fun$env$data$y <- y[i]
+        jac[i,] <- fun$gr(pars)
+    }
+    return(jac)    
 }

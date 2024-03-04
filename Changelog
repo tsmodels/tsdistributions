@@ -1,4 +1,15 @@
 2023-09-18 Alexios Galanos <alexios$4dscape.com>
+	* DESCRIPTION (Version): version is 0.3.2
+	* The Jacobian, which is used in the calculation of the QMLE and OPG
+	covariance matrix is now calculated using TMB rather than numDeriv since
+	that had problems for the ghst and ghyp distribution giving hugely erroneous
+	results. The method of calculating it loops through each data point, and
+	is rather hacky (but works). Using autodiff::jacobian directly in the
+	TMB C++ code is proving challenging.
+	* Removed numDeriv dependency
+
+
+2023-09-18 Alexios Galanos <alexios$4dscape.com>
 	* DESCRIPTION (Version): version is 0.3.1
     * Fix to Fernandez and Steel skewed distributions quantile function
     (qsnorm, qsged and qsstd). 
