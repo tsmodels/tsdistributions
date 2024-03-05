@@ -5,25 +5,17 @@ namespace distfun{
                 atomic::bessel_utils::bessel_k(x[0], x[1], 2.) )
 
     template<class Type>
-    Type besselK2(Type x, Type nu)
+    Type scaled_besselK(Type x, Type nu)
     {
-        Type ans;
-        if(CppAD::Variable(nu)) {
-            CppAD::vector<Type> tx(3);
-            tx[0] = x;
-            tx[1] = nu;
-            tx[2] = 0;
-            ans = bessel_k2(tx)[0];
-        } else {
-            CppAD::vector<Type> tx(2);
-            tx[0] = x;
-            tx[1] = nu;
-            ans = atomic::bessel_k_10(tx)[0];
-        }
+        CppAD::vector<Type> tx(3);
+        tx[0] = x;
+        tx[1] = nu;
+        tx[2] = 0;
+        Type ans = bessel_k2(tx)[0];
         return ans;
     }
-    VECTORIZE2_tt(besselK2)
-
+    VECTORIZE2_tt(scaled_besselK)
+    
     template<class Type>
     Type signbranch(Type x, Type u){
      Type inequality_case = CppAD::CondExpLt(x, Type(0.0), Type(1.0)/u, u);
@@ -150,7 +142,11 @@ namespace distfun{
     template <class Type>
     Type kappagh(Type x, Type lambda)
     {
-        Type kappa = CppAD::CondExpEq(lambda, Type(-0.5), Type(1.0)/x, ((besselK2(x, lambda + Type(1.0)) / (besselK2(x, lambda))) / x));
+        Type lambdaplus = lambda + Type(1.0);
+        Type numerator = scaled_besselK(x, lambdaplus);
+        Type denominator = scaled_besselK(x, lambda);
+        //Type kappa = CppAD::CondExpEq(lambda, Type(-0.5), Type(1.0)/x, );
+        Type kappa = (numerator/denominator)/x;
         return kappa;
     }
     VECTORIZE2_tt(kappagh)
@@ -158,7 +154,8 @@ namespace distfun{
     template <class Type>
     Type deltakappagh(Type x, Type lambda)
     {
-        Type dkappa = kappagh(x, lambda + Type(1.0)) - kappagh(x, lambda);
+        Type lambdaplus = lambda + Type(1.0);
+        Type dkappa = kappagh(x, lambdaplus) - kappagh(x, lambda);
         return dkappa;
     }
     VECTORIZE2_tt(deltakappagh)
@@ -198,7 +195,7 @@ namespace distfun{
         Type arg = sqrt(beta2 * (delta2 + xmu2));
         Type arg2 = (shape + Type(1.0))/Type(2.0);
         Type pdf = ((Type(1.0) - shape)/Type(2.0)) * log(Type(2.0)) + shape * log(delta) + arg2 * log(fabs(beta))
-            + log(besselK2(arg, arg2)) - sqrt(beta2 * (delta2 + xmu2)) + beta * xmu - lgamma(shape/Type(2.0)) - log(M_PI)/Type(2.0) - arg2 * log(delta2 + xmu2)/Type(2.0);
+            + log(scaled_besselK(arg, arg2)) - sqrt(beta2 * (delta2 + xmu2)) + beta * xmu - lgamma(shape/Type(2.0)) - log(M_PI)/Type(2.0) - arg2 * log(delta2 + xmu2)/Type(2.0);
         if(give_log == 0){
             pdf = exp(pdf);
         }
@@ -225,10 +222,10 @@ namespace distfun{
         Type arg = delta*sqrt(alpha2 - beta2);
         Type xmu = x - mu;
         Type xmu2 = xmu * xmu;
-        Type a = (lambda/Type(2.0)) * log(alpha2 - beta2) - (log(sqrt(Type(2.0) * M_PI)) + (lambda - Type(0.5)) * log(alpha) + lambda * log(delta) + log(besselK2(arg, lambda)) - arg);
+        Type a = (lambda/Type(2.0)) * log(alpha2 - beta2) - (log(sqrt(Type(2.0) * M_PI)) + (lambda - Type(0.5)) * log(alpha) + lambda * log(delta) + log(scaled_besselK(arg, lambda)) - arg);
         Type f = ((lambda - Type(0.5))/Type(2.0)) * log(delta2 + xmu2);
         arg = alpha * sqrt(delta2 + xmu2);
-        Type k = log(besselK2(arg, lambda - Type(0.5))) - arg;
+        Type k = log(scaled_besselK(arg, lambda - Type(0.5))) - arg;
         Type e = beta * xmu;
         pdf = exp(a + f + k + e);
         return pdf;
@@ -239,9 +236,8 @@ namespace distfun{
     {
         Type rho2 = Type(1.0) - skew * skew;
         Type zeta2 = shape * shape;
-        Type alpha = zeta2 * kappagh(shape, lambda)/rho2;
-        alpha = alpha * ( Type(1.0) + skew * skew * zeta2 * deltakappagh(shape, lambda)/rho2);
-        alpha = sqrt(alpha);
+        Type tmp_alpha = zeta2 * kappagh(shape, lambda)/rho2;
+        Type alpha = sqrt(tmp_alpha * ( Type(1.0) + skew * skew * zeta2 * deltakappagh(shape, lambda)/rho2));
         Type beta = alpha * skew;
         Type delta = shape / ( alpha * sqrt(rho2) );
         Type d = delta*delta;

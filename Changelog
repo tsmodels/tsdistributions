@@ -1,4 +1,13 @@
 2023-09-18 Alexios Galanos <alexios$4dscape.com>
+	* DESCRIPTION (Version): version is 0.3.3
+	* Fix to the Generalized Hyperbolic Distribution estimation code as well
+	as the scaled besselK function in the presence of fixed lambda. The fix
+	somewhat negates the speedup from the previous version when lambda is fixed,
+	but ensures correctness. To improve the speed, the bessel_k_10 function
+	from adcomp/TMB/inst/include/atomic_math.hpp need to be adjusted to allow
+	scaling and the reverse mode adjusted in the presence of this scaling.
+	
+2023-09-18 Alexios Galanos <alexios$4dscape.com>
 	* DESCRIPTION (Version): version is 0.3.2
 	* The Jacobian, which is used in the calculation of the QMLE and OPG
 	covariance matrix is now calculated using TMB rather than numDeriv since

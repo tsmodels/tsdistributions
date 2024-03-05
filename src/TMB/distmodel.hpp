@@ -16,12 +16,9 @@ Type distmodel(objective_function<Type>* obj) {
     PARAMETER(shape);
     PARAMETER(lambda);
     Type nll = 0.0;
-    int n = y.size();
-    vector<Type> llh_vec(n);
-    llh_vec.setZero();
     vector<Type> z = (y.array() - mu) * (Type(1.0)/sigma);
     REPORT(z);
-    llh_vec = distfun::distlike(z, skew, shape, lambda, dclass);
+    vector<Type>llh_vec = distfun::distlike(z, skew, shape, lambda, dclass);
     // scale to avoid problems in estimation
     llh_vec = llh_vec.array()/sigma;
     REPORT(llh_vec);

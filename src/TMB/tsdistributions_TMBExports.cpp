@@ -5,7 +5,7 @@
 #include "distfun.h"
 #include "distmodel.hpp"
 #ifndef M_PI
-#define M_PI 3.141592653589793116
+#define M_PI 3.141592653589793115998
 #endif
 
 template<class Type>
