@@ -14,7 +14,7 @@
 )
 }
 \arguments{
-\item{object}{an object of class tsdistribution.spec.}
+\item{object}{an object of class \dQuote{tsdistribution.spec}.}
 
 \item{solver}{only \dQuote{nlminb} currently supported.}
 
@@ -25,7 +25,8 @@
 \item{...}{additional parameters passed to the estimation function}
 }
 \value{
-A list of coefficients and other information.
+An object of class \dQuote{tsdistribution.estimate} with slots for 
+the estimated coefficients, gradients, scores etc.
 }
 \description{
 Estimates the parameters of a distribution using autodiff.

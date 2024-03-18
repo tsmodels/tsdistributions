@@ -1,19 +1,19 @@
 Package: tsdistributions
 Type: Package
-Title: Univariate Standardized Distributions
-Version: 0.3.3
-Author: alexios galanos
-Maintainer: alexios galanos <alexios@4dscape.com>
+Title: Location Scale Standardized Distributions
+Version: 1.0.0
+Authors@R: c(person("Alexios", "Galanos", role = c("aut", "cre","cph"), email = "alexios@4dscape.com"))
+Maintainer: Alexios Galanos <alexios@4dscape.com>
 Depends: R (>= 3.5.0), methods, tsmethods
 LinkingTo: TMB, RcppEigen
-Imports: TMB (>= 1.7.20), GeneralizedHyperbolic, SkewHyperbolic, stats, utils, data.table, zoo, Rsolnp, sandwich
-Description: A numbers of reparameterized distributions in mean, variance space with full functionality (p,q,r,d) and estimation using automatic differentiation.
+Imports: TMB (>= 1.7.20), GeneralizedHyperbolic, SkewHyperbolic, stats, utils, data.table, zoo, Rsolnp, sandwich, future.apply, future, progressr
+Description: Location-Scale based distributions parameterized in terms of mean, standard deviation, skew and shape parameters and estimation using automatic differentiation. Distributions include the Normal, Student and GED as well as their skewed variants ('Fernandez and Steel'), the 'Johnson SU', and the Generalized Hyperbolic.
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.1
+VignetteBuilder: knitr
 URL: https://www.nopredict.com/packages/tsdistributions, https://github.com/tsmodels/tsdistributions
 Suggests: 
-    testthat (>= 3.0.0)
+    knitr, rmarkdown, testthat (>= 3.0.0)
 Config/testthat/edition: 3
-Remotes: tsmodels/tsmethods

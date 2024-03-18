@@ -65,7 +65,7 @@ rdist(
 
 \item{shape}{shape parameter.}
 
-\item{lambda}{additional shape parameter determining subfamilies of the ghyp
+\item{lambda}{additional shape parameter for the Generalized Hyperbolic
 distribution.}
 
 \item{log}{(logical) if TRUE, probabilities p are given as log(p).}
@@ -83,6 +83,5 @@ generator
 }
 \description{
 Density, distribution, quantile function and random number
-generation for the location scale invariant parameterization of all
-the distributions in the package.
+generation for all the distributions in the package.
 }

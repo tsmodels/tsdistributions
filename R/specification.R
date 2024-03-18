@@ -5,8 +5,21 @@
 #' snorm (Skew Normal), std (Student), sstd (Skew Student), ged (Generalized Error),
 #' sged (Skew Generalized Error), nig (Normal Inverse Gaussian), gh (Generalized Hyperbolic),
 #' ghst (Generalized Hyperbolic Skew Student) and jsu (Johnson's SU).
+#' @details
+#' All distributions are parameterized in terms of their mean (\sQuote{mu}), standard deviation
+#' \sQuote{sigma}, skew \sQuote{skew} and shape \sQuote{shape} parameters. Additionally,
+#' for the Generalized Hyperbolic distribution, there is an extra shape parameter
+#' \dQuote{lambda} arising from the GIG mixing distribution.
+#' Parameters can be fixed post initialization by setting setting specific values
+#' to the \sQuote{value} column in the parmatrix table and setting the \sQuote{estimate}
+#' variable to 0 (instead of 1).
 #' @param ... not currently used
-#' @return An object of class tsdistribution.spec
+#' @returns An object of class \dQuote{tsdistribution.spec}
+#' @examples
+#' spec <- distribution_modelspec(rnorm(1000), distribution = "gh")
+#' # fix lambda and shape
+#' spec$parmatrix[parameter == 'lambda', value := 30]
+#' spec$parmatrix[parameter == 'lambda', estimate := 0]
 #' @export distribution_modelspec
 #' @export
 #'
@@ -85,11 +98,11 @@ distribution_modelspec <- function(y, distribution = "norm", ...)
                      data.table(parameter = "lambda", value = -0.5, lower = -6, upper = 6, include = 0, estimate = 0, equation = "distribution", group = "distribution"))
         return(tmp)
     }
-    if (distribution == "ghyp") {
+    if (distribution == "gh") {
         tmp <- rbind(tmp,
                      data.table(parameter = "skew", value = 0.2, lower = -0.99, upper = 0.99, include = 1, estimate = 1, equation = "distribution", group = "distribution"),
                     data.table(parameter = "shape", value = 2, lower = 0.25, upper = 100, include = 1, estimate = 1, equation = "distribution", group = "distribution"),
-                    data.table(parameter = "lambda", value = -0.5, lower = -6, upper = 6, include = 1, estimate = 1, equation = "distribution", group = "distribution"))
+                    data.table(parameter = "lambda", value = -0.5, lower = -30, upper = 30, include = 1, estimate = 1, equation = "distribution", group = "distribution"))
         return(tmp)
     }
     if (distribution == "jsu") {

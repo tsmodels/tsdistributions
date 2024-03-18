@@ -57,6 +57,6 @@ generator
 }
 \description{
 Density, distribution, quantile function and random number
-generation for the location scale invariant parameterization of Johnson's SU
-distribution.
+generation for Johnson's SU distribution parameterized in 
+terms of mean, standard deviation, skew and shape parameters.
 }

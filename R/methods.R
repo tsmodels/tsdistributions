@@ -4,15 +4,13 @@
 #' @param digits the number of significant digits to use when printing,.
 #' @param vcov_type the type of standard errors based on the vcov estimate (see \code{\link{vcov}}).
 #' @param ... additional parameters passed to the summary method.
-#' @return The function computes and returns a list of summary statistics of
-#' the fitted model given in object.
+#' @returns A list of summary statistics of the fitted model given in object.
 #' @method summary tsdistribution.estimate
 #' @aliases summary
-#' @rdname summary
+#' @rdname summary.tsdistribution.estimate
 #' @export
 #'
 #'
-
 summary.tsdistribution.estimate <- function(object, digits = 4, vcov_type = "H", ...)
 {
     value <- NULL
@@ -56,10 +54,10 @@ summary.tsdistribution.estimate <- function(object, digits = 4, vcov_type = "H",
 #' @param signif.stars logical. If TRUE, ‘significance stars’ are printed for each coefficient.
 #' @param table.caption an optional string for the table caption.
 #' @param ... not currently used.
-#' @return Console output of the object summary.
+#' @returns Console output of the object summary.
 #' @aliases print.summary.tsdistribution
 #' @method print summary.tsdistribution
-#' @rdname print
+#' @rdname print.summary.tsdistribution
 #' @export
 #'
 #'
@@ -98,10 +96,10 @@ print.summary.tsdistribution <- function(x, digits = max(3L, getOption("digits")
 #' @param ... not currently used.
 #' @param k the penalty per parameter to be used; the default k = 2 is the
 #' classical AIC.
-#' @return A numeric value.
+#' @returns The AIC value (scalar).
 #' @aliases AIC
 #' @method AIC tsdistribution.estimate
-#' @rdname AIC
+#' @rdname AIC.tsdistribution.estimate
 #' @export
 #'
 #'
@@ -116,10 +114,10 @@ AIC.tsdistribution.estimate <- function(object, ..., k = 2)
 #' @description Extract the BIC from an estimated model.
 #' @param object an object of class \dQuote{tsdistribution.estimate}.
 #' @param ... not currently used.
-#' @return A numeric value.
+#' @returns The BIC value (scalar).
 #' @aliases BIC
 #' @method BIC tsdistribution.estimate
-#' @rdname BIC
+#' @rdname BIC.tsdistribution.estimate
 #' @export
 #'
 #'
@@ -130,16 +128,14 @@ BIC.tsdistribution.estimate <- function(object, ...)
 }
 
 
-
 #' Extract Model Coefficients
 #'
 #' @param object an object of class tsdistribution.estimate.
 #' @param ... other arguments.
-#' @return The function computes and returns a list of summary statistics of
-#' the fitted model given in object.
+#' @returns A vector of the estimated model coefficients.
 #' @method coef tsdistribution.estimate
 #' @aliases coef
-#' @rdname coef
+#' @rdname coef.tsdistribution.estimate
 #' @export
 #'
 #'
@@ -152,33 +148,37 @@ coef.tsdistribution.estimate <- function(object, ...)
 #'
 #' @param object an object of class tsdistribution.estimate.
 #' @param ... other arguments.
-#' @return The function computes and returns a vector of the first four 
-#' moments of the distribution based on the estimated parameters. The kurtosis
-#' always represents the value in excess of 3.
+#' @returns A vector of the first four moments of the distribution based on the 
+#' estimated parameters. The kurtosis represents the value in excess of 3.
 #' @method tsmoments tsdistribution.estimate
 #' @aliases tsmoments
-#' @rdname tsmoments
+#' @rdname tsmoments.tsdistribution.estimate
 #' @export
 #'
 #'
 tsmoments.tsdistribution.estimate <- function(object, ...)
 {
-    p <- c(coef(object),0,0,0)
-    s <- dskewness(object$spec$distribution, skew = p[3], shape = p[4], lambda = p[5])
-    k <- dkurtosis(object$spec$distribution, skew = p[3], shape = p[4], lambda = p[5])
-    return(c(mu = as.numeric(p[1]), sigma = as.numeric(p[2]), skewness = s, kurtosis = k))
+    parameter = NULL
+    p <- object$parmatrix
+    s <- dskewness(object$spec$distribution, skew = p[parameter == "skew"]$value, 
+                   shape = p[parameter == "shape"]$value, lambda = p[parameter == "lambda"]$value)
+    k <- dkurtosis(object$spec$distribution,  skew = p[parameter == "skew"]$value, 
+                   shape = p[parameter == "shape"]$value, lambda = p[parameter == "lambda"]$value)
+    return(c(mu = p[parameter == "mu"]$value, 
+             sigma = p[parameter == "sigma"]$value, 
+             skewness = s, kurtosis = k))
 }
 
 #' Extract Log-Likelihood
 #'
 #' @param object an object of class tsdistribution.estimate.
 #' @param ... other arguments.
-#' @return Returns an object of class logLik. This is a number with at least 
-#' one attribute, "df" (degrees of freedom), giving the number of 
+#' @returns An object of class logLik. This is a number with at least 
+#' one attribute, \dQuote{df} (degrees of freedom), giving the number of 
 #' (estimated) parameters in the model.
 #' @method logLik tsdistribution.estimate
 #' @aliases logLik
-#' @rdname logLik
+#' @rdname logLik.tsdistribution.estimate
 #' @export
 #'
 #'
@@ -199,15 +199,15 @@ logLik.tsdistribution.estimate <- function(object, ...)
 #' to multiplication with n/(n-k) where n is the number of observations and k
 #' the number of estimated parameters.
 #' @param type valid choices are \dQuote{H} for using the analytic hessian
-#' for the bread, \dQuote{OP} for the outer product of gradients, \dQuote{QMLE}
+#' for the \sQuote{bread}, \dQuote{OP} for the outer product of gradients, \dQuote{QMLE}
 #' for the Quasi-ML sandwich estimator (Huber-White), and \dQuote{NW} for the Newey-West
 #' adjusted sandwich estimator (a HAC estimator).
 #' @param ... additional parameters passed to the Newey-West bandwidth function to
 #' determine the optimal lags.
-#' @return The variance-covariance matrix of the estimated parameters.
+#' @returns The variance-covariance matrix of the estimated parameters.
 #' @method vcov tsdistribution.estimate
 #' @aliases vcov
-#' @rdname vcov
+#' @rdname vcov.tsdistribution.estimate
 #' @export
 #'
 vcov.tsdistribution.estimate <- function(object, adjust = FALSE, type = c("H","OP","QMLE","NW"), ...)

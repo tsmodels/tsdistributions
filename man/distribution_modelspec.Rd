@@ -17,8 +17,23 @@ ghst (Generalized Hyperbolic Skew Student) and jsu (Johnson's SU).}
 \item{...}{not currently used}
 }
 \value{
-An object of class tsdistribution.spec
+An object of class \dQuote{tsdistribution.spec}
 }
 \description{
 Specification of distribution model
+}
+\details{
+All distributions are parameterized in terms of their mean (\sQuote{mu}), standard deviation
+\sQuote{sigma}, skew \sQuote{skew} and shape \sQuote{shape} parameters. Additionally,
+for the Generalized Hyperbolic distribution, there is an extra shape parameter
+\dQuote{lambda} arising from the GIG mixing distribution.
+Parameters can be fixed post initialization by setting setting specific values
+to the \sQuote{value} column in the parmatrix table and setting the \sQuote{estimate}
+variable to 0 (instead of 1).
+}
+\examples{
+spec <- distribution_modelspec(rnorm(1000), distribution = "gh")
+# fix lambda and shape
+spec$parmatrix[parameter == 'lambda', value := 30]
+spec$parmatrix[parameter == 'lambda', estimate := 0]
 }

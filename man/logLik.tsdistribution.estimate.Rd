@@ -13,8 +13,8 @@
 \item{...}{other arguments.}
 }
 \value{
-Returns an object of class logLik. This is a number with at least 
-one attribute, "df" (degrees of freedom), giving the number of 
+An object of class logLik. This is a number with at least 
+one attribute, \dQuote{df} (degrees of freedom), giving the number of 
 (estimated) parameters in the model.
 }
 \description{

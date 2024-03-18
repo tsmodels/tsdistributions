@@ -39,6 +39,6 @@ generator
 }
 \description{
 Density, distribution, quantile function and random number
-generation for the location scale invariant parameterization of the
-student distribution.
+generation for the student distribution parameterized in terms of mean,
+standard deviation and shape parameters.
 }

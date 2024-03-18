@@ -6,7 +6,7 @@ output: github_document
 version <- as.vector(read.dcf('DESCRIPTION')[, 'Version'])
 version <- gsub('-', '.', version)
 ```
- [![R-CMD-check](https://github.com/tsmodels/tsdistributions/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tsmodels/tsdistributions/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/tsmodels/tsdistributions/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tsmodels/tsdistributions/actions/workflows/R-CMD-check.yaml)
 [![Last-changedate](https://img.shields.io/badge/last%20change-`r gsub('-', '--', Sys.Date())`-yellowgreen.svg)](/commits/master)
 [![packageversion](https://img.shields.io/badge/Package%20version-`r version`-orange.svg?style=flat-square)](commits/master)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/tsdistributions)](https://cran.r-project.org/package=tsdistributions)
@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 # tsdistributions
 A number of location-scale invariant distributions with full d,p,q,r methods 
 and autodiff (TMB) backed estimation. These distributions are parameterized in
-terms of the mean, standard deviation, skew and shape, with the GHYP distribution 
+terms of the mean, standard deviation, skew and shape, with the GH distribution 
 having 2 shape parameters.
 
 The currently implemented distributions are shown below.
@@ -34,7 +34,7 @@ library(data.table)
 references <- c("")
 tab <- data.table(Distribution = c("Normal","Student","GED","Skew-Normal","Skew-Student","Skew-GED","Normal Inverse Gaussian","Generalized Hyperbolic",
                                    "Johnson's SU","Generalized Hyperbolic Skew Student"),
-                  Function = c("norm","std","ged","snorm","sstd","sged","nig","ghyp","jsu","ghst"),
+                  Function = c("norm","std","ged","snorm","sstd","sged","nig","gh","jsu","ghst"),
                   Parameters = c(2,3,3,3,4,4,4,5,4,4),
                   Notes = c(""," ","","Fernandez & Steel","Fernandez & Steel","Fernandez & Steel","Barndorff-Nielsen","Barndorff-Nielsen",
                             "Johnson","Aas & Haff")

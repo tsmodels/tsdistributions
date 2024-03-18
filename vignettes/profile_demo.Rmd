@@ -1,0 +1,68 @@
+---
+title: "Profile Demo"
+author: "Alexios Galanos"
+date: "`r Sys.Date()`"
+output: 
+    rmarkdown::html_vignette:
+        css: custom.css
+vignette: >
+  %\VignetteIndexEntry{Profile Demo}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The `tsprofile` method allows one to specify a model with given parameters, simulate
+data from that model under different lengths, and then estimate the parameters 
+given the simulated data, thus enabling the creation of parameter distributions
+under different size assumptions. The goal of the exercise is to understand how
+much variation under the true specified parameters we should expect given each 
+data size given the algorihtms for estimation implemented in this package.
+
+When choosing **n** paths to generate for **sizes** of [400, 800, 1000], for instance,
+we simply simulate n x max(sizes), creating a (max size) x nsim matrix **S**, 
+and then for each path (i) and size (j) we estimate S[1:j, i]. Thus the simulated
+data in size 1000 will include the simulated data for sizes 400 and 800 for each
+path (i).
+
+The demonstation code below is illustrative of how to create a specification with
+fixed parameters which can then be passed to the tsprofile method. In real world
+applications, one should set nsim quite high and the sizes guided by problem specific
+considerations. The method can take advantage of parallel functionality using the
+`future` package as well as tracing using the `progressr` package.
+
+```{r}
+library(tsdistributions)
+library(future)
+library(progressr)
+plan(list(
+    tweak(sequential),
+    tweak(multisession, workers = 1)
+))
+# tracing using the progressr package
+
+# handlers(global = TRUE)
+# handlers("progress")
+
+# set up some dummy data to establish the specification
+spec <- distribution_modelspec(rnorm(100), distribution = "std")
+# make sure to set all parameter values. The mu and sigma are otherwise defaulted
+# to the mean and standard deviation of the data input.
+spec$parmatrix[parameter %in% c("mu","sigma","shape"), value := c(0.0, 1.0, 5.0)]
+sim <- tsprofile(spec, nsim = 100, sizes = c(400, 1000, 2000), seed = 100, trace = FALSE)
+plan("sequential")
+summary(sim)
+```
+
+
+Note that inspection of the returned object should be conducted to observe whether
+any NA values are present. If the estimation was no successful for a particular 
+set of data, then NA values are returned. These are not excluded from the returned
+table, but the summary statistics table removes the NA's (na.rm) in the calculation
+of the different measures.

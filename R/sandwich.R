@@ -3,11 +3,11 @@
 #'
 #' @param x an object of class \dQuote{tsdistribution.estimate}.
 #' @param ... not currently used.
-#' @return The score matrix
+#' @returns The score matrix
 #' @details The function returns the scores of likelihood at the optimal solution.
 #' @method estfun tsdistribution.estimate
 #' @aliases estfun
-#' @rdname estfun
+#' @rdname estfun.tsdistribution.estimate
 #' @author Alexios Galanos
 #' @export
 #'
@@ -22,10 +22,10 @@ estfun.tsdistribution.estimate <- function(x, ...)
 #'
 #' @param x an object of class \dQuote{tsdistribution.estimate}.
 #' @param ... not currently used.
-#' @return The analytic hessian of the model.
+#' @returns The analytic hessian of the model.
 #' @method bread tsdistribution.estimate
 #' @aliases bread
-#' @rdname bread
+#' @rdname bread.tsdistribution.estimate
 #' @author Alexios Galanos
 #' @export
 #'

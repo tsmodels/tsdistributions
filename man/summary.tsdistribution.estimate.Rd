@@ -17,8 +17,7 @@
 \item{...}{additional parameters passed to the summary method.}
 }
 \value{
-The function computes and returns a list of summary statistics of
-the fitted model given in object.
+A list of summary statistics of the fitted model given in object.
 }
 \description{
 Summary of estimated distribution

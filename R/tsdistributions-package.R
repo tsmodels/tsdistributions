@@ -5,10 +5,13 @@
 #' @import methods
 #' @importFrom zoo coredata
 #' @importFrom SkewHyperbolic pskewhyp qskewhyp
-#' @importFrom GeneralizedHyperbolic ghypMom
+#' @importFrom GeneralizedHyperbolic ghypMom rghyp
 #' @importFrom Rsolnp solnp
 #' @importFrom sandwich estfun bwNeweyWest vcovHAC vcovOPG bread
 #' @importFrom stats dnorm integrate optim pnorm qnorm rnorm runif sd uniroot spline nlminb na.omit coef logLik printCoefmat ar lm logLik vcov AIC BIC
+#' @importFrom future.apply future_lapply
+#' @importFrom future %<-%
+#' @importFrom progressr handlers progressor
 #' @importFrom utils tail
 #' @import tsmethods
 "_PACKAGE"

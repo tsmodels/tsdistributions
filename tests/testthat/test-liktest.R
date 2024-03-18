@@ -118,8 +118,8 @@ test_that("ghst", {
  expect_equal(mod$loglik, test_llh)
 })
 
-test_that("ghyp", {
- dist <- "ghyp"
+test_that("gh", {
+ dist <- "gh"
  set.seed(1)
  r <- rdist(dist, 1000, mu = 0.1, sigma = 0.3, skew = -0.5, shape = 5, lambda = 1)
  spec <- distribution_modelspec(r, dist)

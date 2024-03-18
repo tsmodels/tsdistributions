@@ -1,0 +1,53 @@
+---
+title: "Estimation Demo"
+author: "Alexios Galanos"
+date: "`r Sys.Date()`"
+output: 
+    rmarkdown::html_vignette:
+        css: custom.css
+vignette: >
+  %\VignetteIndexEntry{Estimation Demo}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This provides a quick demo to illustrate how to specify and estimate a distribution.
+
+We'll choose the Hyperbolic distribution which is a special case of the Generalized
+Hyperbolic when $\lambda = 1$. This will allow us to show how parameters can
+be fixed pre-estimation.
+
+```{r}
+library(tsdistributions)
+# simulate data
+set.seed(101)
+sim <- rgh(3000, mu = 0, sigma = 1, skew = -0.8, shape = 4, lambda = 1)
+spec <- distribution_modelspec(sim, distribution = "gh")
+# fix lambda to value and set it to non-estimate
+spec$parmatrix[parameter == "lambda", value := 1.0]
+spec$parmatrix[parameter == "lambda", estimate := 0]
+mod <- estimate(spec, use_hessian = FALSE)
+summary(mod, vcov_type = "QMLE")
+```
+
+
+A variety of estimators are available for the standard error, and the package
+makes use of the sandwich package for the methods. The gradients, hessian and
+scores (jacobian) are calculated using autodiff making use of the framework
+provided by the [TMB](https://CRAN.R-project.org/package=TMB) package.
+
+We can also calculate the moments of the distribution using the `tsmoments` method,
+or directly call the `dskewness` and `dkurtosis` functions. Note that the kurtosis
+reported is in excess of the Normal (3.0).
+
+```{r}
+tsmoments(mod)
+```
+

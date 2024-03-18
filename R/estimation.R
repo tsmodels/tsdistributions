@@ -1,16 +1,17 @@
 #' Estimates the parameters of a distribution using autodiff.
 #'
-#' @param object an object of class tsdistribution.spec.
+#' @param object an object of class \dQuote{tsdistribution.spec}.
 #' @param solver only \dQuote{nlminb} currently supported.
 #' @param control solver control parameters.
 #' @param use_hessian whether to use the hessian in the calculation.
 #' @param ... additional parameters passed to the estimation function
-#' @return A list of coefficients and other information.
-#' @method estimate tsdistribution.spec
+#' @returns An object of class \dQuote{tsdistribution.estimate} with slots for 
+#' the estimated coefficients, gradients, scores etc.
 #' @details The estimation makes use of the TMB package for minimizing
 #' the negative of the log-likelihood using automatic differentiation.
+#' @method estimate tsdistribution.spec
 #' @aliases estimate
-#' @rdname estimate
+#' @rdname estimate.tsdistribution.spec
 #' @export
 #'
 #'
@@ -67,8 +68,6 @@ estimate.tsdistribution.spec <- function(object, solver = "nlminb", control = li
     class(out) <- "tsdistribution.estimate"
     return(out)
 }
-
-
 
 # convert specification to object ready for estimation using TMB
 tsdistribution_tmb <- function(object, use_hessian = FALSE, silent = TRUE)

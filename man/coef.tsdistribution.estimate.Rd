@@ -13,8 +13,7 @@
 \item{...}{other arguments.}
 }
 \value{
-The function computes and returns a list of summary statistics of
-the fitted model given in object.
+A vector of the estimated model coefficients.
 }
 \description{
 Extract Model Coefficients

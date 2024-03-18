@@ -2,7 +2,7 @@
 #'
 #' @details Returns the upper a lower bounds for the parameters of a distribution.
 #' @param distribution A valid distribution
-#' @return A data.table of the parameters and bounds.
+#' @returns A data.table of the parameters and their default bounds.
 #' @export
 #'
 #'
@@ -54,12 +54,12 @@ distribution_bounds <- function(distribution = "norm")
         tmp[,distribution := "nig"]
         return(tmp)
     }
-    if (distribution == "ghyp") {
+    if (distribution == "gh") {
         tmp <- rbind(tmp,
                      data.table(parameter = "skew", lower = -0.99, upper = 0.99),
                      data.table(parameter = "shape", lower = 0.25, upper = 100),
-                     data.table(parameter = "lambda", lower = -6, upper = 6))
-        tmp[,distribution := "ghyp"]
+                     data.table(parameter = "lambda", lower = -30, upper = 30))
+        tmp[,distribution := "gh"]
         return(tmp)
     }
     if (distribution == "jsu") {
@@ -92,7 +92,7 @@ distribution_class <- function(distribution)
            "ged" = 5,
            "sged" = 6,
            "nig" = 7,
-           "ghyp" = 8,
+           "gh" = 8,
            "jsu" = 9,
            "ghst" = 10
            )
@@ -100,6 +100,6 @@ distribution_class <- function(distribution)
 
 valid_distributions <- function()
 {
-    c("norm", "std", "snorm", "sstd", "ged", "sged", "nig", "ghyp", "jsu", "ghst")
+    c("norm", "std", "snorm", "sstd", "ged", "sged", "nig", "gh", "jsu", "ghst")
 }
 

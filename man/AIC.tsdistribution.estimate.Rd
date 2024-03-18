@@ -16,7 +16,7 @@
 classical AIC.}
 }
 \value{
-A numeric value.
+The AIC value (scalar).
 }
 \description{
 Extract the AIC from an estimated model.

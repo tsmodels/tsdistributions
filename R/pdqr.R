@@ -16,11 +16,11 @@
     return(c(mu, delta, beta, nu))
 }
 
-#' Skewed Generalized Hyperbolic Student Distribution
+#' Generalized Hyperbolic Skewed Student Distribution
 #'
 #' @description Density, distribution, quantile function and random number
-#' generation for the location scale invariant parameterization of the
-#' generalized hyperbolic student distribution.
+#' generation for the generalized hyperbolic skew student distribution parameterized in 
+#' terms of mean, standard deviation, skew and shape parameters.
 #' @param x,q vector of quantiles.
 #' @param p vector of probabilities.
 #' @param n Number of observations.
@@ -30,7 +30,7 @@
 #' @param shape shape parameter.
 #' @param log (logical) if TRUE, probabilities p are given as log(p).
 #' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
-#' @return d gives the density, p gives the distribution function, q gives the quantile function
+#' @returns d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
 #' generator
 #' @rdname ghst
@@ -38,7 +38,7 @@
 #'
 #'
 #'
-dsghst <- function(x, mu = 0, sigma = 1, skew = 1, shape = 8, log = FALSE)
+dghst <- function(x, mu = 0, sigma = 1, skew = 1, shape = 8, log = FALSE)
 {
     if (any(abs(skew) < 1e-12)) skew[which(abs(skew) < 1e-12)] <- 1e-12
     val_length <- c(length(x), length(mu), length(sigma), length(skew), length(shape))
@@ -64,7 +64,7 @@ dsghst <- function(x, mu = 0, sigma = 1, skew = 1, shape = 8, log = FALSE)
 #' @rdname ghst
 #' @export
 #'
-rsghst <- function(n, mu = 0, sigma = 1, skew = 1, shape = 8)
+rghst <- function(n, mu = 0, sigma = 1, skew = 1, shape = 8)
 {
     if (any(abs(skew) < 1e-12)) skew[which(abs(skew) < 1e-12)] <- 1e-12
     val_length = c(length(mu), length(sigma), length(skew), length(shape))
@@ -88,7 +88,7 @@ rsghst <- function(n, mu = 0, sigma = 1, skew = 1, shape = 8)
 #' @rdname ghst
 #' @export
 #'
-psghst <- function(q, mu = 0, sigma = 1, skew = 1, shape = 8, lower_tail = TRUE, log = FALSE)
+pghst <- function(q, mu = 0, sigma = 1, skew = 1, shape = 8, lower_tail = TRUE, log = FALSE)
 {
     if (any(abs(skew) < 1e-12)) skew[which(abs(skew) < 1e-12)] <- 1e-12
     val_length <- c(length(q), length(mu), length(sigma), length(skew), length(shape))
@@ -100,13 +100,13 @@ psghst <- function(q, mu = 0, sigma = 1, skew = 1, shape = 8, lower_tail = TRUE,
     if (val_length[5] != max_n) shape <- rep(shape[1], max_n)
     ans <- double(max_n)
     for (i in 1:max_n) {
-        ans[i] <- .psghst(q[i], mu = mu[i], sigma = sigma[i], skew = skew[i],
+        ans[i] <- .pghst(q[i], mu = mu[i], sigma = sigma[i], skew = skew[i],
                           shape = shape[i], lower_tail = lower_tail, log = log)
     }
     return(ans)
 }
 
-.psghst <- function(q, mu = 0, sigma = 1, skew = 1, shape = 8, lower_tail = TRUE, log = FALSE)
+.pghst <- function(q, mu = 0, sigma = 1, skew = 1, shape = 8, lower_tail = TRUE, log = FALSE)
 {
     param <- .paramGHST(skew, shape)
     # scale the parameters
@@ -122,7 +122,7 @@ psghst <- function(q, mu = 0, sigma = 1, skew = 1, shape = 8, lower_tail = TRUE,
 #' @rdname ghst
 #' @export
 #'
-qsghst <- function(p, mu = 0, sigma = 1, skew = 1, shape = 8, lower_tail = TRUE, log = FALSE) {
+qghst <- function(p, mu = 0, sigma = 1, skew = 1, shape = 8, lower_tail = TRUE, log = FALSE) {
     if (any(abs(skew) < 1e-12)) skew[which(abs(skew) < 1e-12)] <- 1e-12
     val_length <- c(length(p), length(mu), length(sigma), length(skew), length(shape))
     max_n <- max(val_length)
@@ -133,12 +133,12 @@ qsghst <- function(p, mu = 0, sigma = 1, skew = 1, shape = 8, lower_tail = TRUE,
     if (val_length[5] != max_n) shape <- rep(shape[1], max_n)
     ans <- double(max_n)
     for (i in 1:max_n) {
-        ans[i] <- .qsghst(p[i], mu = mu[i], sigma = sigma[i], skew = skew[i], shape = shape[i], lower_tail = lower_tail, log = log)
+        ans[i] <- .qghst(p[i], mu = mu[i], sigma = sigma[i], skew = skew[i], shape = shape[i], lower_tail = lower_tail, log = log)
     }
     return(ans)
 }
 
-.qsghst <- function(p, mu = 0, sigma = 1, skew = 1, shape = 8, lower_tail = TRUE, log = FALSE)
+.qghst <- function(p, mu = 0, sigma = 1, skew = 1, shape = 8, lower_tail = TRUE, log = FALSE)
 {
     if (!lower_tail) {
         p <- 1 - p
@@ -159,8 +159,8 @@ qsghst <- function(p, mu = 0, sigma = 1, skew = 1, shape = 8, lower_tail = TRUE,
 #' Skewed Normal Distribution of Fernandez and Steel
 #'
 #' @description Density, distribution, quantile function and random number
-#' generation for the location scale invariant parameterization of the
-#' skewed normal distribution.
+#' generation for the skewed normal distribution parameterized in 
+#' terms of mean, standard deviation and skew parameters.
 #' @param x,q vector of quantiles.
 #' @param p vector of probabilities.
 #' @param n Number of observations.
@@ -169,7 +169,7 @@ qsghst <- function(p, mu = 0, sigma = 1, skew = 1, shape = 8, lower_tail = TRUE,
 #' @param skew skew parameter.
 #' @param log (logical) if TRUE, probabilities p are given as log(p).
 #' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
-#' @return d gives the density, p gives the distribution function, q gives the quantile function
+#' @returns d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
 #' generator
 #' @rdname snorm
@@ -267,8 +267,8 @@ rsnorm <- function(n, mu = 0, sigma = 1, skew = 1.5)
 #' Generalized Error Distribution
 #'
 #' @description Density, distribution, quantile function and random number
-#' generation for the location scale invariant parameterization of the
-#' generalized error distribution.
+#' generation for the generalized error distribution parameterized in 
+#' terms of mean, standard deviation and shape parameters.
 #' @param x,q vector of quantiles.
 #' @param p vector of probabilities.
 #' @param n Number of observations.
@@ -277,7 +277,7 @@ rsnorm <- function(n, mu = 0, sigma = 1, skew = 1.5)
 #' @param shape shape parameter.
 #' @param log (logical) if TRUE, probabilities p are given as log(p).
 #' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
-#' @return d gives the density, p gives the distribution function, q gives the quantile function
+#' @returns d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
 #' generator
 #' @rdname ged
@@ -375,8 +375,8 @@ rged <- function(n, mu = 0, sigma = 1, shape = 2)
 #' Skewed Generalized Error Distribution of Fernandez and Steel
 #'
 #' @description Density, distribution, quantile function and random number
-#' generation for the location scale invariant parameterization of the
-#' skewed generalized error distribution.
+#' generation for the skewed generalized error distribution parameterized in 
+#' terms of mean, standard deviation, skew and shape parameters.
 #' @param x,q vector of quantiles.
 #' @param p vector of probabilities.
 #' @param n number of observations.
@@ -386,7 +386,7 @@ rged <- function(n, mu = 0, sigma = 1, shape = 2)
 #' @param shape shape parameter.
 #' @param log (logical) if TRUE, probabilities p are given as log(p).
 #' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
-#' @return d gives the density, p gives the distribution function, q gives the quantile function
+#' @returns d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
 #' generator
 #' @rdname sged
@@ -495,8 +495,8 @@ Heaviside <- function(x, a = 0)
 #' Student Distribution
 #'
 #' @description Density, distribution, quantile function and random number
-#' generation for the location scale invariant parameterization of the
-#' student distribution.
+#' generation for the student distribution parameterized in terms of mean,
+#' standard deviation and shape parameters.
 #' @param x,q vector of quantiles.
 #' @param p vector of probabilities.
 #' @param n number of observations.
@@ -505,7 +505,7 @@ Heaviside <- function(x, a = 0)
 #' @param shape shape parameter.
 #' @param log (logical) if TRUE, probabilities p are given as log(p).
 #' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
-#' @return d gives the density, p gives the distribution function, q gives the quantile function
+#' @returns d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
 #' generator
 #' @rdname std
@@ -603,8 +603,8 @@ rstd <- function(n, mu = 0, sigma = 1, shape = 5)
 #' Skewed Student Distribution of Fernandez and Steel
 #'
 #' @description Density, distribution, quantile function and random number
-#' generation for the location scale invariant parameterization of the
-#' skewed student distribution.
+#' generation for the skewed student distribution parameterized in 
+#' terms of mean, standard deviation, skew and shape parameters.
 #' @param x,q vector of quantiles.
 #' @param p vector of probabilities.
 #' @param mu mean.
@@ -614,7 +614,7 @@ rstd <- function(n, mu = 0, sigma = 1, shape = 5)
 #' @param shape shape parameter.
 #' @param log (logical) if TRUE, probabilities p are given as log(p).
 #' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
-#' @return d gives the density, p gives the distribution function, q gives the quantile function
+#' @returns d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
 #' generator
 #' @rdname sstd
@@ -762,92 +762,7 @@ rsstd <- function(n, mu = 0, sigma = 1, skew = 1.5, shape = 5)
     return(c(alpha = alpha, beta = beta, delta = delta, mu = mu))
 }
 
-.rgigjd <- function(n, theta)
-{
-    #	Original Version by David Scott
-    lambda <- theta[1]
-    chi <- theta[2]
-    psi <- theta[3]
-    if (chi < 0) stop("chi can not be negative")
-    if (psi < 0) stop("psi can not be negative")
-    if ((lambda >= 0) & (psi == 0)) stop("When lambda >= 0, psi must be > 0")
-    if ((lambda <= 0) & (chi == 0)) stop("When lambda <= 0, chi must be > 0")
-    if (chi == 0) stop("chi = 0, use rgamma")
-    if (psi == 0) stop("algorithm only valid for psi > 0")
-    alpha <- sqrt(psi/chi)
-    beta <- sqrt(psi*chi)
-    m <- (lambda - 1 + sqrt((lambda - 1)^2 + beta^2))/beta
-    g <- function(y) {
-        0.5 * beta * y^3 - y^2 * (0.5 * beta * m + lambda + 1) + y * ((lambda - 1) * m - 0.5 * beta) + 0.5 * beta * m
-    }
-    upper <- m
-    while (g(upper) <= 0) upper = 2 * upper
-    yM <- uniroot(g, interval = c(0, m))$root
-    yP <- uniroot(g, interval = c(m, upper))$root
-    a <- (yP - m) * (yP/m)^(0.5 * (lambda - 1)) * exp(-0.25 * beta * (yP + 1/yP - m - 1/m))
-    b <- (yM - m) * (yM/m)^(0.5 * (lambda - 1)) * exp(-0.25 * beta * (yM + 1/yM - m - 1/m))
-    c <- -0.25 * beta * (m + 1/m) + 0.5 * (lambda - 1) * log(m)
-    output <- numeric(n)
-    for (i in 1:n) {
-        need.value <- TRUE
-        while (need.value == TRUE) {
-            R1 <- runif(1)
-            R2 <- runif(1)
-            Y <- m + a * R2/R1 + b * (1 - R2)/R1
-            if (Y > 0) {
-                if (-log(R1) >= -0.5 * (lambda - 1) * log(Y) + 0.25 * beta * (Y + 1/Y) + c) {
-                    need.value <- FALSE
-                }
-            }
-        }
-        output[i] <- Y
-    }
-    return(output/alpha)
-}
-
-.rgigjd1 <- function(n, theta)
-{
-    #	Original Version by David Scott
-    if (length(theta) == 2) theta <- c(1, theta)
-    lambda <- 1
-    chi <- theta[2]
-    psi <- theta[3]
-    if (chi < 0) stop("chi can not be negative")
-    if (psi < 0) stop("psi can not be negative")
-    if (chi == 0) stop("chi = 0, use rgamma")
-    if (psi == 0) stop("When lambda >= 0, psi must be > 0")
-    alpha <- sqrt(psi/chi)
-    beta <- sqrt(psi*chi)
-    m <- abs(beta)/beta
-    g <- function(y) {
-        0.5 * beta * y^3 - y^2 * (0.5 * beta * m + lambda + 1) + y * (-0.5 * beta) + 0.5 * beta * m
-    }
-    upper <- m
-    while (g(upper) <= 0) upper <- 2 * upper
-    yM <- uniroot(g,interval = c(0, m))$root
-    yP <- uniroot(g,interval = c(m, upper))$root
-    a <- (yP - m) * exp(-0.25 * beta * (yP + 1/yP - m - 1/m))
-    b <- (yM - m) * exp(-0.25 * beta * (yM + 1/yM - m - 1/m))
-    c <- -0.25 * beta * (m + 1/m)
-    output <- numeric(n)
-    for (i in 1:n) {
-        need.value <- TRUE
-        while (need.value == TRUE) {
-            R1 <- runif(1)
-            R2 <- runif(1)
-            Y <- m + a * R2/R1 + b * (1 - R2)/R1
-            if (Y > 0) {
-                if (-log(R1) >= 0.25 * beta * (Y + 1/Y) + c) {
-                    need.value <- FALSE
-                }
-            }
-        }
-        output[i] <- Y
-    }
-    return(output/alpha)
-}
-
-dgh <- function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, log = FALSE)
+dghyp <- function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, log = FALSE)
 {
     value_len <- c(length(x), length(alpha), length(beta), length(delta), length(mu), length(lambda))
     max_n <- max(value_len)
@@ -861,7 +776,7 @@ dgh <- function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, log = FAL
     if (any(delta <= 0)) stop("delta must be greater than zero")
     if (any(abs(beta) >= alpha)) stop("abs value of beta must be less than alpha")
     ans <- double(max_n)
-    sol <- try(.C("c_dgh", x = as.double(x), alpha = as.double(alpha),
+    sol <- try(.C("c_dghyp", x = as.double(x), alpha = as.double(alpha),
                   beta = as.double(beta), delta = as.double(delta),
                   mu = as.double(mu), lambda = as.double(lambda),
                   ans = ans, n = as.integer(max_n), logr = as.integer(log),
@@ -873,7 +788,7 @@ dgh <- function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, log = FAL
     }
 }
 
-pgh <- function(q, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, lower_tail = TRUE, log = FALSE)
+pghyp <- function(q, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, lower_tail = TRUE, log = FALSE)
 {
     value_len <- c(length(q), length(alpha), length(beta), length(delta), length(mu), length(lambda))
     max_n <- max(value_len)
@@ -888,7 +803,7 @@ pgh <- function(q, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, lower_tai
     if (any(abs(beta) >= alpha)) stop("abs value of beta must be less than alpha")
     ans <- rep(NA, max_n)
     for (i in 1:max_n) {
-        Integral = integrate(dgh, -Inf, q[i], stop.on.error = FALSE, alpha = alpha[i], 
+        Integral = integrate(dghyp, -Inf, q[i], stop.on.error = FALSE, alpha = alpha[i], 
                              beta = beta[i], delta = delta[i], mu = mu[i], 
                              lambda = lambda[i])
         ans[i] = as.numeric(unlist(Integral)[1])
@@ -898,7 +813,7 @@ pgh <- function(q, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, lower_tai
     return(ans)
 }
 
-qgh <- function(p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, lower_tail = TRUE, log = FALSE)
+qghyp <- function(p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, lower_tail = TRUE, log = FALSE)
 {
     if (!lower_tail) p <- 1 - p
     value_len <- c(length(p), length(alpha), length(beta), length(delta), length(mu), length(lambda))
@@ -915,7 +830,7 @@ qgh <- function(p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, lower_tai
     # Internal Function:
     .froot <- function(x, alpha, beta, delta, mu, lambda, p)
     {
-        pgh(q = x, alpha = alpha, beta = beta, delta = delta, mu = mu, lambda = lambda) - p
+        pghyp(q = x, alpha = alpha, beta = beta, delta = delta, mu = mu, lambda = lambda) - p
     }
     # Quantiles:
     ans <- rep(NA, max_n)
@@ -939,36 +854,12 @@ qgh <- function(p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, lower_tai
 }
 
 
-rgh <- function(n, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
-{
-    value_len <- c(length(alpha), length(beta), length(delta), length(mu), length(lambda))
-    max_n <- n
-    if (value_len[1] != max_n) alpha <- rep(alpha[1], max_n)
-    if (value_len[2] != max_n) beta <- rep(beta[1], max_n)
-    if (value_len[3] != max_n) delta <- rep(delta[1], max_n)
-    if (value_len[4] != max_n) mu <- rep(mu[1], max_n)
-    if (value_len[5] != max_n) lambda <- rep(lambda[1], max_n)
-    chi <- delta^2
-    psi <- alpha^2 - beta^2
-    if (any(alpha <= 0)) stop("alpha must be greater than zero")
-    if (any(delta <= 0)) stop("delta must be greater than zero")
-    if (any(abs(beta) >= alpha)) stop("abs value of beta must be less than alpha")
-    V <- cbind(lambda, chi, psi)
-    X <- apply(V, 1, function(x){
-    ifelse(x[1] == 1,
-           .rgigjd1(1, c(x[1], x[2], x[3])), .rgigjd(1,  c(x[1], x[2], x[3])))
-    })
-    sigma <- sqrt(as.numeric(X))
-    Z <- rnorm(n)
-    Y <- mu + beta * sigma^2 + sigma * Z
-    return(Y)
-}
-
-#' (Standardized) Generalized Hyperbolic Distribution
+#' Generalized Hyperbolic Distribution
 #'
 #' @description Density, distribution, quantile function and random number
-#' generation for the location scale invariant parameterization of the
-#' standardized generalized hyperbolic distribution.
+#' generation for the generalized hyperbolic distribution parameterized in 
+#' terms of mean, standard deviation, skew and two shape parameters (shape and
+#' lambda)
 #' @param x,q vector of quantiles.
 #' @param p vector of probabilities.
 #' @param n number of observations.
@@ -983,12 +874,12 @@ rgh <- function(n, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
 #' @return d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
 #' generator
-#' @rdname sgh
+#' @rdname gh
 #' @export
 #'
 #'
 #'
-dsgh <- function(x, mu = 0, sigma = 1, skew = 0, shape = 1, lambda = 1, log = FALSE)
+dgh <- function(x, mu = 0, sigma = 1, skew = 0, shape = 1, lambda = 1, log = FALSE)
 {
     value_len <- c(length(x), length(mu), length(sigma), length(skew), length(shape), length(lambda))
     max_n <- max(value_len)
@@ -999,7 +890,7 @@ dsgh <- function(x, mu = 0, sigma = 1, skew = 0, shape = 1, lambda = 1, log = FA
     if (value_len[5] != max_n) shape <- rep(shape[1], max_n)
     if (value_len[6] != max_n) lambda <- rep(lambda[1], max_n)
     ans <- double(max_n)
-    sol = try(.C("c_dghyp", x = as.double(x), mu = as.double(mu), 
+    sol = try(.C("c_dgh", x = as.double(x), mu = as.double(mu), 
                  sigma = as.double(sigma), skew = as.double(skew), 
                  shape = as.double(shape), lambda = as.double(lambda), 
                  ans = ans, n = as.integer(max_n), logr = as.integer(log), 
@@ -1011,9 +902,9 @@ dsgh <- function(x, mu = 0, sigma = 1, skew = 0, shape = 1, lambda = 1, log = FA
     }
 }
 
-#' @rdname sgh
+#' @rdname gh
 #' @export
-psgh <- function(q, mu = 0, sigma = 1, skew = 0, shape = 1, lambda = 1, lower_tail = TRUE, log = FALSE)
+pgh <- function(q, mu = 0, sigma = 1, skew = 0, shape = 1, lambda = 1, lower_tail = TRUE, log = FALSE)
 {
     value_len <- c(length(q), length(mu), length(sigma), length(skew), length(shape), length(lambda))
     max_n <- max(value_len)
@@ -1024,14 +915,14 @@ psgh <- function(q, mu = 0, sigma = 1, skew = 0, shape = 1, lambda = 1, lower_ta
     if (value_len[5] != max_n) shape <- rep(shape[1], max_n)
     if (value_len[6] != max_n) lambda <- rep(lambda[1], max_n)
     tmp <- t(apply(cbind(skew, shape, lambda), 1, function(x) .paramGH(x[1], x[2], x[3])))
-    ans <- pgh((q - mu)/sigma, tmp[,1], tmp[,2], tmp[,3], tmp[,4], lambda, lower_tail = lower_tail, log = log)
-    # equivalent: pgh(q, alpha/sigma, beta/sigma, delta*sigma, mu*sigma+mu, lambda)
+    ans <- pghyp((q - mu)/sigma, tmp[,1], tmp[,2], tmp[,3], tmp[,4], lambda, lower_tail = lower_tail, log = log)
+    # equivalent: pghyp(q, alpha/sigma, beta/sigma, delta*sigma, mu*sigma+mu, lambda)
     return(as.numeric(ans))
 }
 
-#' @rdname sgh
+#' @rdname gh
 #' @export
-qsgh <- function(p, mu = 0, sigma = 1, skew = 0, shape = 1, lambda = 1, lower_tail = TRUE, log = FALSE)
+qgh <- function(p, mu = 0, sigma = 1, skew = 0, shape = 1, lambda = 1, lower_tail = TRUE, log = FALSE)
 {
     value_len <- c(length(p), length(mu), length(sigma), length(skew), length(shape), length(lambda))
     max_n <- max(value_len)
@@ -1042,145 +933,29 @@ qsgh <- function(p, mu = 0, sigma = 1, skew = 0, shape = 1, lambda = 1, lower_ta
     if (value_len[5] != max_n) shape <- rep(shape[1], max_n)
     if (value_len[6] != max_n) lambda <- rep(lambda[1], max_n)
     tmp <- t(apply(cbind(skew, shape, lambda), 1, function(x) .paramGH(x[1], x[2], x[3])))
-    ans <- mu + sigma * as.numeric(qgh(p, tmp[,1], tmp[,2], tmp[,3], tmp[,4], lambda, lower_tail = lower_tail, log = log))
+    ans <- mu + sigma * as.numeric(qghyp(p, tmp[,1], tmp[,2], tmp[,3], tmp[,4], lambda, lower_tail = lower_tail, log = log))
     return(ans)
 }
 
-#' @rdname sgh
+#' @rdname gh
 #' @export
-rsgh <- function(n, mu = 0, sigma = 1, skew = 0, shape = 1, lambda = 1)
+rgh <- function(n, mu = 0, sigma = 1, skew = 0, shape = 1, lambda = 1)
 {
-    value_len <- c(length(mu), length(sigma), length(skew), length(shape), length(lambda))
-    if (value_len[1] != n) mu <- rep(mu[1], n)
-    if (value_len[2] != n) sigma <- rep(sigma[1], n)
-    if (value_len[3] != n) skew <- rep(skew[1], n)
-    if (value_len[4] != n) shape <- rep(shape[1], n)
-    if (value_len[5] != n) lambda <- rep(lambda[1], n)
-    ans <- double(n)
-    sol <- try(.C("c_rghyp", n = as.integer(n), mu = as.double(mu), 
-                  sigma = as.double(sigma), skew = as.double(skew), 
-                  shape = as.double(shape), lambda = as.double(lambda), 
-                  ans = ans, PACKAGE = "tsdistributions"), silent = TRUE)
-    if (inherits(sol, 'try-error')) { 
-        return(sol)
-    } else {
-        return(sol$ans)
-    }
-}
-# ------------------------------------------------------------------------------
-# Normal Inverse Gaussian (NIG) Distribution
-# ------------------------------------------------------------------------------
-.qnigC <- function(p, alpha = 1, beta = 0, delta = 1, mu = 0, lower_tail = TRUE, log = FALSE)
-{
-    if (alpha <= 0) stop("Invalid parameters: alpha <= 0.\n")
-    if (alpha^2 <= beta^2) stop("Invalid parameters: alpha^2 <= beta^2.\n")
-    if (delta <= 0) stop("Invalid parameters: delta <= 0.\n")
-    if ((sum(is.na(p)) > 0)) { 
-        stop("Invalid probabilities:\n", p,"\n")
-    } else { 
-        if (sum(p < 0) + sum(p > 1) > 0) stop("Invalid probabilities:\n", p,"\n")
-    }
-    if (!lower_tail) p <- 1 - p
-    n <- length(p)
-    q <- rep(0, n)
-    ans <- .C("qNIG",
-              p = as.double(.CArrange(p,1,1,n)), 
-              i_mu = as.double(mu), 
-              i_delta = as.double(delta), 
-              i_alpha = as.double(alpha), 
-              i_beta = as.double(beta), 
-              i_n = as.integer(n), 
-              q = as.double(.CArrange(q, 1, 1, n)), PACKAGE = "tsdistributions")
-    ans <- ans[[7]]
-    ans[ans <= -1.78e+308] <- -Inf
-    ans[ans >= 1.78e+308] <- Inf
-    if (log) ans <- log(ans)
-    return(ans)
-}
-
-
-.CArrange <- function(obj, i, j, n)
-{
-    # Description:
-    #   Arrange input matrices and vectors in a suitable way for the C program
-    #   Matrices are transposed because the C program stores matrices by row
-    #   while R stores matrices by column
-    # Arguments:
-    #   i - length of first dimension
-    #   j - length of second dimension
-    #   n - length of third dimension
-    # Value:
-    #   out - transformed data set
-    # Author:
-    #   Daniel Berg <daniel at nr.no> (Kjersti Aas <Kjersti.Aas at nr.no>)
-    #   Date: 12 May 2005
-    #   Version: 1.0.2
-    if (is.null(obj)) stop("Missing data")
-    if (is.vector(obj)) {
-        if (i == 1 & j == 1 & length(obj) == n) {
-            out <- as.double(obj) 
-        } else {
-            stop("Unexpected length of vector")
-        } 
-    } else if (is.matrix(obj)) {
-        if (nrow(obj) == i && ncol(obj) == j) { 
-            out <- as.double(rep(t(obj), n))
-        } else {
-            stop("Unexpected dimensions of matrix")
-        }
-    } else {
-        stop("Unexpected object")
-    }
+    params <- .paramGH(rho = skew, zeta = shape, lambda = lambda)
+    out <- rghyp(n = n, mu = params[4], delta = params[3], alpha = params[1], beta = params[2], lambda = lambda)
+    out <- mu + sigma * out
     return(out)
 }
 
-dnig <- function(x, alpha = 1, beta = 0, delta = 1, mu = 0, log = FALSE)
-{
-    return(dgh(x = x, alpha = alpha, beta = beta, delta = delta, mu = mu, lambda = -0.5, 
-               log = log))
-}
+# ------------------------------------------------------------------------------
+# Normal Inverse Gaussian (NIG) Distribution
+# ------------------------------------------------------------------------------
 
-pnig <- function(q, alpha = 1, beta = 0, delta = 1, mu = 0, lower_tail = TRUE, log = FALSE)
-{
-    return(pgh(q = q, alpha = alpha, beta = beta, delta = delta, mu = mu, lambda = -0.5, 
-               lower_tail = lower_tail, log = log))
-}
-
-qnig <- function(p, alpha = 1, beta = 0, delta = 1, mu = 0, lower_tail = TRUE, log = FALSE)
-{
-    value_len <- c(length(p), length(alpha), length(beta), length(delta), length(mu))
-    max_n <- max(value_len)
-    if (value_len[1] != max_n) p <- rep(p[1], max_n)
-    if (value_len[2] != max_n) alpha <- rep(alpha[1], max_n)
-    if (value_len[3] != max_n) beta <- rep(beta[1], max_n)
-    if (value_len[4] != max_n) delta <- rep(delta[1], max_n)
-    if (value_len[5] != max_n) mu <- rep(mu[1], max_n)
-    ans <- rep(NA, max_n)
-    for (i in 1:max_n) {
-        ans[i] <- .qnigC(p = p[i], alpha = alpha[i], beta = beta[i], delta = delta[i], 
-                         mu = mu[i], lower_tail = lower_tail, log = log)
-    }
-    return(ans)
-}
-
-rnig <- function(n, alpha = 1, beta = 0, delta = 1, mu = 0)
-{
-    return(rgh(n, alpha = alpha, beta = beta, delta = delta, mu = mu, lambda = -0.5))
-}
-
-
-.qsnigC <- function(p, rho = 0, zeta = 1, lower_tail = TRUE, log = FALSE)
-{
-    param <- .paramGH(rho, zeta, lambda = -0.5) 
-    return(.qnigC(p, param[1], param[2], param[3], param[4], 
-                  lower_tail = lower_tail, log = log))
-}
-
-#' (Standardized) Normal Inverse Gaussian Distribution
+#' Normal Inverse Gaussian Distribution
 #'
 #' @description Density, distribution, quantile function and random number
-#' generation for the location scale invariant parameterization of the
-#' standardized normal inverse gaussian distribution.
+#' generation for the normal inverse gaussian distribution generalized parameterized in 
+#' terms of mean, standard deviation, skew and shape parameters.
 #' @param x,q vector of quantiles.
 #' @param p vector of probabilities.
 #' @param n number of observations.
@@ -1190,15 +965,15 @@ rnig <- function(n, alpha = 1, beta = 0, delta = 1, mu = 0)
 #' @param shape shape parameter.
 #' @param log (logical) if TRUE, probabilities p are given as log(p).
 #' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
-#' @return d gives the density, p gives the distribution function, q gives the quantile function
+#' @returns d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
 #' generator
-#' @rdname snig
+#' @rdname nig
 #' @export
 #'
 #'
 #'
-dsnig <- function(x, mu = 0, sigma = 1, skew = 0, shape = 1, log = FALSE)
+dnig <- function(x, mu = 0, sigma = 1, skew = 0, shape = 1, log = FALSE)
 {
     value_len <- c(length(x), length(mu), length(sigma), length(skew), length(shape))
     max_n <- max(value_len)
@@ -1208,7 +983,7 @@ dsnig <- function(x, mu = 0, sigma = 1, skew = 0, shape = 1, log = FALSE)
     if (value_len[4] != max_n) skew <- rep(skew[1], max_n)
     if (value_len[5] != max_n) shape <- rep(shape[1], max_n)
     ans <- double(max_n)
-    sol <- try(.C("c_dsnig", x = as.double(x), mu = as.double(mu),
+    sol <- try(.C("c_dnig", x = as.double(x), mu = as.double(mu),
                   sigma = as.double(sigma), skew = as.double(skew), 
                   shape = as.double(shape), ans = ans, n = as.integer(max_n), 
                   logr = as.integer(log), PACKAGE = "tsdistributions"), silent = TRUE)
@@ -1219,56 +994,33 @@ dsnig <- function(x, mu = 0, sigma = 1, skew = 0, shape = 1, log = FALSE)
     }
 }
 
-#' @rdname snig
+#' @rdname nig
 #' @export
-psnig <- function(q, mu = 0, sigma = 1, skew = 0, shape = 1, lower_tail = TRUE, log = FALSE)
+pnig <- function(q, mu = 0, sigma = 1, skew = 0, shape = 1, lower_tail = TRUE, log = FALSE)
 {
-    return(psgh(q, mu, sigma, skew, shape, lambda = -0.5, lower_tail = lower_tail, log = log))
+    return(pgh(q, mu, sigma, skew, shape, lambda = -0.5, lower_tail = lower_tail, log = log))
 }
 
-#' @rdname snig
+#' @rdname nig
 #' @export
-qsnig <- function(p, mu = 0, sigma = 1, skew = 0, shape = 1, lower_tail = TRUE, log = FALSE)
+qnig <- function(p, mu = 0, sigma = 1, skew = 0, shape = 1, lower_tail = TRUE, log = FALSE)
 {
-    value_len <- c(length(p), length(mu), length(sigma), length(skew), length(shape))
-    max_n <- max(value_len)
-    if (value_len[1] != max_n) p <- rep(p[1], max_n)
-    if (value_len[2] != max_n) mu <- rep(mu[1], max_n)
-    if (value_len[3] != max_n) sigma <- rep(sigma[1], max_n)
-    if (value_len[4] != max_n) skew <- rep(skew[1], max_n)
-    if (value_len[5] != max_n) shape <- rep(shape[1], max_n)
-    ans <- double(max_n)
-    for (i in 1:max_n) {
-        ans[i] <- mu[i] + sigma[i]*.qsnigC(p[i], rho = skew[i], zeta = shape[i], lower_tail = lower_tail, log = log)
-    }
-    return(ans)
+    return(qgh(p, mu, sigma, skew, shape, lambda = -0.5, lower_tail = lower_tail, log = log))
 }
 
-#' @rdname snig
+#' @rdname nig
 #' @export
-rsnig <- function(n, mu = 0, sigma = 1, skew = 0, shape = 1)
+rnig <- function(n, mu = 0, sigma = 1, skew = 0, shape = 1)
 {
-    value_len <- c(length(mu), length(sigma), length(skew), length(shape))
-    if (value_len[1] != n) mu <- rep(mu[1], n)
-    if (value_len[2] != n) sigma <- rep(sigma[1], n)
-    if (value_len[3] != n) skew <- rep(skew[1], n)
-    if (value_len[4] != n) shape <- rep(shape[1], n)
-    ans <- double(n)
-    sol <- try(.C("c_rsnig", n = as.integer(n), mu = as.double(mu), 
-                  sigma = as.double(sigma), skew = as.double(skew), 
-                  shape = as.double(shape), 
-                  ans = ans, PACKAGE = "tsdistributions"), silent = TRUE)
-    if (inherits(sol, 'try-error')) {
-        return(sol)
-    } else {
-        return(sol$ans)
-    }
+    return(rgh(n, mu, sigma, skew, shape, lambda = -0.5))
 }
+
+
 #' Johnson's SU Distribution
 #'
 #' @description Density, distribution, quantile function and random number
-#' generation for the location scale invariant parameterization of Johnson's SU
-#' distribution.
+#' generation for Johnson's SU distribution parameterized in 
+#' terms of mean, standard deviation, skew and shape parameters.
 #' @param x,q vector of quantiles.
 #' @param p vector of probabilities.
 #' @param n number of observations.
@@ -1278,7 +1030,7 @@ rsnig <- function(n, mu = 0, sigma = 1, skew = 0, shape = 1)
 #' @param shape shape parameter.
 #' @param log (logical) if TRUE, probabilities p are given as log(p).
 #' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
-#' @return d gives the density, p gives the distribution function, q gives the quantile function
+#' @returns d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
 #' generator
 #' @rdname jsu
@@ -1447,13 +1199,14 @@ rjsu <- function(n, mu = 0, sigma = 1, skew = 1, shape = 0.5)
 
 #' Parameter Transformation
 #' @description Transforms parameters from standardized representation to distribution
-#' specific representation for the nig and ghyp distributions.
+#' specific representation for the nig and gh distributions.
 #' @param mu mean.
 #' @param sigma standard deviation.
 #' @param skew skew parameter.
 #' @param shape shape parameter.
-#' @param lambda additional shape parameter of the ghyp distribution.
-#' @return The (alpha, beta, delta, mu) representation.
+#' @param lambda additional shape parameter for the Generalized Hyperbolic
+#' distribution.
+#' @returns The (alpha, beta, delta, mu) representation.
 #' @rdname ghyptransform
 #' @export
 #'
@@ -1475,8 +1228,7 @@ ghyptransform <- function(mu = 0, sigma = 1,  skew = 0, shape = 3, lambda = -0.5
 #' Distributions pqdr wrapper
 #'
 #' @description Density, distribution, quantile function and random number
-#' generation for the location scale invariant parameterization of all
-#' the distributions in the package.
+#' generation for all the distributions in the package.
 #' @param distribution a valid distribution.
 #' @param x,q vector of quantiles.
 #' @param p vector of probabilities.
@@ -1485,11 +1237,11 @@ ghyptransform <- function(mu = 0, sigma = 1,  skew = 0, shape = 3, lambda = -0.5
 #' @param sigma standard deviation.
 #' @param skew skew parameter.
 #' @param shape  shape parameter.
-#' @param lambda additional shape parameter determining subfamilies of the ghyp
+#' @param lambda additional shape parameter for the Generalized Hyperbolic
 #' distribution.
 #' @param log (logical) if TRUE, probabilities p are given as log(p).
 #' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
-#' @return d gives the density, p gives the distribution function, q gives the quantile function
+#' @returns d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
 #' generator
 #' @rdname ddist
@@ -1505,10 +1257,10 @@ ddist <- function(distribution = "norm", x, mu = 0, sigma = 1, skew = 1, shape =
                   "sstd" = dsstd(x, mu = mu, sigma = sigma, skew = skew, shape = shape, log = log), 
                   "ged" = dged(x, mu = mu, sigma = sigma, shape = shape, log = log), 
                   "sged" = dsged(x, mu = mu, sigma = sigma, skew = skew, shape = shape, log = log),
-                  "nig" = dsnig((x - mu)/sigma, skew = skew, shape = shape, log = log)/sigma, 
-                  "ghyp" = dsgh((x - mu)/sigma, skew = skew, shape = shape, lambda = lambda, log = log)/sigma, 
+                  "nig" = dnig(x, mu = mu, sigma = sigma, skew = skew, shape = shape, log = log), 
+                  "gh" = dgh(x, mu = mu, sigma = sigma, skew = skew, shape = shape, lambda = lambda, log = log), 
                   "jsu" = djsu(x, mu = mu, sigma = sigma, skew = skew, shape = shape, log = log), 
-                  "ghst" = dsghst(x, mu = mu, sigma = sigma, skew = skew, shape = shape, log = log)
+                  "ghst" = dghst(x, mu = mu, sigma = sigma, skew = skew, shape = shape, log = log)
                   )
     return(ans)
 }
@@ -1525,10 +1277,10 @@ pdist <- function(distribution = "norm", q, mu = 0, sigma = 1, skew = 1, shape =
                   "sstd" = psstd(q, mu = mu, sigma = sigma, skew = skew, shape = shape, lower_tail = lower_tail, log = log), 
                   "ged" = pged(q, mu = mu, sigma = sigma, shape = shape, lower_tail = lower_tail, log = log), 
                   "sged" = psged(q, mu = mu, sigma = sigma, skew = skew, shape = shape, lower_tail = lower_tail, log = log), 
-                  "nig" = psnig((q - mu)/sigma, skew = skew, shape = shape, lower_tail = lower_tail, log = log), 
-                  "ghyp" = psgh((q - mu)/sigma, skew = skew, shape = shape, lambda = lambda, lower_tail = lower_tail, log = log), 
+                  "nig" = pnig(q, mu = mu, sigma = sigma, skew = skew, shape = shape, lower_tail = lower_tail, log = log), 
+                  "gh" = pgh(q, mu = mu, sigma = sigma, skew = skew, shape = shape, lambda = lambda, lower_tail = lower_tail, log = log), 
                   "jsu" = pjsu(q, mu = mu, sigma = sigma, skew = skew, shape = shape, lower_tail = lower_tail, log = log), 
-                  "ghst" = psghst(q, mu = mu, sigma = sigma, skew = skew, shape = shape, lower_tail = lower_tail, log = log)
+                  "ghst" = pghst(q, mu = mu, sigma = sigma, skew = skew, shape = shape, lower_tail = lower_tail, log = log)
                   )
     return(ans)
 }
@@ -1545,10 +1297,10 @@ qdist <- function(distribution = "norm", p, mu = 0, sigma = 1, skew = 1, shape =
                   "sstd" = qsstd(p, mu = mu, sigma = sigma, skew = skew, shape = shape, lower_tail = lower_tail, log = log), 
                   "ged" = qged(p, mu = mu, sigma = sigma, shape = shape, lower_tail = lower_tail, log = log), 
                   "sged" = qsged(p, mu = mu, sigma = sigma, skew = skew, shape = shape, lower_tail = lower_tail, log = log),
-                  "nig" = qsnig(p, skew = skew, shape = shape, lower_tail = lower_tail, log = log) * sigma + mu, 
-                  "ghyp" = qsgh(p, skew = skew, shape = shape, lambda = lambda, lower_tail = lower_tail, log = log) * sigma + mu, 
+                  "nig" = qnig(p, mu = mu, sigma = sigma, skew = skew, shape = shape, lower_tail = lower_tail, log = log), 
+                  "gh" = qgh(p, mu = mu, sigma = sigma, skew = skew, shape = shape, lambda = lambda, lower_tail = lower_tail, log = log), 
                   "jsu" = qjsu(p, mu = mu, sigma = sigma, skew = skew, shape = shape, lower_tail = lower_tail, log = log), 
-                  "ghst" = qsghst(p, mu = mu, sigma = sigma, skew = skew, shape = shape, lower_tail = lower_tail, log = log),
+                  "ghst" = qghst(p, mu = mu, sigma = sigma, skew = skew, shape = shape, lower_tail = lower_tail, log = log),
                   )
     return(ans)
 }
@@ -1565,495 +1317,10 @@ rdist <- function(distribution = "norm", n, mu = 0, sigma = 1, skew = 1, shape =
                   "sstd" = rsstd(n, mu = mu, sigma = sigma, skew = skew, shape = shape), 
                   "ged" = rged(n, mu = mu, sigma = sigma, shape = shape), 
                   "sged" = rsged(n, mu = mu, sigma = sigma, skew = skew, shape = shape), 
-                  "nig" =  mu + sigma * rsnig(n, skew = skew, shape = shape), 
-                  "ghyp" = mu + sigma * rsgh(n, skew = skew, shape = shape, lambda = lambda), 
+                  "nig" =  rnig(n, mu = mu, sigma = sigma, skew = skew, shape = shape), 
+                  "gh" = rgh(n, mu = mu, sigma = sigma, skew = skew, shape = shape, lambda = lambda), 
                   "jsu" = rjsu(n, mu = mu, sigma = sigma, skew = skew, shape = shape), 
-                  "ghst" = rsghst(n, mu = mu, sigma = sigma, skew = skew, shape = shape)
+                  "ghst" = rghst(n, mu = mu, sigma = sigma, skew = skew, shape = shape)
                   )
     return(ans)
-}
-
-#' Distribution skewness and kurtosis
-#'
-#' @description Calculates the skewness and excess kurtosis of the distribution given
-#' a set of parameters.
-#' @param distribution a valid distribution.
-#' @param skew skew parameter.
-#' @param shape  shape parameter.
-#' @param lambda additional shape parameter determining subfamilies of the ghyp
-#' distribution.
-#' @return A numeric value.
-#' @rdname dskewness
-#' @export
-#'
-dskewness <- function(distribution = "norm", skew = 1, shape = 5, lambda = -0.5)
-{
-    distribution <- match.arg(distribution[1], valid_distributions())
-    f <- Vectorize(.dskewness)
-    ans <- f(distribution, skew, shape, lambda)
-    if (NCOL(ans) == 1) ans <- as.numeric(ans)
-    return(ans)
-}
-
-.dskewness <- function(distribution = "norm", skew = 1, shape = 5, lambda = -0.5)
-{
-    ans <- switch(distribution,
-                  "norm" = 0, 
-                  "snorm" = .snormskew(skew = skew), 
-                  "std" = 0,
-                  "sstd" = .sstdskew(skew = skew, shape = shape), 
-                  "ged" = 0, 
-                  "sged" = .sgedskew(skew = skew, shape = shape), 
-                  "nig" = .snigskew(skew = skew, shape = shape),
-                  "ghyp" = .sghypskew(skew = skew, shape = shape, lambda = lambda), 
-                  "jsu" = .jsuskew(skew = skew, shape = shape), 
-                  "ghst" = .ghstskew(skew, shape)
-                  )
-    return(as.numeric(ans))
-}
-
-#' @rdname dskewness
-#' @export
-dkurtosis <- function(distribution = "norm", skew = 1, shape = 5, lambda = -0.5)
-{
-    distribution <- match.arg(distribution[1], valid_distributions())
-    f <- Vectorize(.dkurtosis)
-    ans <- f(distribution, skew, shape, lambda)
-    if (NCOL(ans) == 1) ans <- as.numeric(ans)
-    return(ans)
-}
-
-.dkurtosis <- function(distribution = "norm", skew = 1, shape = 5, lambda = -0.5)
-{
-    ans <- switch(distribution, 
-                  "norm" = 0, 
-                  "snorm" = 0, 
-                  "std" = .stdexkurt(shape = shape), 
-                  "sstd" = .sstdexkurt(skew = skew, shape = shape), 
-                  "ged" = .gedexkurt(shape = shape), 
-                  "sged" = .sgedexkurt(skew = skew, shape = shape), 
-                  "nig" = .snigexkurt(skew = skew, shape = shape), 
-                  "ghyp" = .sghypexkurt(skew = skew, shape = shape, lambda = lambda), 
-                  "jsu" = .jsuexkurt(skew = skew, shape = shape), 
-                  "ghst" = .ghstexkurt(skew, shape)
-                  )
-    return(as.numeric(ans))
-}
-
-
-# NIG Moments
-.nigmu <- function(alpha, beta, delta, mu){
-    gm <- sqrt(alpha^2 - beta^2)
-    ans <- mu + (delta * beta)/gm
-    return(ans)
-}
-
-.nigsigma <- function(alpha, beta, delta, mu){
-    gm <- sqrt(alpha^2 - beta^2)
-    ans <- sqrt((delta * alpha^2)/(gm^3))
-    return(ans)
-}
-
-.snigskew <- function(skew, shape){
-    fun <- function(skew, shape){
-        pars <- .paramGH(rho = skew, zeta = shape, lambda = -0.5) 
-        return(.nigskew(alpha = pars[1], beta = pars[2], delta = pars[3], mu = pars[4]))
-    }
-    f <- Vectorize(fun)
-    ans <- f(skew, shape)
-    if (NCOL(ans) == 1) ans <- as.numeric(ans)
-    return(ans)
-}
-
-.nigskew <- function(alpha, beta, delta, mu){
-    gm <- sqrt(alpha^2 - beta^2)
-    ans <- 3*beta / (alpha * sqrt(delta*gm))
-    return(ans)
-}
-
-.snigexkurt <- function(skew, shape){
-    fun <- function(skew, shape){
-        pars <- .paramGH(rho = skew, zeta = shape, lambda = -0.5) 
-        return(.nigexkurt(alpha = pars[1], beta = pars[2], delta = pars[3], mu = pars[4]))
-    }
-    f <- Vectorize(fun)
-    ans <- f(skew, shape)
-    if (NCOL(ans) == 1) ans <- as.numeric(ans)
-    return(ans)
-}
-
-.nigexkurt <- function(alpha, beta, delta, mu){
-    gm <- sqrt(alpha^2 - beta^2)
-    ans <- 3 * (1 + 4 * (beta^2) / (alpha^2)) / (delta * gm)
-    return(ans)
-}
-
-
-.ghypmu <- function(lambda, alpha, beta, delta, mu){
-    gm <- sqrt(alpha^2 - beta^2)
-    ans <- mu + (delta * beta * besselK(delta * gm, lambda + 1)) / (gm * besselK(delta * gm, lambda))
-    return(ans)
-}
-
-.ghypsigma <- function(lambda, alpha, beta, delta, mu){
-    gm <- sqrt(alpha^2 - beta^2)
-    x1 <- delta * besselK(delta * gm, lambda + 1) / (gm * besselK(delta * gm, lambda))
-    x2 <- ((beta^2 * delta^2) / (gm^2)) * ((besselK(delta * gm, lambda + 2) / besselK(delta * gm, lambda)) 
-                                           - (besselK(delta * gm, lambda + 1)^2 / besselK(delta * gm, lambda)^2))
-    ans <- sqrt(x1 + x2)
-    return(ans)
-}
-
-.sghypskew <- function(skew, shape, lambda){
-    fun <- function(skew, shape, lambda){
-        pars <- .paramGH(rho = skew, zeta = shape, lambda = lambda) 
-        return(.ghypskew(lambda = lambda, alpha = pars[1], beta = pars[2], delta = pars[3], mu = pars[4]))
-    }
-    f <- Vectorize(fun)
-    ans <- f(skew, shape, lambda)
-    if (NCOL(ans) == 1) ans <- as.numeric(ans)
-    return(ans)
-}
-
-.ghypskew <- function(lambda, alpha, beta, delta, mu){
-    skew <- ghypMom(3, lambda = lambda, alpha = alpha, beta = beta, delta = delta, mu = mu, momType = "central") / 
-        (.ghypsigma(lambda = lambda, alpha = alpha, beta = beta, delta = delta, mu = mu)^3)
-    return(skew)
-}
-
-.sghypexkurt <- function(skew, shape, lambda){
-    fun <- function(skew, shape, lambda){
-        pars <- .paramGH(rho = skew, zeta = shape, lambda = lambda) 
-        return(.ghypexkurt(lambda = lambda, alpha = pars[1], beta = pars[2], delta = pars[3], mu = pars[4]))
-    }
-    f <- Vectorize(fun)
-    ans <- f(skew, shape, lambda)
-    if (NCOL(ans) == 1) ans <- as.numeric(ans)
-    return(ans)
-}
-
-.ghypexkurt <- function(lambda, alpha, beta, delta, mu){
-    kurt <- ghypMom(4, lambda = lambda, alpha = alpha, beta = beta, delta = delta, mu = mu, momType = "central") / 
-        (.ghypsigma(lambda = lambda, alpha = alpha, beta = beta, delta = delta, mu = mu)^4) - 3
-    return(kurt)
-}
-
-.norm2snorm1 <- function(mu, sigma, skew)
-{
-    m1 <- 2 / sqrt(2 * pi)
-    ans <- mu + m1 * (skew - 1 / skew) * sigma
-    return(ans)
-}
-
-.norm2snorm2 <- function(mu, sigma, skew)
-{
-    m1 <- 2 / sqrt(2 * pi)
-    m2 <- 1
-    sigx <- sqrt((1 - m1^2) * (skew^2 + 1 / skew^2) + 2 * m1^2 - 1)
-    ans <- sigx * sigma
-    return(ans)
-}
-
-.snormskew <- function(skew)
-{
-    m1 <- 2 / sqrt(2 * pi)
-    m2 <- 1
-    m3 <- 4 / sqrt(2 * pi)
-    ans <- (skew - 1/skew) * ((m3 + 2 * m1^3 - 3 * m1 * m2) * (skew^2 + (1/skew^2)) + 3 * m1 * m2 - 4 * m1^3) / 
-        (((m2 - m1^2) * (skew^2 + 1/skew^2) + 2 * m1^2 - m2)^(3/2))
-    return(ans)
-}
-
-.snormexkurt <- function(skew)
-{
-    return(0)
-}
-
-.stdskew <- function(shape)
-{
-    return(0)
-}
-
-.stdexkurt <- function(shape)
-{
-    ans <- ifelse(shape > 4, 6 / (shape - 4), NA)
-    return(ans)
-}
-
-.sstdskew <- function(skew, shape){
-    # Theoretical moments based on bijection betweeen Fernandez and Steel versions
-    # and Hansen's Generalized Skew-T (credit due to Michael Rockinger)
-    if (shape > 2) {
-        eta <- shape
-        k2 <- skew^2
-        lda <- (k2 - 1) / (k2 + 1)
-        ep1 <- (eta + 1) / 2
-        lnc <- lgamma(ep1) - lgamma(eta/2) - 0.5*log(pi * (eta - 2))
-        cx <- exp(lnc)
-        a <- 4 * lda * cx * (eta - 2) / (eta - 1)
-        b <- sqrt(1 + 3 * lda^2 - a^2)
-        my2 <- 1 + 3 * lda^2
-        my3 <- 16 * cx * lda * (1 + lda^2) * ((eta - 2)^2) / ((eta - 1) * (eta - 3))
-        my4 <- 3 * (eta - 2) * (1 + 10 * lda^2 + 5 * lda^4) / (eta - 4)
-        m3 <- (my3 - 3 * a * my2 + 2 * a^3) / (b^3)
-    } else {
-        m3 <- NA
-    }
-    return(m3)
-}
-
-.sstdexkurt <- function(skew, shape)
-{
-    # Theoretical moments based on bijection betweeen Fernandez and Steel versions
-    # and Hansen's Generalized Skew-T (credit due to Michael Rockinger)
-    if (shape > 4) {
-        eta <- shape
-        k2 <- skew^2
-        lda <- (k2 - 1) / (k2 + 1)
-        ep1 <- (eta + 1) / 2
-        lnc <- lgamma(ep1) - lgamma(eta/2) - 0.5 * log(pi * (eta - 2))
-        cx <- exp(lnc)
-        a <- 4 * lda * cx * (eta - 2) / (eta - 1)
-        b <- sqrt(1 + 3 * lda^2 - a^2)
-        my2 <- 1 + 3 * lda^2
-        my3 <- 16 * cx * lda * (1 + lda^2) * ((eta - 2)^2) / ((eta - 1) * (eta - 3))
-        my4 <- 3 * (eta - 2) * (1 + 10 * lda^2 + 5 * lda^4) / (eta - 4)
-        m4 <- -3 + (my4 - 4 * a * my3 + 6 * (a^2) * my2 - 3 * a^4) / (b^4)
-    } else {
-        m4 <- NA
-    }
-    return(m4)
-}
-
-.gedskew <- function(shape)
-{
-    return(0)
-}
-
-.gedexkurt <- function(shape)
-{
-    ans <- (((gamma(1/shape) / gamma(3/shape))^2) * (gamma(5/shape) / gamma(1/shape))) - 3
-    return(ans)
-}
-
-.sgedskew <- function(skew, shape)
-{
-     lambda <- sqrt(2^(-2/shape) * gamma(1/shape) / gamma(3/shape))
-     m1 <- ((2^(1/shape) * lambda)^1 * gamma(2/shape) / gamma(1/shape))
-     m2 <- 1
-     m3 <- ((2^(1/shape) * lambda)^3 * gamma(4/shape) / gamma(1/shape))
-     ans <- (skew - 1/skew) * ((m3 + 2 * m1^3 - 3 * m1 * m2) * (skew^2 + (1/skew^2)) + 3 * m1 * m2 - 4 * m1^3) / 
-         (((m2 - m1^2) * (skew^2 + 1/skew^2) + 2 * m1^2 - m2)^(3/2))
-     return(ans)
-}
-
-.sgedexkurt <- function(skew, shape)
-{
-    lambda <- sqrt(2^(-2/shape) * gamma(1/shape) / gamma(3/shape))
-    m1 <- ((2^(1/shape) * lambda)^1 * gamma(2/shape) / gamma(1/shape))
-    m2 <- 1
-    m3 <- ((2^(1/shape) * lambda)^3 * gamma(4/shape) / gamma(1/shape))
-    m4 <- ((2^(1/shape) * lambda)^4 * gamma(5/shape) / gamma(1/shape))
-    cm4 <- (-3 * m1^4 * (skew - 1/skew)^4) +
-    (6 * m1^2 * (skew - 1/skew)^2 * m2 * (skew^3 + 1/skew^3)) / (skew + 1/skew) -
-    (4 * m1 * (skew - 1/skew) * m3 * (skew^4 - 1/skew^4)) / (skew + 1/skew) +
-    (m4 * (skew^5 + 1/skew^5)) / (skew + 1/skew)
-    ans <- (cm4 / (((m2 - m1^2) * (skew^2 + 1/skew^2) + 2 * m1^2 - m2) ^ 2)) - 3
-    return(ans)
-}
-
-.jsuskew <- function(mu = 0, sigma = 1, skew, shape)
-{
-    omega <- -skew / shape
-    w <- exp(shape^-2)
-    s3 <- -0.25 * sqrt(w) * ((w - 1)^2) * (w * (w + 2) * sinh(3 * omega) + 3 * sinh(omega))
-    ans <- s3 / (0.5 * (w - 1) * (w * cosh(2*omega) + 1))^(3/2)
-    return(ans)
-}
-
-.jsuexkurt <- function(mu = 0, sigma = 1, skew, shape)
-{
-    omega <- -skew / shape
-    w <- exp(shape^-2)
-    s4 <- 0.125 * (w - 1)^2 * (w^2 * (w^4 + 2 * w^3 + 3 * w^2 - 3) * cosh(4 * omega) + 
-                                   4 * w^2 * (w + 2) * cosh(2 * omega) + 3 * (2 * w + 1))
-    ans <- s4 / (0.5 * (w - 1) * (w * cosh(2 * omega) + 1))^2
-    return(ans - 3)
-}
-
-.ghstskew <- function(skew, shape)
-{
-    if (shape < 6) {
-        ans <- NA
-    } else {
-        params <- .paramGHST(nu = shape, betabar = skew)
-        delta <- params[2]
-        beta <- params[3]
-        nu <- params[4]
-        beta2 <- beta * beta
-        delta2 <- delta * delta
-        ans <- ((2 * sqrt(nu - 4) * beta * delta) / ((2 * beta2 * delta2 + (nu - 2) * (nu - 4))^(3/2))) * 
-            (3 * (nu - 2) + ((8 * beta2 * delta2)/(nu - 6)))
-    }
-    return(ans)
-}
-
-.ghstexkurt <- function(skew, shape)
-{
-    if (shape < 8) {
-        ans <- NA
-    } else {
-        params <- .paramGHST(nu = shape, betabar = skew)
-        delta <- params[2]
-        beta <- params[3]
-        nu <- params[4]
-        beta2 <- beta * beta
-        delta2 <- delta * delta
-        k1 <- 6 / ((2 * beta2 * delta2 + (nu - 2) * (nu - 4))^2)
-        k21 <- (nu - 2) * (nu - 2) * (nu - 4)
-        k22 <- (16 * beta2 * delta2 * (nu - 2) * (nu - 4)) / (nu - 6)
-        k23 <- (8 * (beta2^2) * (delta2^2) * (5 * nu - 22)) / ((nu - 6) * (nu - 8))
-        ans <- k1 * (k21 + k22 + k23)
-    }
-    return(ans)
-}
-
-validate_bounds <- function(distribution, sigma = 1, skew = 0.2, shape = 5, lambda = 1, return_table = FALSE)
-{
-    distribution <- match.arg(distribution[1], valid_distributions())
-    value <- lower <- upper <- lower_check <- upper_check <- NULL
-    p <- distribution_bounds(distribution)
-    p <- p[-which(p$parameter == "mu")]
-    newd <- data.table(parameter = c("sigma","skew","shape","lambda"), value = c(sigma, skew, shape, lambda))
-    out <- merge(p, newd, by = "parameter", all.x = T)
-    out[,lower_check := value >= lower]
-    out[,upper_check := value <= upper]
-    if (return_table) {
-        return(out)
-    } else { 
-        if (any(!out$lower_check) | any(!out$upper_check)) {
-            return(FALSE)
-        } else {
-            return(TRUE)
-        }
-    }
-}
-
-#' Distribution Authorized Domain
-#'
-#' @description Calculated the region of Skewness-Kurtosis for which a density exists.
-#' @param distribution a valid distribution with skew and shape parameters.
-#' @param max_kurt the maximum kurtosis for which to determine the bounds for
-#' the skewness-kurtosis domain.
-#' @param n  the number of points between the lower and upper bounds of the
-#' skew and shape parameters for which to evaluate the skewness and excess kurtosis.
-#' This determines the kurtosis interval (3 - max_kurt) for which to
-#' calculate (solver based) the maximum skewness.
-#' @param lambda additional shape parameter determining subfamilies of the ghyp
-#' distribution.
-#' @return A list with the lower half of the skewness and kurtosis values.
-#' @rdname authorized_domain
-#' @export
-#'
-authorized_domain <- function(distribution, max_kurt = 30, n = 25, lambda = 1) 
-{
-    parameter <- NULL
-    valid_d <- c("nig","ghyp","jsu","sstd","ghst")
-    distribution <- match.arg(distribution[1], valid_d)
-    di <- skdomain_bounds(distribution)
-    k <- seq(5, max_kurt, length = n)
-    dpars <- c(di[parameter == "skew"]$value, di[parameter == "shape"]$value)
-    # sstd skew = 1 is equivalent to zero skewness
-    skew_min <- switch(distribution, "jsu" = 0, "nig" = 0, "sstd" = 1, "ghyp" = 0, "ghst" = 0)
-    if (distribution == "ghyp") {
-        maxkurt <- dkurtosis(distribution, skew = skew_min, shape = di[parameter == "shape"]$upper, lambda = lambda)
-        f1 <- function(x, kurt, xlambda){
-          -dskewness(distribution, skew = x[1], shape = x[2], lambda = xlambda)
-        }
-        fin1 <- function(x, kurt, xlambda){
-          dkurtosis(distribution, skew = x[1], shape = x[2], lambda = xlambda) + 3 - maxkurt - kurt
-        }
-        pars <- matrix(NA, ncol = 4, nrow = n)
-        for (i in 1:length(k)) {
-            sol <- try(solnp(pars = dpars, fun = f1, eqfun = fin1, eqB = 0, LB = c(di[parameter == "skew"]$lower, di[parameter == "shape"]$lower), 
-                             UB = c(di[parameter == "skew"]$upper, di[parameter == "shape"]$upper), 
-                             control = list(trace = 0, outer.iter = 25), kurt = k[i], xlambda = lambda), silent = TRUE)
-          if (inherits(sol, 'try-error')) {
-              pars[i,1:2] <- rep(NA, 2)
-              pars[i,3] <- NA
-              pars[i,4] <- NA
-          } else {
-              if (any(is.na(sol$pars))) {
-                  pars[i,1:2] <- rep(NA, 2)
-                  pars[i,3] <- NA
-                  pars[i,4] <- NA
-            } else {
-                pars[i,1:2] <- sol$pars
-                pars[i,3] <- tail(sol$value,1)
-                pars[i,4] <- dkurtosis(distribution, skew =  sol$pars[1], shape =  sol$pars[2], lambda = lambda) + 3
-            }
-          }
-        }
-        pars <- rbind(matrix(c(0, di[parameter == "shape"]$upper, dskewness(distribution, 0,  di[parameter == "shape"]$upper, lambda = lambda), 
-                               3 + dkurtosis(distribution, 0,  di[parameter == "shape"]$upper, lambda = lambda)), ncol = 4), pars)
-    } else {
-        maxkurt <- dkurtosis(distribution, skew = skew_min, shape = di[parameter == "shape"]$upper)
-        f2 <- function(x, kurt){
-            -dskewness(distribution, skew = x[1], shape = x[2])
-        }
-        fin2 <- function(x, kurt){
-            dkurtosis(distribution, skew = x[1], shape = x[2]) + 3 - maxkurt - kurt
-        }
-        pars <- matrix(NA, ncol = 4, nrow = n)
-        for (i in 1:length(k)) {
-            sol <- try(solnp(pars = dpars, fun = f2, eqfun = fin2, eqB = 0, LB = c(di[parameter == "skew"]$lower, di[parameter == "shape"]$lower),
-                             UB = c(di[parameter == "skew"]$upper, di[parameter == "shape"]$upper),
-                             control = list(trace = 0, outer.iter = 25), kurt = k[i]), silent = TRUE)
-          if (inherits(sol, 'try-error')) {
-              pars[i,1:2] <- rep(NA, 2)
-              pars[i,3] <- NA
-              pars[i,4] <- NA
-          } else {
-            if (any(is.na(sol$pars))) {
-                pars[i,1:2] <- rep(NA, 2)
-                pars[i,3] <- NA
-                pars[i,4] <- NA
-            } else {
-                pars[i,1:2] <- sol$pars
-                pars[i,3] <- tail(sol$value,1)
-                pars[i,4] <- dkurtosis(distribution, skew =  sol$pars[1], shape =  sol$pars[2]) + 3
-            }
-          }
-        }
-        pars <- rbind(matrix(c(0, di[parameter == "shape"]$upper, 
-                               dskewness(distribution, skew_min,  di[parameter == "shape"]$upper), 
-                               3 + dkurtosis(distribution, skew_min,  di[parameter == "shape"]$upper)), ncol = 4), 
-                      pars)
-    }
-    ans <- spline(pars[,4], pars[,3], method = "fmm")
-    return(list(Skewness = ans$y, Kurtosis = ans$x, pars = pars[,1:2]))
-}
-
-# valid bounds for the existence of a fourth moment
-skdomain_bounds <- function(distribution)
-{
-    parameter <- NULL
-    d <- distribution_bounds(distribution)
-    if (distribution == "sstd") {
-        out <- rbind(data.table(parameter = "skew", lower = 1, upper = 60, value = 1.1), 
-                     data.table(parameter = "shape", lower = 4.01, upper = 300, value = 4.05))
-    } else if (distribution == "nig") {
-        out <- rbind(data.table(parameter = "skew", lower = 0.05, upper = d[parameter == "skew"]$upper, value = 0.1), 
-                     data.table(parameter = "shape", lower = d[parameter == "shape"]$lower, upper = d[parameter == "shape"]$upper, value = 0.5))
-    } else if (distribution == "ghst") {
-        out <- rbind(data.table(parameter = "skew", lower = 0.1, upper = d[parameter == "skew"]$upper, value = 0.2), 
-                     data.table(parameter = "shape", lower = 8.01, upper = d[parameter == "shape"]$upper, value = 8.1))
-    } else if (distribution == "ghyp") {
-        out <- rbind(data.table(parameter = "skew", lower = 0.05, upper = d[parameter == "skew"]$upper, value = 0.1), 
-                     data.table(parameter = "shape", lower = d[parameter == "shape"]$lower, upper = d[parameter == "shape"]$upper, value = 0.5))
-    } else if (distribution == "jsu") {
-        out <- rbind(data.table(parameter = "skew", lower = 0.05, upper = d[parameter == "skew"]$upper, value = 0.1), 
-                     data.table(parameter = "shape", lower = 0.1, upper = d[parameter == "shape"]$upper, value = 0.5))
-    }
-    return(out)
 }

@@ -18,12 +18,13 @@ ghyptransform(mu = 0, sigma = 1, skew = 0, shape = 3, lambda = -0.5)
 
 \item{shape}{shape parameter.}
 
-\item{lambda}{additional shape parameter of the ghyp distribution.}
+\item{lambda}{additional shape parameter for the Generalized Hyperbolic
+distribution.}
 }
 \value{
 The (alpha, beta, delta, mu) representation.
 }
 \description{
 Transforms parameters from standardized representation to distribution
-specific representation for the nig and ghyp distributions.
+specific representation for the nig and gh distributions.
 }

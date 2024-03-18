@@ -13,7 +13,7 @@
 \item{...}{not currently used.}
 }
 \value{
-A numeric value.
+The BIC value (scalar).
 }
 \description{
 Extract the BIC from an estimated model.

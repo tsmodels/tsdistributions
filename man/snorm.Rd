@@ -39,6 +39,6 @@ generator
 }
 \description{
 Density, distribution, quantile function and random number
-generation for the location scale invariant parameterization of the
-skewed normal distribution.
+generation for the skewed normal distribution parameterized in 
+terms of mean, standard deviation and skew parameters.
 }

@@ -15,7 +15,7 @@ to multiplication with n/(n-k) where n is the number of observations and k
 the number of estimated parameters.}
 
 \item{type}{valid choices are \dQuote{H} for using the analytic hessian
-for the bread, \dQuote{OP} for the outer product of gradients, \dQuote{QMLE}
+for the \sQuote{bread}, \dQuote{OP} for the outer product of gradients, \dQuote{QMLE}
 for the Quasi-ML sandwich estimator (Huber-White), and \dQuote{NW} for the Newey-West
 adjusted sandwich estimator (a HAC estimator).}
 

@@ -10,7 +10,7 @@ distribution_bounds(distribution = "norm")
 \item{distribution}{A valid distribution}
 }
 \value{
-A data.table of the parameters and bounds.
+A data.table of the parameters and their default bounds.
 }
 \description{
 Distribution Bounds
