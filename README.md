@@ -1,7 +1,7 @@
 
 [![R-CMD-check](https://github.com/tsmodels/tsdistributions/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tsmodels/tsdistributions/actions/workflows/R-CMD-check.yaml)
-[![Last-changedate](https://img.shields.io/badge/last%20change-2024--03--17-yellowgreen.svg)](/commits/master)
-[![packageversion](https://img.shields.io/badge/Package%20version-1.0.0-orange.svg?style=flat-square)](commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2024--05--10-yellowgreen.svg)](/commits/master)
+[![packageversion](https://img.shields.io/badge/Package%20version-1.0.1-orange.svg?style=flat-square)](commits/master)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/tsdistributions)](https://cran.r-project.org/package=tsdistributions)
 
 # tsdistributions
@@ -11,7 +11,7 @@ methods and autodiff (TMB) backed estimation. These distributions are
 parameterized in terms of the mean, standard deviation, skew and shape,
 with the GH distribution having 2 shape parameters.
 
-The currently implemented distributions are shown below.
+Currently implemented location-scale family distributions:
 
 | Distribution                        | Function | Parameters | Notes             |
 |:------------------------------------|:--------:|-----------:|:------------------|
@@ -25,3 +25,17 @@ The currently implemented distributions are shown below.
 | Generalized Hyperbolic              |    gh    |          5 | Barndorff-Nielsen |
 | Johnson’s SU                        |   jsu    |          4 | Johnson           |
 | Generalized Hyperbolic Skew Student |   ghst   |          4 | Aas & Haff        |
+
+A number of other distributions are also implemented or planned to be,
+which do not technically belong to the location-scale family but are
+useful in time-series and financial risk analysis.
+
+The semi-parametric distribution (`spd`) models the upper and lower
+tails using the Generalized Pareto distribution. This leads to 1 scale
+and 1 shape parameters for each of the tails (4 parameters in total).
+
+Other distributions:
+
+| Distribution                 | Function | Parameters | Notes   |
+|:-----------------------------|:--------:|-----------:|:--------|
+| Semi Parametric Distribution |   spd    |          4 | Carmona |

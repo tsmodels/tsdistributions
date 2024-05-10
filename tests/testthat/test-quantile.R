@@ -86,3 +86,18 @@ test_that("qsged", {
     expect_equal(median_r, median_q, tolerance = 0.02)
     expect_equal(p, 0.5)
 })
+
+
+test_that("spd", {
+    set.seed(101)
+    y <- rdist("jsu", 100000, mu = 0.1, sigma = 1, skew = 1.5, shape = 4)
+    spec <- spd_modelspec(y)
+    mod <- estimate(spec)
+    set.seed(101)
+    r <- rspd(100000, mod)
+    median_r = median(r)
+    median_q <- qspd(0.5, mod)
+    p <- pspd(median_q, mod)
+    expect_equal(median_r, median_q, tolerance = 0.07)
+    expect_equal(p, 0.5, tolerance = 0.02)
+})

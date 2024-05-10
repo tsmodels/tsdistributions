@@ -17,7 +17,7 @@ ghst (Generalized Hyperbolic Skew Student) and jsu (Johnson's SU).}
 \item{...}{not currently used}
 }
 \value{
-An object of class \dQuote{tsdistribution.spec}
+An object of class \dQuote{tsdistribution.spec}.
 }
 \description{
 Specification of distribution model

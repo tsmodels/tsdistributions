@@ -14,7 +14,7 @@ Type objective_function<Type>::operator() () {
   if(model == "distribution") {
     return distmodel(this);
   } else {
-    error("Unknown model.");
+    Rf_error("Unknown model.");
   }
   return 0;
 }

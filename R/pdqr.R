@@ -32,7 +32,7 @@
 #' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
 #' @returns d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
-#' generator
+#' generator.
 #' @rdname ghst
 #' @export
 #'
@@ -171,7 +171,7 @@ qghst <- function(p, mu = 0, sigma = 1, skew = 1, shape = 8, lower_tail = TRUE, 
 #' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
 #' @returns d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
-#' generator
+#' generator.
 #' @rdname snorm
 #' @export
 #'
@@ -279,7 +279,7 @@ rsnorm <- function(n, mu = 0, sigma = 1, skew = 1.5)
 #' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
 #' @returns d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
-#' generator
+#' generator.
 #' @rdname ged
 #' @export
 #'
@@ -388,7 +388,7 @@ rged <- function(n, mu = 0, sigma = 1, shape = 2)
 #' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
 #' @returns d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
-#' generator
+#' generator.
 #' @rdname sged
 #' @export
 #'
@@ -507,7 +507,7 @@ Heaviside <- function(x, a = 0)
 #' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
 #' @returns d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
-#' generator
+#' generator.
 #' @rdname std
 #' @export
 #'
@@ -616,7 +616,7 @@ rstd <- function(n, mu = 0, sigma = 1, shape = 5)
 #' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
 #' @returns d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
-#' generator
+#' generator.
 #' @rdname sstd
 #' @export
 #'
@@ -873,7 +873,7 @@ qghyp <- function(p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, lower_t
 #' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
 #' @return d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
-#' generator
+#' generator.
 #' @rdname gh
 #' @export
 #'
@@ -967,7 +967,7 @@ rgh <- function(n, mu = 0, sigma = 1, skew = 0, shape = 1, lambda = 1)
 #' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
 #' @returns d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
-#' generator
+#' generator.
 #' @rdname nig
 #' @export
 #'
@@ -1032,7 +1032,7 @@ rnig <- function(n, mu = 0, sigma = 1, skew = 0, shape = 1)
 #' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
 #' @returns d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
-#' generator
+#' generator.
 #' @rdname jsu
 #' @export
 #'
@@ -1243,7 +1243,7 @@ ghyptransform <- function(mu = 0, sigma = 1,  skew = 0, shape = 3, lambda = -0.5
 #' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
 #' @returns d gives the density, p gives the distribution function, q gives the quantile function
 #' and r generates random deviates. Output depends on x or q length, or n for the random number
-#' generator
+#' generator.
 #' @rdname ddist
 #' @export
 #'

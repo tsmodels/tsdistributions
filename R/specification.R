@@ -14,7 +14,7 @@
 #' to the \sQuote{value} column in the parmatrix table and setting the \sQuote{estimate}
 #' variable to 0 (instead of 1).
 #' @param ... not currently used
-#' @returns An object of class \dQuote{tsdistribution.spec}
+#' @returns An object of class \dQuote{tsdistribution.spec}.
 #' @examples
 #' spec <- distribution_modelspec(rnorm(1000), distribution = "gh")
 #' # fix lambda and shape

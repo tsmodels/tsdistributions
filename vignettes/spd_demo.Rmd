@@ -1,0 +1,122 @@
+---
+title: "Semi-Parametric Distribution Demo"
+author: "Alexios Galanos"
+date: "`r Sys.Date()`"
+output: 
+    rmarkdown::html_vignette:
+        css: custom.css
+        code_folding: show
+        highlight: kate
+vignette: >
+  %\VignetteIndexEntry{Semi-Parametric Distribution Demo}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This provides a quick demo to illustrate the semi-parametric distribution. This
+distribution estimates the tails of the data using the Generalized Pareto distribution 
+(`gpd`) whilst the interior is estimated using a kernel density. The tails and 
+interior are then smoothly joined together to form the semi-parametric distribution.
+
+For this demo, we'll generate a random sample from the Generalized Hyperbolic 
+Skew Student distribution and then model the top and bottom 1% of the data 
+using the Generalized Pareto distribution. Choosing the correct threshold when 
+applying the Generalized Pareto distribution is an important step to ensure that 
+the asymptotic distribution fits the data well and the parameter estimates are 
+stable. There are a number of methods to test for this, and numerous packages in R which can help. The [mev](https://CRAN.R-project.org/package=mev) 
+package, which is used for estimating the GPD (except in the case of the probability weighted moments
+approach) provides threshold stability plots and other diagnostics for aid in
+choosing the right threshold.
+
+There are a total of 4 parameters, 2 for each tail, estimated independently. As such,
+the standard errors are based on a block diagonal variance-covariance matrix.
+
+```{r,warning=FALSE,message=FALSE}
+library(tsdistributions)
+library(data.table)
+library(knitr)
+# simulate data
+set.seed(200)
+n <- 6000
+sim <- rghst(n, mu = 0, sigma = 1, skew = -0.6, shape = 8.01)
+spec <- spd_modelspec(sim, lower = 0.01, upper = 0.99, kernel_type = 'normal')
+mod <- estimate(spec, method = "pwm")
+print(summary(mod))
+```
+
+We'll investigate the goodness of fit of the distribution using some visuals:
+
+```{r,fig.height=6,fig.width=7}
+lower_treshold <- mod$gpd$lower$threshold
+upper_treshold <- mod$gpd$upper$threshold
+oldpar <- par(mfrow = c(1,1))
+par(mfrow = c(3,1), mar = c(3,3,3,3))
+hist(sim, breaks = 300, probability = TRUE, xlab = "r", 
+     col = "steelblue", border = "whitesmoke",main = "PDF")
+box()
+abline(v = lower_treshold, col = 'mediumpurple3', lty = 2)
+abline(v = upper_treshold, col = 'mediumpurple3', lty = 2)
+lines(sort(sim), dspd(sort(sim), mod), col = "darkorange",lwd = 2)
+
+plot(sort(sim), (1:length(sim)/length(sim)), 
+     ylim = c(0, 1), pch = 19, 
+     cex = 0.5, ylab = "p", xlab = "q", main = "CDF")
+grid()
+lines(sort(sim), pspd(sort(sim), mod), col = "darkorange",lwd = 2)
+
+abline(v = lower_treshold, col = 'mediumpurple3', lty = 2)
+abline(v = upper_treshold, col = 'mediumpurple3', lty = 2)
+
+plot(sort(sim), qspd(ppoints(length(sim)), mod), ylab = "Model Simulated", xlab = "Observed", main = "Q-Q")
+abline(0, 1, col = "darkorange")
+grid()
+abline(v = lower_treshold, col = 'mediumpurple3', lty = 2)
+abline(v = upper_treshold, col = 'mediumpurple3', lty = 2)
+abline(h = lower_treshold, col = 'mediumpurple3', lty = 2)
+abline(h = upper_treshold, col = 'mediumpurple3', lty = 2)
+par(oldpar)
+```
+
+The vertical purple lines show the region modeled by the kernel density, representing
+the thresholds beyond which the GPD is used.
+
+To calculate expectations from the estimated object we can use quadrature integration,
+as shown below, with calculations for the mean, variance, skewness, kurtosis, value
+at risk (1%) and expected shortfall (1%). We choose reasonably large but finite values
+for the numerical integration limits.
+
+```{r}
+f <- function(x) x * dspd(x, mod)
+mu <- integrate(f, -50, 50)$value
+f <- function(x) x^2 * dspd(x, mod)
+variance <- integrate(f, -50, 50)$value
+f <- function(x) (x - mu)^3 * dspd(x, mod)
+skewness <- integrate(f, -50, 50)$value/(variance^(3/2))
+f <- function(x) (x - mu)^4 * dspd(x, mod)
+kurtosis <- integrate(f, -50, 50)$value/(variance^2)
+value_at_risk <- qspd(0.01, mod)
+f <- function(x) x * dspd(x, mod)
+expected_shortfall <- integrate(f, -50, value_at_risk)$value/0.01
+
+tab <- data.table(stat = c("mean","variance","skewness","kurtosis","VaR(1%)","ES(1%)"),
+                  spd = c(mu, variance, skewness, kurtosis, value_at_risk, expected_shortfall),
+                  observed = c(mean(sim), var(sim), mean((sim - mean(sim))^3)/(sd(sim)^3), 
+                               mean((sim - mean(sim))^4)/(sd(sim)^4),quantile(sim, 0.01),
+                               mean(sim[sim <= quantile(sim, 0.01)])))
+kable(tab, digits = 2)
+```
+
+The results appear promising and close to the observed values. Note that even though
+we simulated the data from a known distribution, in practice we usually don't 
+know which distribution the data came from. Therefore, the semi-parametric 
+distribution provides a good trade-off between fully parametric and non-parametric
+approaches. The caveat is that we still need to be careful in choosing the thresholds.
+There is no free lunch!
+

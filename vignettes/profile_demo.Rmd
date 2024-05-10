@@ -23,7 +23,7 @@ data from that model under different lengths, and then estimate the parameters
 given the simulated data, thus enabling the creation of parameter distributions
 under different size assumptions. The goal of the exercise is to understand how
 much variation under the true specified parameters we should expect given each 
-data size given the algorihtms for estimation implemented in this package.
+data size given the algorithms for estimation implemented in this package.
 
 When choosing **n** paths to generate for **sizes** of [400, 800, 1000], for instance,
 we simply simulate n x max(sizes), creating a (max size) x nsim matrix **S**, 
@@ -31,7 +31,7 @@ and then for each path (i) and size (j) we estimate S[1:j, i]. Thus the simulate
 data in size 1000 will include the simulated data for sizes 400 and 800 for each
 path (i).
 
-The demonstation code below is illustrative of how to create a specification with
+The demonstration code below is illustrative of how to create a specification with
 fixed parameters which can then be passed to the tsprofile method. In real world
 applications, one should set nsim quite high and the sizes guided by problem specific
 considerations. The method can take advantage of parallel functionality using the

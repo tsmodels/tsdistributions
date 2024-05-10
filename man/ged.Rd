@@ -35,7 +35,7 @@ rged(n, mu = 0, sigma = 1, shape = 2)
 \value{
 d gives the density, p gives the distribution function, q gives the quantile function
 and r generates random deviates. Output depends on x or q length, or n for the random number
-generator
+generator.
 }
 \description{
 Density, distribution, quantile function and random number

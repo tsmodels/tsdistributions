@@ -1,3 +1,14 @@
+# tsdistributions 1.0.1
+
+* Added the semi-parametric piece-wise distribution (`spd`). As this is a special
+type of distribution, it gets its own class for specification and estimation. 
+Added p, d, q, r functions and other methods (summary, vcov, coef etc).
+* Fixed the noRemap Additional Issue on CRAN checks (renames error to Rf_error
+in C++ code).
+* Added a unit test for the spd in the test-quantile.R file.
+* Added an html vignette for the spd.
+
+
 # tsdistributions 1.0.0
 
 * Initial CRAN submission.
@@ -40,4 +51,4 @@ distributions used signum function but this distribution seems to have missed th
 0 case for some reason.
 * Added vcov methods and other sandwich estimators (QMLE, OP, NW).
 * Added BIC and AIC and created a print method for the summary.
-* Fixed some code fomatting issues
+* Fixed some code formatting issues

@@ -3,7 +3,7 @@
 #'
 #' @param x an object of class \dQuote{tsdistribution.estimate}.
 #' @param ... not currently used.
-#' @returns The score matrix
+#' @returns The score matrix.
 #' @details The function returns the scores of likelihood at the optimal solution.
 #' @method estfun tsdistribution.estimate
 #' @aliases estfun
@@ -15,6 +15,19 @@ estfun.tsdistribution.estimate <- function(x, ...)
 {
     out <- x$scores
     return(out)
+}
+
+
+#' @method bread tsdistribution.spdestimate
+#' @aliases bread
+#' @rdname bread.tsdistribution.estimate
+#' @author Alexios Galanos
+#' @export
+#'
+bread.tsdistribution.spdestimate <- function(x, ...)
+{
+    H <- bdiag(x$gpd$lower$hessian, x$gpd$upper$hessian)
+    return(H)
 }
 
 

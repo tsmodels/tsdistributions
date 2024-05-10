@@ -24,9 +24,9 @@ knitr::opts_chunk$set(
 A number of location-scale invariant distributions with full d,p,q,r methods 
 and autodiff (TMB) backed estimation. These distributions are parameterized in
 terms of the mean, standard deviation, skew and shape, with the GH distribution 
-having 2 shape parameters.
+having 2 shape parameters. 
 
-The currently implemented distributions are shown below.
+Currently implemented location-scale family distributions:
 
 
 ```{r,echo = FALSE,warning=FALSE,message=FALSE}
@@ -38,6 +38,28 @@ tab <- data.table(Distribution = c("Normal","Student","GED","Skew-Normal","Skew-
                   Parameters = c(2,3,3,3,4,4,4,5,4,4),
                   Notes = c(""," ","","Fernandez & Steel","Fernandez & Steel","Fernandez & Steel","Barndorff-Nielsen","Barndorff-Nielsen",
                             "Johnson","Aas & Haff")
+                  )
+tab <- knitr::kable(tab, format = "pipe", align = c("l","c","r"))
+tab
+```
+
+A number of other distributions are also implemented or planned to be, which do not 
+technically belong to the location-scale family but are useful in time-series and 
+financial risk analysis.
+
+The semi-parametric distribution (`spd`) models the upper and lower tails using 
+the Generalized Pareto distribution. This leads to 1 scale and 1 shape parameters 
+for each of the tails (4 parameters in total).
+
+
+Other distributions:
+```{r,echo = FALSE,warning=FALSE,message=FALSE}
+library(data.table)
+references <- c("")
+tab <- data.table(Distribution = c("Semi Parametric Distribution"),
+                  Function = c("spd"),
+                  Parameters = c(4),
+                  Notes = c("Carmona")
                   )
 tab <- knitr::kable(tab, format = "pipe", align = c("l","c","r"))
 tab

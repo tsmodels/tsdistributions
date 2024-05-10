@@ -8,7 +8,7 @@
 #' @param shape  shape parameter.
 #' @param lambda additional shape parameter for the Generalized Hyperbolic
 #' distribution.
-#' @returns A numeric value.
+#' @returns A numeric value for the skewness and excess kurtosis.
 #' @rdname dskewness
 #' @export
 #'

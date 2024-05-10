@@ -20,7 +20,7 @@ dkurtosis(distribution = "norm", skew = 1, shape = 5, lambda = -0.5)
 distribution.}
 }
 \value{
-A numeric value.
+A numeric value for the skewness and excess kurtosis.
 }
 \description{
 Calculates the skewness and excess kurtosis of the distribution given

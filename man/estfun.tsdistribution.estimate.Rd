@@ -13,7 +13,7 @@
 \item{...}{not currently used.}
 }
 \value{
-The score matrix
+The score matrix.
 }
 \description{
 Score Method
