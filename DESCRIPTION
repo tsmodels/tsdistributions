@@ -7,7 +7,7 @@ Maintainer: Alexios Galanos <alexios@4dscape.com>
 Depends: R (>= 3.5.0), methods, tsmethods
 LinkingTo: TMB, RcppEigen
 Imports: TMB (>= 1.7.20), Rdpack, GeneralizedHyperbolic, KernSmooth, SkewHyperbolic, mev, stats, utils, data.table, zoo, Rsolnp, sandwich, future.apply, future, progressr
-Description: Location-Scale based distributions parameterized in terms of mean, standard deviation, skew and shape parameters and estimation using automatic differentiation. Distributions include the Normal, Student and GED as well as their skewed variants ('Fernandez and Steel'), the 'Johnson SU', and the Generalized Hyperbolic. Also included is the semi-parametric piecewise distribution ('spd') with pareto tails and kernel interior.
+Description: Location-Scale based distributions parameterized in terms of mean, standard deviation, skew and shape parameters and estimation using automatic differentiation. Distributions include the Normal, Student and GED as well as their skewed variants ('Fernandez and Steel'), the 'Johnson SU', and the Generalized Hyperbolic. Also included is the semi-parametric piece wise distribution ('spd') with Pareto tails and kernel interior.
 License: GPL-2
 Encoding: UTF-8
 LazyData: true

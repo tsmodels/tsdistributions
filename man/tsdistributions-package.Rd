@@ -6,7 +6,7 @@
 \alias{tsdistributions-package}
 \title{tsdistributions: Location Scale Standardized Distributions}
 \description{
-Location-Scale based distributions parameterized in terms of mean, standard deviation, skew and shape parameters and estimation using automatic differentiation. Distributions include the Normal, Student and GED as well as their skewed variants ('Fernandez and Steel'), the 'Johnson SU', and the Generalized Hyperbolic. Also included is the semi-parametric piecewise distribution ('spd') with pareto tails and kernel interior.
+Location-Scale based distributions parameterized in terms of mean, standard deviation, skew and shape parameters and estimation using automatic differentiation. Distributions include the Normal, Student and GED as well as their skewed variants ('Fernandez and Steel'), the 'Johnson SU', and the Generalized Hyperbolic. Also included is the semi-parametric piece wise distribution ('spd') with Pareto tails and kernel interior.
 }
 \seealso{
 Useful links:
