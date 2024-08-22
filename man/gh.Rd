@@ -5,7 +5,7 @@
 \alias{pgh}
 \alias{qgh}
 \alias{rgh}
-\title{Generalized Hyperbolic Distribution}
+\title{Generalized Hyperbolic Distribution (rho-zeta parameterization)}
 \usage{
 dgh(x, mu = 0, sigma = 1, skew = 0, shape = 1, lambda = 1, log = FALSE)
 

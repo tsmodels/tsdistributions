@@ -3,7 +3,7 @@
 #' @param y a numeric vector
 #' @param lower the probability for the lower GPD tail.
 #' @param upper the probability for the upper GPD tail.
-#' @param kernel_type the choice of the kernel to use from the \code{\link{bkde}}
+#' @param kernel_type the choice of the kernel to use from the \code{\link[KernSmooth]{bkde}} 
 #' function.
 #' @param ... not currently used
 #' @returns An object of class \dQuote{tsdistribution.spd_spec}.

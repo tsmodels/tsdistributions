@@ -2,5 +2,5 @@
 
 0 errors | 0 warnings | 1 note
 
-* Added a new distribution (`spd`).
-* Fixed 'noRemap' in Additional Issues.
+* Replaced PI to M_PI (strict headers warning)
+* Translated c code to c++ (Rcpp)

@@ -48,15 +48,13 @@ dghst <- function(x, mu = 0, sigma = 1, skew = 1, shape = 8, log = FALSE)
     if (val_length[3] != max_n) sigma <- rep(sigma[1], max_n)
     if (val_length[4] != max_n) skew <- rep(skew[1], max_n)
     if (val_length[5] != max_n) shape <- rep(shape[1], max_n)
-    ans <- double(max_n)
-    sol <- try(.C("c_dghst", x = as.double(x), mu = as.double(mu),
+    sol <- try(c_dghst(x = as.double(x), mu = as.double(mu),
           sigma = as.double(sigma), skew = as.double(skew),
-          shape = as.double(shape), ans = ans, n = as.integer(max_n),
-          logr = as.integer(log), PACKAGE = "tsdistributions"), silent = TRUE)
+          shape = as.double(shape), logr = as.integer(log)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        return(sol$ans)
+        return(sol)
     }
 }
 
@@ -72,15 +70,13 @@ rghst <- function(n, mu = 0, sigma = 1, skew = 1, shape = 8)
     if (val_length[2] != n) sigma <- rep(sigma[1], n)
     if (val_length[3] != n) skew <- rep(skew[1], n)
     if (val_length[4] != n) shape <- rep(shape[1], n)
-    ans <- double(n)
-    sol <- try(.C("c_rghst", n = as.integer(n), mu = as.double(mu),
+    sol <- try(c_rghst(n = as.integer(n), mu = as.double(mu),
               sigma = as.double(sigma), skew = as.double(skew),
-              shape = as.double(shape), ans = ans,
-              PACKAGE = "tsdistributions"), silent = TRUE)
+              shape = as.double(shape)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        return(sol$ans)
+        return(sol)
     }
 }
 
@@ -185,15 +181,13 @@ dsnorm <- function(x, mu = 0, sigma = 1, skew = 1.5, log = FALSE)
     if (val_length[2] != max_n) mu <- rep(mu[1], max_n)
     if (val_length[3] != max_n) sigma <- rep(sigma[1], max_n)
     if (val_length[4] != max_n) skew <- rep(skew[1], max_n)
-    ans <- double(max_n)
-    sol <- try(.C("c_dsnorm", x = as.double(x), mu = as.double(mu),
-                  sigma = as.double(sigma), skew = as.double(skew), ans = ans,
-                  n = as.integer(max_n), logr = as.integer(log),
-                  PACKAGE = "tsdistributions"), silent = TRUE)
+    sol <- try(c_dsnorm(x = as.double(x), mu = as.double(mu),
+                  sigma = as.double(sigma), skew = as.double(skew),
+                  logr = as.integer(log)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        return(sol$ans)
+        return(sol)
     }
 }
 
@@ -207,16 +201,14 @@ psnorm <- function(q, mu = 0, sigma = 1, skew = 1.5, lower_tail = TRUE, log = FA
     if (val_length[2] != max_n) mu <- rep(mu[1], max_n)
     if (val_length[3] != max_n) sigma <- rep(sigma[1], max_n)
     if (val_length[4] != max_n) skew <- rep(skew[1], max_n)
-    ans <- double(max_n)
-    sol <- try(.C("c_psnorm", q = as.double(q), mu = as.double(mu),
-                  sigma = as.double(sigma), skew = as.double(skew), ans = ans,
-                  n = as.integer(max_n), PACKAGE = "tsdistributions"), silent = TRUE)
+    sol <- try(c_psnorm(q = as.double(q), mu = as.double(mu),
+                  sigma = as.double(sigma), skew = as.double(skew)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        if (!lower_tail) sol$ans <- 1 - sol$ans
-        if (log) sol$ans <- log(sol$ans)
-        return(sol$ans)
+        if (!lower_tail) sol <- 1 - sol
+        if (log) sol <- log(sol)
+        return(sol)
     }
 }
 
@@ -233,15 +225,13 @@ qsnorm <- function(p, mu = 0, sigma = 1, skew = 1.5, lower_tail = TRUE, log = FA
     if (val_length[2] != max_n) mu <- rep(mu[1], max_n)
     if (val_length[3] != max_n) sigma <- rep(sigma[1], max_n)
     if (val_length[4] != max_n) skew <- rep(skew[1], max_n)
-    ans <- double(max_n)
-    sol <- try(.C("c_qsnorm", p = as.double(p), mu = as.double(mu),
-                  sigma = as.double(sigma), skew = as.double(skew), ans = ans,
-                  n = as.integer(max_n), PACKAGE = "tsdistributions"), silent = TRUE)
+    sol <- try(c_qsnorm(p = as.double(p), mu = as.double(mu),
+                  sigma = as.double(sigma), skew = as.double(skew)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        if (log) sol$ans <- log(sol$ans)
-        return(sol$ans)
+        if (log) sol <- log(sol)
+        return(sol)
     }
 }
 
@@ -253,14 +243,12 @@ rsnorm <- function(n, mu = 0, sigma = 1, skew = 1.5)
     if (val_length[1] != n) mu <- rep(mu[1], n)
     if (val_length[2] != n) sigma <- rep(sigma[1], n)
     if (val_length[3] != n) skew <- rep(skew[1], n)
-    ans <- double(n)
-    sol <- try(.C("c_rsnorm", n = as.integer(n), mu = as.double(mu),
-                  sigma = as.double(sigma), skew = as.double(skew), ans = ans,
-                  PACKAGE = "tsdistributions"), silent = TRUE)
+    sol <- try(c_rsnorm(n = as.integer(n), mu = as.double(mu),
+                  sigma = as.double(sigma), skew = as.double(skew)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        return(sol$ans)
+        return(sol)
     }
 }
 
@@ -293,15 +281,13 @@ dged <- function(x, mu = 0, sigma = 1, shape = 2, log = FALSE)
     if (value_len[2] != max_n) mu <- rep(mu[1], max_n)
     if (value_len[3] != max_n) sigma <- rep(sigma[1], max_n)
     if (value_len[4] != max_n) shape <- rep(shape[1], max_n)
-    ans <- double(max_n)
-    sol <- try(.C("c_dged", x = as.double(x), mu = as.double(mu),
+    sol <- try(c_dged(x = as.double(x), mu = as.double(mu),
                   sigma = as.double(sigma), shape = as.double(shape),
-                  ans = ans, n = as.integer(max_n), logr = as.integer(log),
-                  PACKAGE = "tsdistributions"), silent = TRUE)
+                  logr = as.integer(log)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        return(sol$ans)
+        return(sol)
     }
 }
 
@@ -315,17 +301,14 @@ pged <- function(q, mu = 0, sigma = 1, shape = 2, lower_tail = TRUE, log = FALSE
     if (value_len[2] != max_n) mu <- rep(mu[1], max_n)
     if (value_len[3] != max_n) sigma <- rep(sigma[1], max_n)
     if (value_len[4] != max_n) shape <- rep(shape[1], max_n)
-    ans <- double(max_n)
-    sol <- try(.C("c_pged", q = as.double(q), mu = as.double(mu),
-                  sigma = as.double(sigma), shape = as.double(shape),
-                  ans = ans, n = as.integer(max_n),
-                  PACKAGE = "tsdistributions"), silent = TRUE)
+    sol <- try(c_pged(q = as.double(q), mu = as.double(mu),
+                  sigma = as.double(sigma), shape = as.double(shape)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        if (!lower_tail) sol$ans <- 1 - sol$ans
-        if (log) sol$ans <- log(sol$ans)
-        return(sol$ans)
+        if (!lower_tail) sol <- 1 - sol
+        if (log) sol <- log(sol)
+        return(sol)
     }
 }
 
@@ -340,16 +323,13 @@ qged <- function(p, mu = 0, sigma = 1, shape = 2, lower_tail = TRUE, log = FALSE
     if (value_len[2] != max_n) mu <- rep(mu[1], max_n)
     if (value_len[3] != max_n) sigma <- rep(sigma[1], max_n)
     if (value_len[4] != max_n) shape <- rep(shape[1], max_n)
-    ans <- double(max_n)
-    sol <- try(.C("c_qged", p = as.double(p), mu = as.double(mu),
-                  sigma = as.double(sigma), shape = as.double(shape),
-                  ans = ans, n = as.integer(max_n),
-                  PACKAGE = "tsdistributions"), silent = TRUE)
+    sol <- try(c_qged(p = as.double(p), mu = as.double(mu),
+                  sigma = as.double(sigma), shape = as.double(shape)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        if (log) sol$ans <- log(sol$ans)
-        return(sol$ans)
+        if (log) sol <- log(sol)
+        return(sol)
     }
 }
 
@@ -361,14 +341,12 @@ rged <- function(n, mu = 0, sigma = 1, shape = 2)
     if (value_len[1] != n) mu <- rep(mu[1], n)
     if (value_len[2] != n) sigma <- rep(sigma[1], n)
     if (value_len[3] != n) shape <- rep(shape[1], n)
-    ans <- double(n)
-    sol <- try(.C("c_rged", n = as.integer(n), mu = as.double(mu),
-                  sigma = as.double(sigma), shape = as.double(shape),
-                  ans = ans, PACKAGE = "tsdistributions"), silent = TRUE)
+    sol <- try(c_rged(n = as.integer(n), mu = as.double(mu),
+                  sigma = as.double(sigma), shape = as.double(shape)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        return(sol$ans)
+        return(sol)
     }
 }
 
@@ -403,15 +381,13 @@ dsged <- function(x, mu = 0, sigma = 1, skew = 1.5, shape = 2, log = FALSE)
     if (value_len[3] != max_n) sigma <- rep(sigma[1], max_n)
     if (value_len[4] != max_n) skew <- rep(skew[1], max_n)
     if (value_len[5] != max_n) shape <- rep(shape[1], max_n)
-    ans <- double(max_n)
-    sol <- try(.C("c_dsged", x = as.double(x), mu = as.double(mu),
+    sol <- try(c_dsged(x = as.double(x), mu = as.double(mu),
                   sigma = as.double(sigma), skew = as.double(skew),
-                  shape = as.double(shape), ans = ans, n = as.integer(max_n),
-                  logr = as.integer(log), PACKAGE = "tsdistributions"), silent = TRUE)
+                  shape = as.double(shape), logr = as.integer(log)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        return(sol$ans)
+        return(sol)
     }
 }
 
@@ -426,17 +402,15 @@ psged <- function(q, mu = 0, sigma = 1, skew = 1.5, shape = 2, lower_tail = TRUE
     if (value_len[3] != max_n) sigma <- rep(sigma[1], max_n)
     if (value_len[4] != max_n) skew <- rep(skew[1], max_n)
     if (value_len[5] != max_n) shape <- rep(shape[1], max_n)
-    ans <- double(max_n)
-    sol <- try(.C("c_psged", q = as.double(q), mu = as.double(mu),
+    sol <- try(c_psged(q = as.double(q), mu = as.double(mu),
                   sigma = as.double(sigma), skew = as.double(skew),
-                  shape = as.double(shape), ans = ans,
-                  n = as.integer(max_n), PACKAGE = "tsdistributions"), silent = TRUE)
+                  shape = as.double(shape)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        if (!lower_tail) sol$ans <- 1 - sol$ans
-        if (log) sol$ans <- log(sol$ans)
-        return(sol$ans)
+        if (!lower_tail) sol <- 1 - sol
+        if (log) sol <- log(sol)
+        return(sol)
     }
 }
 
@@ -452,16 +426,14 @@ qsged <- function(p, mu = 0, sigma = 1, skew = 1.5, shape = 2, lower_tail = TRUE
     if (value_len[3] != max_n) sigma <- rep(sigma[1], max_n)
     if (value_len[4] != max_n) skew <- rep(skew[1], max_n)
     if (value_len[5] != max_n) shape <- rep(shape[1], max_n)
-    ans <- double(max_n)
-    sol = try(.C("c_qsged", p = as.double(p), mu = as.double(mu),
+    sol = try(c_qsged(p = as.double(p), mu = as.double(mu),
                  sigma = as.double(sigma), skew = as.double(skew),
-                 shape = as.double(shape), ans = ans, n = as.integer(max_n),
-                 PACKAGE = "tsdistributions"), silent = TRUE)
+                 shape = as.double(shape)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        if (log) sol$ans <- log(sol$ans)
-        return(sol$ans)
+        if (log) sol <- log(sol)
+        return(sol)
     }
 }
 
@@ -474,15 +446,13 @@ rsged <- function(n, mu = 0, sigma = 1, skew = 1.5, shape = 2)
     if (value_len[2] != n) sigma <- rep(sigma[1], n)
     if (value_len[3] != n) skew <- rep(skew[1], n)
     if (value_len[4] != n) shape <- rep(shape[1], n)
-    ans <- double(n)
-    sol <- try(.C("c_rsged", n = as.integer(n), mu = as.double(mu),
+    sol <- try(c_rsged(n = as.integer(n), mu = as.double(mu),
                   sigma = as.double(sigma), skew = as.double(skew),
-                  shape = as.double(shape),
-                  ans = ans, PACKAGE = "tsdistributions"), silent = TRUE)
+                  shape = as.double(shape)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        return(sol$ans)
+        return(sol)
     }
 }
 
@@ -521,15 +491,13 @@ dstd <- function(x, mu = 0, sigma = 1, shape = 5, log = FALSE)
     if (value_len[2] != max_n) mu <- rep(mu[1], max_n)
     if (value_len[3] != max_n) sigma <- rep(sigma[1], max_n)
     if (value_len[4] != max_n) shape <- rep(shape[1], max_n)
-    ans <- double(max_n)
-    sol <- try(.C("c_dstd", x = as.double(x), mu = as.double(mu),
+    sol <- try(c_dstd(x = as.double(x), mu = as.double(mu),
                   sigma = as.double(sigma), shape = as.double(shape),
-                  ans = ans, n = as.integer(max_n), logr = as.integer(log),
-                  PACKAGE = "tsdistributions"), silent = TRUE)
+                  logr = as.integer(log)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        return(sol$ans)
+        return(sol)
     }
 }
 
@@ -543,17 +511,14 @@ pstd <- function(q, mu = 0, sigma = 1, shape = 5, lower_tail = TRUE, log = FALSE
     if (value_len[2] != max_n) mu <- rep(mu[1], max_n)
     if (value_len[3] != max_n) sigma <- rep(sigma[1], max_n)
     if (value_len[4] != max_n) shape <- rep(shape[1], max_n)
-    ans <- double(max_n)
-    sol <- try(.C("c_pstd", q = as.double(q), mu = as.double(mu),
-                  sigma = as.double(sigma), shape = as.double(shape),
-                  ans = ans, n = as.integer(max_n),
-                  PACKAGE = "tsdistributions"), silent = TRUE)
+    sol <- try(c_pstd(q = as.double(q), mu = as.double(mu),
+                  sigma = as.double(sigma), shape = as.double(shape)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        if (!lower_tail) sol$ans <- 1 - sol$ans
-        if (log) sol$ans <- log(sol$ans)
-        return(sol$ans)
+        if (!lower_tail) sol <- 1 - sol
+        if (log) sol <- log(sol)
+        return(sol)
     }
 }
 
@@ -568,16 +533,13 @@ qstd <- function(p, mu = 0, sigma = 1, shape = 5, lower_tail = TRUE, log = FALSE
     if (value_len[2] != max_n) mu <- rep(mu[1], max_n)
     if (value_len[3] != max_n) sigma <- rep(sigma[1], max_n)
     if (value_len[4] != max_n) shape <- rep(shape[1], max_n)
-    ans <- double(max_n)
-    sol <- try(.C("c_qstd", p = as.double(p), mu = as.double(mu),
-                  sigma = as.double(sigma), shape = as.double(shape),
-                  ans = ans, n = as.integer(max_n),
-                  PACKAGE = "tsdistributions"), silent = TRUE)
+    sol <- try(c_qstd(p = as.double(p), mu = as.double(mu),
+                  sigma = as.double(sigma), shape = as.double(shape)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        if (log) sol$ans <- log(sol$ans)
-        return(sol$ans)
+        if (log) sol <- log(sol)
+        return(sol)
     }
 }
 
@@ -589,14 +551,12 @@ rstd <- function(n, mu = 0, sigma = 1, shape = 5)
     if (value_len[1] != n) mu <- rep(mu[1], n)
     if (value_len[2] != n) sigma <- rep(sigma[1], n)
     if (value_len[3] != n) shape <- rep(shape[1], n)
-    ans <- double(n)
-    sol <- try(.C("c_rstd", n = as.integer(n), mu = as.double(mu),
-                  sigma = as.double(sigma), shape = as.double(shape),
-                  ans = ans, PACKAGE = "tsdistributions"), silent = TRUE)
+    sol <- try(c_rstd(n = as.integer(n), mu = as.double(mu),
+                  sigma = as.double(sigma), shape = as.double(shape)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        return(sol$ans)
+        return(sol)
     }
 }
 
@@ -631,15 +591,13 @@ dsstd <- function(x, mu = 0, sigma = 1, skew = 1.5, shape = 5, log = FALSE)
     if (value_len[3] != max_n) sigma <- rep(sigma[1], max_n)
     if (value_len[4] != max_n) skew <- rep(skew[1], max_n)
     if (value_len[5] != max_n) shape <- rep(shape[1], max_n)
-    ans <- double(max_n)
-    sol <- try(.C("c_dsstd", x = as.double(x), mu = as.double(mu),
+    sol <- try(c_dsstd(x = as.double(x), mu = as.double(mu),
                   sigma = as.double(sigma), skew = as.double(skew),
-                  shape = as.double(shape), ans = ans, n = as.integer(max_n),
-                  logr = as.integer(log), PACKAGE = "tsdistributions"), silent = TRUE)
+                  shape = as.double(shape), logr = as.integer(log)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        return(sol$ans)
+        return(sol)
     }
 }
 
@@ -654,17 +612,15 @@ psstd <- function(q, mu = 0, sigma = 1, skew = 1.5, shape = 5, lower_tail = TRUE
     if (value_len[3] != max_n) sigma <- rep(sigma[1], max_n)
     if (value_len[4] != max_n) skew <- rep(skew[1], max_n)
     if (value_len[5] != max_n) shape <- rep(shape[1], max_n)
-    ans <- double(max_n)
-    sol = try(.C("c_psstd", q = as.double(q), mu = as.double(mu),
+    sol = try(c_psstd(q = as.double(q), mu = as.double(mu),
                  sigma = as.double(sigma), skew = as.double(skew),
-                 shape = as.double(shape), ans = ans, n = as.integer(max_n),
-                 PACKAGE = "tsdistributions"), silent = TRUE)
+                 shape = as.double(shape)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        if (!lower_tail) sol$ans <- 1 - sol$ans
-        if (log) sol$ans <- log(sol$ans)
-        return(sol$ans)
+        if (!lower_tail) sol <- 1 - sol
+        if (log) sol <- log(sol)
+        return(sol)
     }
 }
 
@@ -680,16 +636,14 @@ qsstd <- function(p, mu = 0, sigma = 1, skew = 1.5, shape = 5, lower_tail = TRUE
     if (value_len[3] != max_n) sigma <- rep(sigma[1], max_n)
     if (value_len[4] != max_n) skew <- rep(skew[1], max_n)
     if (value_len[5] != max_n) shape <- rep(shape[1], max_n)
-    ans <- double(max_n)
-    sol <- try(.C("c_qsstd", p = as.double(p), mu = as.double(mu),
+    sol <- try(c_qsstd(p = as.double(p), mu = as.double(mu),
                   sigma = as.double(sigma), skew = as.double(skew),
-                  shape = as.double(shape), ans = ans, n = as.integer(max_n),
-                  PACKAGE = "tsdistributions"), silent = TRUE)
+                  shape = as.double(shape)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        if (log) sol$ans <- log(sol$ans)
-        return(sol$ans)
+        if (log) sol <- log(sol)
+        return(sol)
     }
 }
 
@@ -702,15 +656,13 @@ rsstd <- function(n, mu = 0, sigma = 1, skew = 1.5, shape = 5)
     if (value_len[2] != n) sigma <- rep(sigma[1], n)
     if (value_len[3] != n) skew <- rep(skew[1], n)
     if (value_len[4] != n) shape <- rep(shape[1], n)
-    ans <- double(n)
-    sol <- try(.C("c_rsstd", n = as.integer(n), mu = as.double(mu),
+    sol <- try(c_rsstd(n = as.integer(n), mu = as.double(mu),
                   sigma = as.double(sigma), skew = as.double(skew),
-                  shape = as.double(shape),
-                  ans = ans, PACKAGE = "tsdistributions"), silent = TRUE)
+                  shape = as.double(shape)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
       return(sol)
     } else {
-      return(sol$ans)
+      return(sol)
   }
 }
 # ------------------------------------------------------------------------------
@@ -762,6 +714,31 @@ rsstd <- function(n, mu = 0, sigma = 1, skew = 1.5, shape = 5)
     return(c(alpha = alpha, beta = beta, delta = delta, mu = mu))
 }
 
+
+#' Generalized Hyperbolic Distribution (alpha-beta-delta-mu parameterization)
+#'
+#' @description Density, distribution, quantile function and random number
+#' generation for the generalized hyperbolic distribution
+#' using the alpha-beta-delta-mu-lambda parameterization.
+#' @param x,q vector of quantiles.
+#' @param p vector of probabilities.
+#' @param n number of observations.
+#' @param alpha tail parameter.
+#' @param beta skewness parameter.
+#' @param delta scale parameter.
+#' @param mu location parameter.
+#' @param lambda additional shape parameter determining subfamilies of this
+#' distributions.
+#' @param log (logical) if TRUE, probabilities p are given as log(p).
+#' @param lower_tail if TRUE (default), probabilities are \eqn{P[X \le x]} otherwise, \eqn{P[X > x]}.
+#' @return d gives the density, p gives the distribution function, q gives the quantile function
+#' and r generates random deviates. Output depends on x or q length, or n for the random number
+#' generator.
+#' @rdname ghyp
+#' @export
+#'
+#'
+#'
 dghyp <- function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, log = FALSE)
 {
     value_len <- c(length(x), length(alpha), length(beta), length(delta), length(mu), length(lambda))
@@ -775,19 +752,19 @@ dghyp <- function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, log = F
     if (any(alpha <= 0)) stop("alpha must be greater than zero")
     if (any(delta <= 0)) stop("delta must be greater than zero")
     if (any(abs(beta) >= alpha)) stop("abs value of beta must be less than alpha")
-    ans <- double(max_n)
-    sol <- try(.C("c_dghyp", x = as.double(x), alpha = as.double(alpha),
+    sol <- try(c_dghyp(x = as.double(x), alpha = as.double(alpha),
                   beta = as.double(beta), delta = as.double(delta),
                   mu = as.double(mu), lambda = as.double(lambda),
-                  ans = ans, n = as.integer(max_n), logr = as.integer(log),
-                  PACKAGE = "tsdistributions"), silent = TRUE)
+                  logr = as.integer(log)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        return(sol$ans)
+        return(sol)
     }
 }
 
+#' @rdname ghyp
+#' @export
 pghyp <- function(q, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, lower_tail = TRUE, log = FALSE)
 {
     value_len <- c(length(q), length(alpha), length(beta), length(delta), length(mu), length(lambda))
@@ -813,6 +790,8 @@ pghyp <- function(q, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, lower_t
     return(ans)
 }
 
+#' @rdname ghyp
+#' @export
 qghyp <- function(p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, lower_tail = TRUE, log = FALSE)
 {
     if (!lower_tail) p <- 1 - p
@@ -853,8 +832,17 @@ qghyp <- function(p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, lower_t
     return(ans)
 }
 
+#' @rdname ghyp
+#' @export
+rghyp <- function(n, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
+{
+  if (alpha <= 0) stop("alpha must be greater than zero")
+  if (delta <= 0) stop("delta must be greater than zero")
+  if (abs(beta) >= alpha) stop("abs value of beta must be less than alpha")
+  return(c_rghyp(n, mu  = mu[1], delta = delta[1], alpha = alpha[1], beta = beta[1], lambda = lambda[1]))
+}
 
-#' Generalized Hyperbolic Distribution
+#' Generalized Hyperbolic Distribution (rho-zeta parameterization)
 #'
 #' @description Density, distribution, quantile function and random number
 #' generation for the generalized hyperbolic distribution parameterized in 
@@ -889,16 +877,14 @@ dgh <- function(x, mu = 0, sigma = 1, skew = 0, shape = 1, lambda = 1, log = FAL
     if (value_len[4] != max_n) skew <- rep(skew[1], max_n)
     if (value_len[5] != max_n) shape <- rep(shape[1], max_n)
     if (value_len[6] != max_n) lambda <- rep(lambda[1], max_n)
-    ans <- double(max_n)
-    sol = try(.C("c_dgh", x = as.double(x), mu = as.double(mu), 
+    sol = try(c_dgh(x = as.double(x), mu = as.double(mu), 
                  sigma = as.double(sigma), skew = as.double(skew), 
-                 shape = as.double(shape), lambda = as.double(lambda), 
-                 ans = ans, n = as.integer(max_n), logr = as.integer(log), 
-                 PACKAGE = "tsdistributions"), silent = TRUE)
+                 shape = as.double(shape), lambda = as.double(lambda),
+                 logr = as.integer(log)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        return(sol$ans)
+        return(sol)
     }
 }
 
@@ -942,7 +928,7 @@ qgh <- function(p, mu = 0, sigma = 1, skew = 0, shape = 1, lambda = 1, lower_tai
 rgh <- function(n, mu = 0, sigma = 1, skew = 0, shape = 1, lambda = 1)
 {
     params <- .paramGH(rho = skew, zeta = shape, lambda = lambda)
-    out <- rghyp(n = n, mu = params[4], delta = params[3], alpha = params[1], beta = params[2], lambda = lambda)
+    out <- rghyp(n = n, mu = params[4], delta = params[3], alpha = params[1], beta = params[2], lambda = lambda[1])
     out <- mu + sigma * out
     return(out)
 }
@@ -982,15 +968,13 @@ dnig <- function(x, mu = 0, sigma = 1, skew = 0, shape = 1, log = FALSE)
     if (value_len[3] != max_n) sigma <- rep(sigma[1], max_n)
     if (value_len[4] != max_n) skew <- rep(skew[1], max_n)
     if (value_len[5] != max_n) shape <- rep(shape[1], max_n)
-    ans <- double(max_n)
-    sol <- try(.C("c_dnig", x = as.double(x), mu = as.double(mu),
+    sol <- try(c_dnig(x = as.double(x), mu = as.double(mu),
                   sigma = as.double(sigma), skew = as.double(skew), 
-                  shape = as.double(shape), ans = ans, n = as.integer(max_n), 
-                  logr = as.integer(log), PACKAGE = "tsdistributions"), silent = TRUE)
+                  shape = as.double(shape), logr = as.integer(log)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        return(sol$ans)
+        return(sol)
     }
 }
 
@@ -1047,15 +1031,13 @@ djsu <- function(x, mu = 0, sigma = 1, skew = 1, shape = 0.5, log = FALSE)
     if (value_len[3] != max_n) sigma <- rep(sigma[1], max_n)
     if (value_len[4] != max_n) skew <- rep(skew[1], max_n)
     if (value_len[5] != max_n) shape <- rep(shape[1], max_n)
-    ans <- double(max_n)
-    sol <- try(.C("c_djsu", x = as.double(x), mu = as.double(mu), 
+    sol <- try(c_djsu(x = as.double(x), mu = as.double(mu), 
                   sigma = as.double(sigma), skew = as.double(skew), 
-                  shape = as.double(shape), ans = ans, n = as.integer(max_n), 
-                  logr = as.integer(log), PACKAGE = "tsdistributions"), silent = TRUE)
+                  shape = as.double(shape), logr = as.integer(log)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        return(sol$ans)
+        return(sol)
     }
 }
 
@@ -1071,16 +1053,15 @@ pjsu <- function(q, mu = 0, sigma = 1, skew = 1, shape = 0.5, lower_tail = TRUE,
     if (value_len[4] != max_n) skew <- rep(skew[1], max_n)
     if (value_len[5] != max_n) shape <- rep(shape[1], max_n)
     ans <- double(max_n)
-    sol <- try(.C("c_pjsu", q = as.double(q), mu = as.double(mu), 
+    sol <- try(c_pjsu(q = as.double(q), mu = as.double(mu), 
                   sigma = as.double(sigma), skew = as.double(skew), 
-                  shape = as.double(shape), ans = ans, n = as.integer(max_n), 
-                  PACKAGE = "tsdistributions"), silent = TRUE)
+                  shape = as.double(shape)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        if (!lower_tail) sol$ans <- 1 - sol$ans
-        if (log) sol$ans <- log(sol$ans)
-        return(sol$ans)
+        if (!lower_tail) sol <- 1 - sol
+        if (log) sol <- log(sol)
+        return(sol)
     }
 }
 
@@ -1096,16 +1077,14 @@ qjsu <- function(p, mu = 0, sigma = 1, skew = 1, shape = 0.5, lower_tail = TRUE,
     if (value_len[3] != max_n) sigma <- rep(sigma[1], max_n)
     if (value_len[4] != max_n) skew <- rep(skew[1], max_n)
     if (value_len[5] != max_n) shape <- rep(shape[1], max_n)
-    ans <- double(max_n)
-    sol <- try(.C("c_qjsu", p = as.double(p), mu = as.double(mu), 
+    sol <- try(c_qjsu(p = as.double(p), mu = as.double(mu), 
                   sigma = as.double(sigma), skew = as.double(skew), 
-                  shape = as.double(shape), ans = ans, n = as.integer(max_n), 
-                  PACKAGE = "tsdistributions"), silent = TRUE)
+                  shape = as.double(shape)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        if (log) sol$ans <- log(sol$ans)
-        return(sol$ans)
+        if (log) sol <- log(sol)
+        return(sol)
     }
 }
 
@@ -1118,15 +1097,13 @@ rjsu <- function(n, mu = 0, sigma = 1, skew = 1, shape = 0.5)
     if (value_len[2] != n) sigma <- rep(sigma[1], n)
     if (value_len[3] != n) skew <- rep(skew[1], n)
     if (value_len[4] != n) shape <- rep(shape[1], n)
-    ans <- double(n)
-    sol <- try(.C("c_rjsu", n = as.integer(n), mu = as.double(mu), 
+    sol <- try(c_rjsu(n = as.integer(n), mu = as.double(mu), 
                   sigma = as.double(sigma), skew = as.double(skew), 
-                  shape = as.double(shape), 
-                  ans = ans, PACKAGE = "tsdistributions"), silent = TRUE)
+                  shape = as.double(shape)), silent = TRUE)
     if (inherits(sol, 'try-error')) {
         return(sol)
     } else {
-        return(sol$ans)
+        return(sol)
     }
 }
 

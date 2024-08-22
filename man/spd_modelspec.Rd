@@ -19,7 +19,7 @@ spd_modelspec(
 
 \item{upper}{the probability for the upper GPD tail.}
 
-\item{kernel_type}{the choice of the kernel to use from the \code{\link{bkde}}
+\item{kernel_type}{the choice of the kernel to use from the \code{\link[KernSmooth]{bkde}} 
 function.}
 
 \item{...}{not currently used}
