@@ -2,11 +2,11 @@ Package: tsdistributions
 Type: Package
 Title: Location Scale Standardized Distributions
 Version: 1.0.2
-Authors@R: c(person("Alexios", "Galanos", role = c("aut", "cre","cph"), email = "alexios@4dscape.com"))
+Authors@R: c(person("Alexios", "Galanos", role = c("aut", "cre","cph"), email = "alexios@4dscape.com", comment = c(ORCID = "0009-0000-9308-0457")))
 Maintainer: Alexios Galanos <alexios@4dscape.com>
 Depends: R (>= 3.5.0), methods, tsmethods
 LinkingTo: Rcpp, TMB, RcppEigen
-Imports: Rcpp, TMB (>= 1.7.20), Rdpack, GeneralizedHyperbolic, KernSmooth, SkewHyperbolic, mev, stats, utils, data.table, zoo, Rsolnp, sandwich, future.apply, future, progressr
+Imports: Rcpp, TMB (>= 1.7.20), Rdpack, GeneralizedHyperbolic, KernSmooth, SkewHyperbolic, mev, stats, utils, data.table, Rsolnp, sandwich, future.apply, future, progressr
 Description: Location-Scale based distributions parameterized in terms of mean, standard deviation, skew and shape parameters and estimation using automatic differentiation. Distributions include the Normal, Student and GED as well as their skewed variants ('Fernandez and Steel'), the 'Johnson SU', and the Generalized Hyperbolic. Also included is the semi-parametric piece wise distribution ('spd') with Pareto tails and kernel interior.
 License: GPL-2
 Encoding: UTF-8

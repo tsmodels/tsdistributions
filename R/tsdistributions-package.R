@@ -3,7 +3,6 @@
 #' @importFrom TMB MakeADFun
 #' @import data.table
 #' @import methods
-#' @importFrom zoo coredata
 #' @importFrom SkewHyperbolic pskewhyp qskewhyp
 #' @importFrom GeneralizedHyperbolic ghypMom
 #' @importFrom KernSmooth bkde
