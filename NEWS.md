@@ -1,3 +1,9 @@
+# tsdistributions 1.0.3
+
+* Added explicit atomic flag for he() in TMB since usingAtomics()
+in default argument of function is not picked up in some O/S.
+
+
 # tsdistributions 1.0.2
 
 * Replaced PI with M_PI to pass strict header checks.

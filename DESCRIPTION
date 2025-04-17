@@ -1,7 +1,7 @@
 Package: tsdistributions
 Type: Package
 Title: Location Scale Standardized Distributions
-Version: 1.0.2
+Version: 1.0.3
 Authors@R: c(person("Alexios", "Galanos", role = c("aut", "cre","cph"), email = "alexios@4dscape.com", comment = c(ORCID = "0009-0000-9308-0457")))
 Maintainer: Alexios Galanos <alexios@4dscape.com>
 Depends: R (>= 3.5.0), methods, tsmethods

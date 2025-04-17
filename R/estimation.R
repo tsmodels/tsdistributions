@@ -57,7 +57,7 @@ estimate.tsdistribution.spec <- function(object, solver = "nlminb", control = li
     object$parmatrix <- parmatrix
     loglik <- fun$fn(pars)
     gradient <- fun$gr(pars)
-    hessian <- fun$he(pars)
+    hessian <- fun$he(pars, atomic = fun$env$usingAtomics())
     names(pars) <- tsdistenv$estimation_names
     colnames(gradient) <- tsdistenv$estimation_names
     colnames(hessian) <- rownames(hessian) <- tsdistenv$estimation_names
@@ -111,7 +111,7 @@ tsdistribution_tmb <- function(object, use_hessian = FALSE, silent = TRUE)
         hess_fun <- function(pars, fun, tsdistenv)
         {
             names(pars) <- tsdistenv$parameter_names
-            return(fun$he(pars))
+            return(fun$he(pars, atomic = fun$env$usingAtomics()))
         }
     } else {
         hess_fun <- NULL
@@ -133,7 +133,7 @@ score_function <- function(object, pars, use_hessian)
     m <- length(fun$par)
     n <- length(y)
     jac <- matrix(0, ncol = m, nrow = n)
-    for(i in 1:n){
+    for (i in 1:n) {
         fun$env$data$y <- y[i]
         jac[i,] <- fun$gr(pars)
     }
