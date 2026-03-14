@@ -1,3 +1,8 @@
+# tsdistributions 1.0.4
+
+* Rf_error fix prompted by Rcpp team
+
+
 # tsdistributions 1.0.3
 
 * Added explicit atomic flag for he() in TMB since usingAtomics()
